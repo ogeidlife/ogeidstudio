@@ -82,28 +82,55 @@ if (stage && canvas) {
   window.addEventListener("resize", resize);
   resize();
 
-  // rotação alvo controlada pelo mouse sobre o palco
-  let targetX = 0, targetY = 0;
-  let idleAngle = 0;
+  // rotação só acontece enquanto o usuário clica (ou toca) e arrasta
+  let isDragging = false;
+  let lastX = 0, lastY = 0;
+  let velY = 0, velX = 0; // pra dar uma leve "inércia" ao soltar
 
-  stage.addEventListener("mousemove", (e) => {
-    const rect = stage.getBoundingClientRect();
-    const nx = (e.clientX - rect.left) / rect.width * 2 - 1;   // -1 a 1
-    const ny = (e.clientY - rect.top) / rect.height * 2 - 1;   // -1 a 1
-    targetY = nx * 0.9;   // esquerda/direita -> gira no eixo Y
-    targetX = ny * 0.5;   // cima/baixo -> gira no eixo X
-  });
+  function dragStart(x, y) {
+    isDragging = true;
+    lastX = x; lastY = y;
+    canvas.style.cursor = "grabbing";
+  }
+  function dragMove(x, y) {
+    if (!isDragging) return;
+    const dx = x - lastX;
+    const dy = y - lastY;
+    lastX = x; lastY = y;
+    velY = dx * 0.006;
+    velX = dy * 0.006;
+    group.rotation.y += velY;
+    group.rotation.x += velX;
+  }
+  function dragEnd() {
+    isDragging = false;
+    canvas.style.cursor = "grab";
+  }
 
-  stage.addEventListener("mouseleave", () => {
-    targetX = 0; targetY = 0;
-  });
+  // mouse
+  stage.addEventListener("mousedown", (e) => dragStart(e.clientX, e.clientY));
+  window.addEventListener("mousemove", (e) => dragMove(e.clientX, e.clientY));
+  window.addEventListener("mouseup", dragEnd);
+
+  // toque (celular/tablet)
+  stage.addEventListener("touchstart", (e) => {
+    const t = e.touches[0];
+    dragStart(t.clientX, t.clientY);
+  }, { passive: true });
+  window.addEventListener("touchmove", (e) => {
+    const t = e.touches[0];
+    if (t) dragMove(t.clientX, t.clientY);
+  }, { passive: true });
+  window.addEventListener("touchend", dragEnd);
 
   function animate() {
     requestAnimationFrame(animate);
-    idleAngle += 0.0025;
-    if (group) {
-      group.rotation.y += (targetY + idleAngle - group.rotation.y) * 0.06;
-      group.rotation.x += (targetX - group.rotation.x) * 0.06;
+    if (group && !isDragging) {
+      // pequena inércia que vai desacelerando depois de soltar
+      group.rotation.y += velY;
+      group.rotation.x += velX;
+      velY *= 0.94;
+      velX *= 0.94;
     }
     renderer.render(scene, camera);
   }
