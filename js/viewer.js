@@ -101,6 +101,7 @@ if (stage && canvas) {
   let isDragging = false;
   let lastX = 0, lastY = 0;
   let velY = 0, velX = 0; // pra dar uma leve "inércia" ao soltar
+  const IDLE_SPEED = 0.0025; // velocidade do giro automático quando ninguém mexe
 
   function dragStart(x, y) {
     isDragging = true;
@@ -141,8 +142,9 @@ if (stage && canvas) {
   function animate() {
     requestAnimationFrame(animate);
     if (group && !isDragging) {
-      // pequena inércia que vai desacelerando depois de soltar
-      group.rotation.y += velY;
+      // gira sozinha devagar quando ninguém está mexendo,
+      // e some suavemente qualquer "inércia" deixada pelo arraste
+      group.rotation.y += velY + IDLE_SPEED;
       group.rotation.x += velX;
       velY *= 0.94;
       velX *= 0.94;
