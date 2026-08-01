@@ -3,8 +3,8 @@
    move sobre o palco (hero-stage). Não precisa clicar/arrastar,
    basta passar o mouse por cima.
    ========================================================= */
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
-import { STLLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/STLLoader.js";
+import * as THREE from "three";
+import { STLLoader } from "three/addons/loaders/STLLoader.js";
 
 const stage  = document.getElementById("hero-stage");
 const canvas = document.getElementById("viewer-canvas");
