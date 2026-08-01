@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ateliê — Colecionáveis Autorais</title>
+<meta name="description" content="Colecionáveis autorais feitos à mão: cabeças de personagem, quadros, abajures, prints e livros.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Na home fica só a cabeça 3D e as duas abas, sem mais nada no topo -->
+  <div class="topbar">
+    <span class="brand-mark">Nº 001 · Edição Autoral</span>
+    <nav class="nav-pill">
+      <a href="catalogo.html">Catálogo</a>
+      <a href="cadastro.html">Cadastro</a>
+    </nav>
+  </div>
+
+  <section class="hero">
+    <div class="hero-stage" id="hero-stage">
+      <canvas id="viewer-canvas"></canvas>
+      <div class="spec-tag t1"><b>Resina</b>pintura manual</div>
+      <div class="spec-tag t2"><b>18 cm</b>escala 1:1 cabeça</div>
+      <div class="spec-tag t3"><b>Edição</b>peça autoral</div>
+    </div>
+    <div class="hero-caption">
+      <h1>A Cabeça</h1>
+      <p>Peça central da coleção — mova o mouse sobre ela</p>
+    </div>
+    <div class="hero-hint">mova o mouse sobre a peça ↑</div>
+  </section>
+
+  <script type="module" src="js/viewer.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encomendar — Ateliê</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a href="index.html" class="home-btn" aria-label="Voltar ao início" title="Início">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 11.5 12 4l9 7.5"/>
+      <path d="M5.5 10v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1v-9"/>
+    </svg>
+  </a>
+
+  <main class="page">
+    <div class="page-head">
+      <p class="eyebrow">Encomenda</p>
+      <h2 class="page-title" id="titulo-produto">Encomendar peça</h2>
+      <p class="page-lede">Preencha seus dados. Seu pedido cai direto na minha caixa de entrada e eu retorno o combinado por email ou whatsapp.</p>
+    </div>
+
+    <!--
+      IMPORTANTE: troque "SEU_ID_AQUI" pelo endpoint do Formspree
+      (mesmo serviço usado na página de cadastro, pode usar o mesmo formulário
+      ou criar um separado para diferenciar "novidades" de "encomendas")
+    -->
+    <form class="form-card" id="form-encomenda" action="https://formspree.io/f/SEU_ID_AQUI" method="POST">
+      <input type="hidden" name="produto" id="produto-hidden" value="">
+      <input type="hidden" name="_subject" value="Nova encomenda pelo site">
+
+      <div class="field">
+        <label for="produto-label">Peça desejada</label>
+        <input type="text" id="produto-label" readonly>
+      </div>
+
+      <div class="field">
+        <label for="nome">Seu nome</label>
+        <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
+      </div>
+
+      <div class="field">
+        <label for="email">Seu email</label>
+        <input type="email" id="email" name="email" placeholder="voce@exemplo.com" required>
+      </div>
+
+      <div class="field">
+        <label for="celular">Seu celular / WhatsApp</label>
+        <input type="tel" id="celular" name="celular" placeholder="(00) 00000-0000" required>
+      </div>
+
+      <div class="field">
+        <label for="obs">Observações (opcional)</label>
+        <textarea id="obs" name="observacoes" placeholder="Cor, tamanho, personalização, prazo desejado..."></textarea>
+      </div>
+
+      <button type="submit" class="btn">Enviar encomenda</button>
+      <div class="form-success" id="success-msg">Encomenda enviada! Você recebe uma resposta minha em breve.</div>
+    </form>
+  </main>
+
+  <footer>
+    <span>Ateliê — peças autorais</span>
+    <span>feito à mão, uma de cada vez</span>
+  </footer>
+
+  <script>
+    // pega o nome do produto pela URL (?produto=Cabeça do Personagem)
+    const params = new URLSearchParams(window.location.search);
+    const produto = params.get('produto') || 'Peça personalizada';
+    document.getElementById('titulo-produto').textContent = 'Encomendar: ' + produto;
+    document.getElementById('produto-hidden').value = produto;
+    document.getElementById('produto-label').value = produto;
+
+    const form = document.getElementById('form-encomenda');
+    const success = document.getElementById('success-msg');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+        if (res.ok) {
+          success.classList.add('show');
+          form.reset();
+          document.getElementById('produto-label').value = produto;
+          document.getElementById('produto-hidden').value = produto;
+        } else {
+          alert('Não consegui enviar agora. Tenta de novo em instantes.');
+        }
+      } catch (err) {
+        alert('Não consegui enviar agora. Verifique sua internet e tente de novo.');
+      }
+    });
+  </script>
+</body>
+</html>

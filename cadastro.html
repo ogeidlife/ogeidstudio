@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro — Ateliê</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a href="index.html" class="home-btn" aria-label="Voltar ao início" title="Início">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 11.5 12 4l9 7.5"/>
+      <path d="M5.5 10v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1v-9"/>
+    </svg>
+  </a>
+
+  <main class="page">
+    <div class="page-head">
+      <p class="eyebrow">Cadastro</p>
+      <h2 class="page-title">Fique por dentro das novidades</h2>
+      <p class="page-lede">Deixe seu email para saber em primeira mão sobre novas peças, edições limitadas e reabertura de encomendas.</p>
+    </div>
+
+    <!--
+      IMPORTANTE: troque "SEU_ID_AQUI" pelo endpoint que o Formspree
+      te der depois de criar o formulário em https://formspree.io
+      (ex: https://formspree.io/f/abcdwxyz)
+    -->
+    <form class="form-card" id="form-cadastro" action="https://formspree.io/f/SEU_ID_AQUI" method="POST">
+      <div class="field">
+        <label for="email">Seu email</label>
+        <input type="email" id="email" name="email" placeholder="voce@exemplo.com" required>
+      </div>
+      <input type="hidden" name="_subject" value="Novo cadastro na lista de novidades">
+      <button type="submit" class="btn">Quero receber novidades</button>
+      <div class="form-success" id="success-msg">Cadastro enviado! Você vai receber as próximas novidades por email.</div>
+      <p class="form-note">Só usamos seu email para avisar sobre novas peças. Sem spam.</p>
+    </form>
+  </main>
+
+  <footer>
+    <span>Ateliê — peças autorais</span>
+    <span>feito à mão, uma de cada vez</span>
+  </footer>
+
+  <script>
+    const form = document.getElementById('form-cadastro');
+    const success = document.getElementById('success-msg');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+        if (res.ok) {
+          success.classList.add('show');
+          form.reset();
+        } else {
+          alert('Não consegui enviar agora. Tenta de novo em instantes.');
+        }
+      } catch (err) {
+        alert('Não consegui enviar agora. Verifique sua internet e tente de novo.');
+      }
+    });
+  </script>
+</body>
+</html>
