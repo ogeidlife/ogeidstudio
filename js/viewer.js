@@ -100,8 +100,8 @@ if (stage && canvas) {
   // rotação só acontece enquanto o usuário clica (ou toca) e arrasta
   let isDragging = false;
   let lastX = 0, lastY = 0;
-  let velY = 0, velX = 0; // pra dar uma leve "inércia" ao soltar
-  const IDLE_SPEED = 0.0025; // velocidade do giro automático quando ninguém mexe
+  let velY = 1, velX = 1; // pra dar uma leve "inércia" ao soltar
+  const IDLE_SPEED = 0.0050; // velocidade do giro automático quando ninguém mexe
 
   function dragStart(x, y) {
     isDragging = true;
