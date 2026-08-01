@@ -18,12 +18,17 @@
 
   <main class="page">
     <div class="product">
-      <div class="product-frame">
-        <img src="assets/img/prints.jpg" alt="Print de arte em edição limitada" onerror="this.style.display='none'">
+      <div class="gallery">
+        <div class="gallery-main">
+          <img id="img-principal" src="assets/img/prints-1.jpg" alt="Print de arte em edição limitada">
+        </div>
+        <div class="gallery-thumbs" id="miniaturas"></div>
+        <div class="zoom-hint">clique na foto pra ampliar</div>
       </div>
       <div class="product-info">
         <p class="eyebrow">Nº 004</p>
         <h1>Prints</h1>
+        <p class="price"><!-- troque pelo preço real -->R$ 90,00</p>
         <p class="desc">Impressões de arte do universo da marca, em papel de qualidade museográfica, feitas em pequenos lotes. Ideais para quem quer uma peça de colecionador com preço mais acessível.</p>
 
         <ul class="spec-list">
@@ -33,10 +38,19 @@
           <li><span>Prazo</span><span>Sob encomenda</span></li>
         </ul>
 
-        <a href="encomenda.html?produto=Print" class="btn">Encomendar esta peça</a>
+        <a href="encomenda.html?produto=Print&imagem=assets%2Fimg%2Fprints-1.jpg&preco=R%24%2090%2C00" class="btn">Encomendar esta peça</a>
       </div>
     </div>
   </main>
+
+  <script src="js/gallery.js"></script>
+  <script>
+    initGallery('#img-principal', '#miniaturas', [
+      'assets/img/prints-1.jpg',
+      'assets/img/prints-2.jpg',
+      'assets/img/prints-3.jpg',
+    ]);
+  </script>
 
   <footer>
     <span>Ateliê — peças autorais</span>

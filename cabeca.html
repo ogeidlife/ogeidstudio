@@ -18,13 +18,18 @@
 
   <main class="page">
     <div class="product">
-      <div class="product-frame">
-        <!-- troque por uma foto real da peça -->
-        <img src="assets/img/cabeca.jpg" alt="Cabeça do personagem, peça em resina pintada à mão" onerror="this.style.display='none'">
+      <div class="gallery">
+        <div class="gallery-main">
+          <!-- troque pelas fotos reais da peça -->
+          <img id="img-principal" src="assets/img/cabeca-1.jpg" alt="Cabeça do personagem, peça em resina pintada à mão">
+        </div>
+        <div class="gallery-thumbs" id="miniaturas"></div>
+        <div class="zoom-hint">clique na foto pra ampliar</div>
       </div>
       <div class="product-info">
         <p class="eyebrow">Nº 001 · Peça principal</p>
         <h1>Cabeça do Personagem</h1>
+        <p class="price"><!-- troque pelo preço real -->R$ 450,00</p>
         <p class="desc">O item de assinatura do ateliê: a cabeça do personagem esculpida e pintada à mão, em escala de colecionador. Cada peça é finalizada individualmente — pequenas variações fazem parte do caráter artesanal do trabalho.</p>
 
         <ul class="spec-list">
@@ -35,10 +40,19 @@
           <li><span>Prazo</span><span>Sob encomenda</span></li>
         </ul>
 
-        <a href="encomenda.html?produto=Cabe%C3%A7a%20do%20Personagem" class="btn">Encomendar esta peça</a>
+        <a href="encomenda.html?produto=Cabe%C3%A7a%20do%20Personagem&imagem=assets%2Fimg%2Fcabeca-1.jpg&preco=R%24%20450%2C00" class="btn">Encomendar esta peça</a>
       </div>
     </div>
   </main>
+
+  <script src="js/gallery.js"></script>
+  <script>
+    initGallery('#img-principal', '#miniaturas', [
+      'assets/img/cabeca-1.jpg',
+      'assets/img/cabeca-2.jpg',
+      'assets/img/cabeca-3.jpg',
+    ]);
+  </script>
 
   <footer>
     <span>Ateliê — peças autorais</span>

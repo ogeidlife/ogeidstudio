@@ -18,12 +18,17 @@
 
   <main class="page">
     <div class="product">
-      <div class="product-frame">
-        <img src="assets/img/livros.jpg" alt="Livro autoral do universo da marca" onerror="this.style.display='none'">
+      <div class="gallery">
+        <div class="gallery-main">
+          <img id="img-principal" src="assets/img/livros-1.jpg" alt="Livro autoral do universo da marca">
+        </div>
+        <div class="gallery-thumbs" id="miniaturas"></div>
+        <div class="zoom-hint">clique na foto pra ampliar</div>
       </div>
       <div class="product-info">
         <p class="eyebrow">Nº 005</p>
         <h1>Livros</h1>
+        <p class="price"><!-- troque pelo preço real -->R$ 120,00</p>
         <p class="desc">Publicações autorais que expandem a história e o universo do personagem — texto e ilustrações originais, pensadas junto com o restante da coleção.</p>
 
         <ul class="spec-list">
@@ -33,10 +38,19 @@
           <li><span>Prazo</span><span>Sob encomenda</span></li>
         </ul>
 
-        <a href="encomenda.html?produto=Livro" class="btn">Encomendar esta peça</a>
+        <a href="encomenda.html?produto=Livro&imagem=assets%2Fimg%2Flivros-1.jpg&preco=R%24%20120%2C00" class="btn">Encomendar esta peça</a>
       </div>
     </div>
   </main>
+
+  <script src="js/gallery.js"></script>
+  <script>
+    initGallery('#img-principal', '#miniaturas', [
+      'assets/img/livros-1.jpg',
+      'assets/img/livros-2.jpg',
+      'assets/img/livros-3.jpg',
+    ]);
+  </script>
 
   <footer>
     <span>Ateliê — peças autorais</span>

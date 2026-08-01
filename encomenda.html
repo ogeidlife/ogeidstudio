@@ -23,43 +23,51 @@
       <p class="page-lede">Preencha seus dados. Seu pedido cai direto na minha caixa de entrada e eu retorno o combinado por email ou whatsapp.</p>
     </div>
 
-    <!--
-      IMPORTANTE: troque "SEU_ID_AQUI" pelo endpoint do Formspree
-      (mesmo serviço usado na página de cadastro, pode usar o mesmo formulário
-      ou criar um separado para diferenciar "novidades" de "encomendas")
-    -->
-    <form class="form-card" id="form-encomenda" action="https://formspree.io/f/mnjekvkr" method="POST">
-      <input type="hidden" name="produto" id="produto-hidden" value="">
-      <input type="hidden" name="_subject" value="Nova encomenda pelo site">
-
-      <div class="field">
-        <label for="produto-label">Peça desejada</label>
-        <input type="text" id="produto-label" readonly>
+    <div class="product">
+      <div>
+        <div class="gallery-main" id="foto-encomenda">
+          <img id="produto-imagem" src="" alt="Foto da peça escolhida">
+        </div>
+        <div class="zoom-hint">clique na foto pra ampliar</div>
+        <p class="price" id="produto-preco" style="margin-top:16px;"></p>
       </div>
 
-      <div class="field">
-        <label for="nome">Seu nome</label>
-        <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
-      </div>
+      <!--
+        IMPORTANTE: os dois formulários (encomenda e cadastro) já estão
+        ligados ao Formspree. Se quiser trocar o email de destino no futuro,
+        é só criar um novo formulário em formspree.io e trocar o link do
+        "action" abaixo.
+      -->
+      <form class="form-card" id="form-encomenda" action="https://formspree.io/f/mnjekvkr" method="POST">
+        <input type="hidden" name="Item_desejado" id="produto-hidden" value="">
+        <input type="hidden" name="Preço" id="preco-hidden" value="">
+        <input type="hidden" name="Foto_do_item" id="imagem-hidden" value="">
+        <input type="hidden" name="_subject" id="subject-hidden" value="Nova encomenda pelo site">
 
-      <div class="field">
-        <label for="email">Seu email</label>
-        <input type="email" id="email" name="email" placeholder="voce@exemplo.com" required>
-      </div>
+        <div class="field">
+          <label for="produto-label">Peça desejada</label>
+          <input type="text" id="produto-label" readonly>
+        </div>
 
-      <div class="field">
-        <label for="celular">Seu celular / WhatsApp</label>
-        <input type="tel" id="celular" name="celular" placeholder="(00) 00000-0000" required>
-      </div>
+        <div class="field">
+          <label for="nome">Seu nome</label>
+          <input type="text" id="nome" name="Nome" placeholder="Nome completo" required>
+        </div>
 
-      <div class="field">
-        <label for="obs">Observações (opcional)</label>
-        <textarea id="obs" name="observacoes" placeholder="Cor, tamanho, personalização, prazo desejado..."></textarea>
-      </div>
+        <div class="field">
+          <label for="email">Seu email</label>
+          <input type="email" id="email" name="Email" placeholder="voce@exemplo.com" required>
+        </div>
 
-      <button type="submit" class="btn">Enviar encomenda</button>
-      <div class="form-success" id="success-msg">Encomenda enviada! Você recebe uma resposta minha em breve.</div>
-    </form>
+        <div class="field">
+          <label for="celular">Seu celular / WhatsApp</label>
+          <input type="tel" id="celular" name="Celular" placeholder="(00) 00000-0000" required>
+        </div>
+
+        <button type="submit" class="btn">Enviar encomenda</button>
+        <div class="form-success" id="success-msg">Encomenda enviada! Você recebe uma resposta minha em breve.</div>
+      </form>
+    </div>
   </main>
 
   <footer>
@@ -67,13 +75,35 @@
     <span>feito à mão, uma de cada vez</span>
   </footer>
 
+  <script src="js/gallery.js"></script>
   <script>
-    // pega o nome do produto pela URL (?produto=Cabeça do Personagem)
+    // pega os dados da peça pela URL (produto, imagem, preco)
     const params = new URLSearchParams(window.location.search);
     const produto = params.get('produto') || 'Peça personalizada';
+    const imagemRelativa = params.get('imagem') || '';
+    const preco = params.get('preco') || '';
+
+    // monta o endereço completo da foto, pra ela aparecer certinho no seu email
+    const imagemAbsoluta = imagemRelativa ? new URL(imagemRelativa, window.location.href).href : '';
+
     document.getElementById('titulo-produto').textContent = 'Encomendar: ' + produto;
     document.getElementById('produto-hidden').value = produto;
     document.getElementById('produto-label').value = produto;
+    document.getElementById('preco-hidden').value = preco;
+    document.getElementById('imagem-hidden').value = imagemAbsoluta;
+    // assunto do email já vem com o nome do item, pra você bater o olho e saber do que se trata
+    document.getElementById('subject-hidden').value = 'Nova encomenda: ' + produto;
+    document.getElementById('produto-preco').textContent = preco;
+
+    const fotoImg = document.getElementById('produto-imagem');
+    if (imagemRelativa) {
+      fotoImg.src = imagemRelativa;
+      fotoImg.addEventListener('click', () => openZoom(fotoImg.src));
+      document.getElementById('foto-encomenda').style.cursor = 'zoom-in';
+    } else {
+      document.getElementById('foto-encomenda').style.display = 'none';
+      document.querySelector('.zoom-hint').style.display = 'none';
+    }
 
     const form = document.getElementById('form-encomenda');
     const success = document.getElementById('success-msg');
@@ -87,6 +117,9 @@
           form.reset();
           document.getElementById('produto-label').value = produto;
           document.getElementById('produto-hidden').value = produto;
+          document.getElementById('preco-hidden').value = preco;
+          document.getElementById('imagem-hidden').value = imagemAbsoluta;
+          document.getElementById('subject-hidden').value = 'Nova encomenda: ' + produto;
         } else {
           alert('Não consegui enviar agora. Tenta de novo em instantes.');
         }
