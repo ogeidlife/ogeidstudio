@@ -20,39 +20,27 @@
     <div class="product">
       <div class="gallery">
         <div class="gallery-main">
-          <!-- troque pelas fotos reais da peça -->
-          <img id="img-principal" src="assets/img/cabeca-1.jpg" alt="Cabeça do personagem, peça em resina pintada à mão">
+          <img id="img-principal" src="" alt="Foto da peça">
         </div>
         <div class="gallery-thumbs" id="miniaturas"></div>
         <div class="zoom-hint">clique na foto pra ampliar</div>
       </div>
       <div class="product-info">
-        <p class="eyebrow">Nº 001 · Peça principal</p>
-        <h1>Cabeça do Personagem</h1>
-        <p class="price"><!-- troque pelo preço real -->R$ 450,00</p>
-        <p class="desc">O item de assinatura do ateliê: a cabeça do personagem esculpida e pintada à mão, em escala de colecionador. Cada peça é finalizada individualmente — pequenas variações fazem parte do caráter artesanal do trabalho.</p>
+        <p class="eyebrow" id="eyebrow"></p>
+        <h1 id="titulo"></h1>
+        <p class="price" id="preco"></p>
+        <p class="desc" id="descricao"></p>
 
-        <ul class="spec-list">
-          <li><span>Material</span><span>Resina</span></li>
-          <li><span>Altura</span><span>≈ 18 cm</span></li>
-          <li><span>Acabamento</span><span>Pintura manual</span></li>
-          <li><span>Edição</span><span>Peça autoral</span></li>
-          <li><span>Prazo</span><span>Sob encomenda</span></li>
-        </ul>
+        <ul class="spec-list" id="specs"></ul>
 
-        <a href="encomenda.html?produto=Cabe%C3%A7a%20do%20Personagem&imagem=assets%2Fimg%2Fcabeca-1.jpg&preco=R%24%20450%2C00" class="btn">Encomendar esta peça</a>
+        <a href="encomenda.html" id="btn-encomendar" class="btn">Encomendar esta peça</a>
       </div>
     </div>
   </main>
 
   <script src="js/gallery.js"></script>
-  <script>
-    initGallery('#img-principal', '#miniaturas', [
-      'assets/img/cabeca-1.jpg',
-      'assets/img/cabeca-2.jpg',
-      'assets/img/cabeca-3.jpg',
-    ]);
-  </script>
+  <script>const PRODUCT_KEY = 'cabeca';</script>
+  <script src="js/produto.js"></script>
 
   <footer>
     <span>Ateliê — peças autorais</span>

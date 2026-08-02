@@ -1,0 +1,88 @@
+{
+  "cabeca": {
+    "numero": "Nº 001 · Peça principal",
+    "titulo": "Cabeça do Personagem",
+    "preco": "R$ 450,00",
+    "descricao": "O item de assinatura do ateliê: a cabeça do personagem esculpida e pintada à mão, em escala de colecionador. Cada peça é finalizada individualmente — pequenas variações fazem parte do caráter artesanal do trabalho.",
+    "specs": [
+      { "label": "Material", "valor": "Resina" },
+      { "label": "Altura", "valor": "≈ 18 cm" },
+      { "label": "Acabamento", "valor": "Pintura manual" },
+      { "label": "Edição", "valor": "Peça autoral" },
+      { "label": "Prazo", "valor": "Sob encomenda" }
+    ],
+    "imagens": [
+      "assets/img/cabeca-1.jpg",
+      "assets/img/cabeca-2.jpg",
+      "assets/img/cabeca-3.jpg"
+    ]
+  },
+  "quadros": {
+    "numero": "Nº 002",
+    "titulo": "Quadros",
+    "preco": "R$ 180,00",
+    "descricao": "Ilustrações originais do universo do personagem, impressas em papel de alta durabilidade e emolduradas à mão. Ótimas para quem quer levar a estética da marca pra dentro de casa.",
+    "specs": [
+      { "label": "Material", "valor": "Impressão + moldura" },
+      { "label": "Tamanhos", "valor": "Variados, sob consulta" },
+      { "label": "Acabamento", "valor": "Emoldurado, pronto para pendurar" },
+      { "label": "Prazo", "valor": "Sob encomenda" }
+    ],
+    "imagens": [
+      "assets/img/quadros-1.jpg",
+      "assets/img/quadros-2.jpg",
+      "assets/img/quadros-3.jpg"
+    ]
+  },
+  "abajures": {
+    "numero": "Nº 003",
+    "titulo": "Abajures",
+    "preco": "R$ 220,00",
+    "descricao": "Luminárias artesanais, feitas à mão, que trazem o universo do personagem para a iluminação do dia a dia. Peças únicas, pensadas como objeto de decoração e colecionável ao mesmo tempo.",
+    "specs": [
+      { "label": "Material", "valor": "Sob consulta" },
+      { "label": "Tamanho", "valor": "Variado" },
+      { "label": "Uso", "valor": "Bivolt, lâmpada não inclusa" },
+      { "label": "Prazo", "valor": "Sob encomenda" }
+    ],
+    "imagens": [
+      "assets/img/abajures-1.jpg",
+      "assets/img/abajures-2.jpg",
+      "assets/img/abajures-3.jpg"
+    ]
+  },
+  "prints": {
+    "numero": "Nº 004",
+    "titulo": "Prints",
+    "preco": "R$ 90,00",
+    "descricao": "Impressões de arte do universo da marca, em papel de qualidade museográfica, feitas em pequenos lotes. Ideais para quem quer uma peça de colecionador com preço mais acessível.",
+    "specs": [
+      { "label": "Material", "valor": "Papel museográfico" },
+      { "label": "Tamanhos", "valor": "A4 / A3" },
+      { "label": "Edição", "valor": "Lote limitado" },
+      { "label": "Prazo", "valor": "Sob encomenda" }
+    ],
+    "imagens": [
+      "assets/img/prints-1.jpg",
+      "assets/img/prints-2.jpg",
+      "assets/img/prints-3.jpg"
+    ]
+  },
+  "livros": {
+    "numero": "Nº 005",
+    "titulo": "Livros",
+    "preco": "R$ 120,00",
+    "descricao": "Publicações autorais que expandem a história e o universo do personagem — texto e ilustrações originais, pensadas junto com o restante da coleção.",
+    "specs": [
+      { "label": "Formato", "valor": "Sob consulta" },
+      { "label": "Páginas", "valor": "Variado" },
+      { "label": "Acabamento", "valor": "Capa dura ou brochura" },
+      { "label": "Prazo", "valor": "Sob encomenda" }
+    ],
+    "imagens": [
+      "assets/img/livros-1.jpg",
+      "assets/img/livros-2.jpg",
+      "assets/img/livros-3.jpg"
+    ]
+  }
+}

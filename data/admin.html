@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Ateliê</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .admin-wrap{ max-width:880px; margin:0 auto; padding:60px 24px 100px; }
+  .admin-head h1{ font-family:var(--f-display); font-size:28px; margin:0 0 8px; }
+  .admin-head p{ color:var(--ink-dim); font-size:14px; max-width:60ch; }
+  .admin-panel{
+    border:1px solid var(--line); background:var(--bg-alt);
+    padding:24px; margin:28px 0; border-radius:2px;
+  }
+  .admin-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .admin-row.single{ grid-template-columns:1fr; }
+  .product-card{
+    border:1px solid var(--line); padding:24px; margin-bottom:20px;
+  }
+  .product-card h2{ font-family:var(--f-display); font-size:18px; margin:0 0 18px; color:var(--accent-2); }
+  .spec-row{ display:grid; grid-template-columns:1fr 1fr auto; gap:10px; margin-bottom:8px; align-items:center; }
+  .spec-row button, .img-row button{
+    all:unset; cursor:pointer; font-family:var(--f-mono); font-size:11px;
+    color:var(--ink-dim); border:1px solid var(--line); padding:8px 10px; text-align:center;
+  }
+  .spec-row button:hover, .img-row button:hover{ border-color:var(--accent); color:var(--ink); }
+  .img-row{ display:grid; grid-template-columns:70px 1fr auto auto; gap:10px; align-items:center; margin-bottom:10px; }
+  .img-row img{ width:70px; height:70px; object-fit:cover; border:1px solid var(--line); background:var(--bg); }
+  .img-row input[type=file]{ font-size:11px; color:var(--ink-dim); }
+  .add-spec{ margin-top:4px; }
+  .status-msg{
+    font-family:var(--f-mono); font-size:12px; padding:12px 14px; margin-top:16px;
+    border:1px solid var(--line); display:none;
+  }
+  .status-msg.ok{ display:block; border-color:var(--accent-2); color:var(--accent-2); }
+  .status-msg.err{ display:block; border-color:#b5502a; color:#e07a52; }
+  .save-bar{
+    position:sticky; bottom:0; background:var(--bg); border-top:1px solid var(--line);
+    padding:16px 0; margin-top:24px; display:flex; gap:12px; align-items:center;
+  }
+  .hidden{ display:none; }
+  .field-mini label{ font-family:var(--f-mono); font-size:10px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:6px; }
+</style>
+</head>
+<body>
+
+  <a href="catalogo.html" class="home-btn" aria-label="Voltar ao início" title="Voltar ao site">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 11.5 12 4l9 7.5"/>
+      <path d="M5.5 10v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1v-9"/>
+    </svg>
+  </a>
+
+  <div class="admin-wrap">
+    <div class="admin-head">
+      <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Painel restrito</p>
+      <h1>Administração do site</h1>
+      <p>Edite títulos, preços, descrições, especificações e fotos de cada peça. As mudanças são salvas direto no seu repositório do GitHub — o site atualiza sozinho em 1-2 minutos depois de salvar.</p>
+    </div>
+
+    <div class="admin-panel" id="login-panel">
+      <div class="admin-row">
+        <div class="field field-mini">
+          <label for="gh-owner">Usuário do GitHub</label>
+          <input type="text" id="gh-owner" value="ogeidlife">
+        </div>
+        <div class="field field-mini">
+          <label for="gh-repo">Nome do repositório</label>
+          <input type="text" id="gh-repo" value="ogeidstudio">
+        </div>
+      </div>
+      <div class="field field-mini" style="margin-top:14px;">
+        <label for="gh-token">Chave de acesso pessoal (GitHub Token)</label>
+        <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+      </div>
+      <p class="form-note" style="margin-top:10px;">
+        Não sabe como gerar essa chave? Veja o passo a passo mais abaixo, na seção "Como gerar sua chave".
+        Ela fica só no seu navegador — nunca é salva no site nem enviada a nenhum lugar além do GitHub.
+      </p>
+      <button class="btn" id="btn-carregar" style="margin-top:16px;">Carregar produtos</button>
+      <div class="status-msg" id="login-status"></div>
+    </div>
+
+    <div id="produtos-area" class="hidden">
+      <div id="cards-container"></div>
+
+      <div class="save-bar">
+        <button class="btn" id="btn-salvar">Salvar todas as alterações</button>
+        <button class="btn ghost" id="btn-sair">Sair</button>
+      </div>
+      <div class="status-msg" id="save-status"></div>
+    </div>
+
+    <div class="admin-panel" style="margin-top:48px;">
+      <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 14px;">Como gerar sua chave (uma vez só)</h2>
+      <ol style="color:var(--ink-dim); font-size:14px; line-height:1.8; padding-left:20px;">
+        <li>Vá em <strong>github.com/settings/tokens?type=beta</strong> (token "fine-grained")</li>
+        <li>Clique em <strong>Generate new token</strong></li>
+        <li>Em "Repository access", escolha <strong>Only select repositories</strong> e selecione só o repositório do seu site</li>
+        <li>Em "Permissions", procure <strong>Contents</strong> e mude de "No access" para <strong>Read and write</strong></li>
+        <li>Clique em <strong>Generate token</strong> lá embaixo</li>
+        <li>Copie a chave gerada (começa com <code>github_pat_...</code>) e cole no campo acima — <strong>ela só aparece uma vez</strong>, se perder tem que gerar outra</li>
+      </ol>
+      <p class="form-note">Guarde essa chave como uma senha. Qualquer pessoa com ela consegue editar o site. Se desconfiar que ela vazou, volte nessa mesma página do GitHub e clique em "Delete" na chave — ela para de funcionar na hora.</p>
+    </div>
+  </div>
+
+  <script>
+    const PRODUCT_KEYS = ['cabeca', 'quadros', 'abajures', 'prints', 'livros'];
+    const DATA_PATH = 'data/produtos.json';
+    let currentSha = null;
+    let currentData = null;
+
+    function b64DecodeUnicode(str) {
+      return decodeURIComponent(atob(str).split('').map(c =>
+        '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      ).join(''));
+    }
+    function b64EncodeUnicode(str) {
+      return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+        (m, p1) => String.fromCharCode('0x' + p1)
+      ));
+    }
+
+    function ghHeaders() {
+      const token = sessionStorage.getItem('gh_token');
+      return {
+        'Authorization': 'Bearer ' + token,
+        'Accept': 'application/vnd.github+json',
+      };
+    }
+    function apiBase() {
+      const owner = sessionStorage.getItem('gh_owner');
+      const repo = sessionStorage.getItem('gh_repo');
+      return `https://api.github.com/repos/${owner}/${repo}`;
+    }
+
+    function showStatus(el, msg, ok) {
+      el.textContent = msg;
+      el.className = 'status-msg ' + (ok ? 'ok' : 'err');
+    }
+
+    document.getElementById('btn-carregar').addEventListener('click', async () => {
+      const owner = document.getElementById('gh-owner').value.trim();
+      const repo = document.getElementById('gh-repo').value.trim();
+      const token = document.getElementById('gh-token').value.trim();
+      const status = document.getElementById('login-status');
+
+      if (!owner || !repo || !token) {
+        showStatus(status, 'Preencha usuário, repositório e a chave de acesso.', false);
+        return;
+      }
+      sessionStorage.setItem('gh_owner', owner);
+      sessionStorage.setItem('gh_repo', repo);
+      sessionStorage.setItem('gh_token', token);
+
+      try {
+        const res = await fetch(`${apiBase()}/contents/${DATA_PATH}`, { headers: ghHeaders() });
+        if (!res.ok) {
+          const body = await res.json().catch(() => ({}));
+          showStatus(status, 'Não consegui carregar: ' + (body.message || res.status) + '. Confira usuário, repositório e a chave.', false);
+          return;
+        }
+        const json = await res.json();
+        currentSha = json.sha;
+        currentData = JSON.parse(b64DecodeUnicode(json.content));
+        renderCards(currentData);
+        document.getElementById('login-panel').classList.add('hidden');
+        document.getElementById('produtos-area').classList.remove('hidden');
+      } catch (err) {
+        showStatus(status, 'Erro de conexão: ' + err.message, false);
+      }
+    });
+
+    document.getElementById('btn-sair').addEventListener('click', () => {
+      sessionStorage.clear();
+      location.reload();
+    });
+
+    function renderCards(data) {
+      const container = document.getElementById('cards-container');
+      container.innerHTML = '';
+      PRODUCT_KEYS.forEach((key) => {
+        const p = data[key];
+        if (!p) return;
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.dataset.key = key;
+        card.innerHTML = `
+          <h2>${p.titulo}</h2>
+          <div class="admin-row">
+            <div class="field field-mini">
+              <label>Número / categoria</label>
+              <input type="text" class="f-numero" value="${escapeAttr(p.numero)}">
+            </div>
+            <div class="field field-mini">
+              <label>Preço</label>
+              <input type="text" class="f-preco" value="${escapeAttr(p.preco)}">
+            </div>
+          </div>
+          <div class="field field-mini" style="margin-top:12px;">
+            <label>Título</label>
+            <input type="text" class="f-titulo" value="${escapeAttr(p.titulo)}">
+          </div>
+          <div class="field field-mini" style="margin-top:12px;">
+            <label>Descrição</label>
+            <textarea class="f-descricao" rows="3">${escapeHtml(p.descricao)}</textarea>
+          </div>
+
+          <div class="field field-mini" style="margin-top:16px;">
+            <label>Especificações</label>
+            <div class="specs-box"></div>
+            <button class="btn ghost add-spec" type="button">+ adicionar linha</button>
+          </div>
+
+          <div class="field field-mini" style="margin-top:16px;">
+            <label>Fotos (clique em "Substituir" pra trocar o arquivo, mantendo o mesmo nome)</label>
+            <div class="imgs-box"></div>
+          </div>
+        `;
+        container.appendChild(card);
+
+        const specsBox = card.querySelector('.specs-box');
+        p.specs.forEach((s) => addSpecRow(specsBox, s.label, s.valor));
+        card.querySelector('.add-spec').addEventListener('click', () => addSpecRow(specsBox, '', ''));
+
+        const imgsBox = card.querySelector('.imgs-box');
+        p.imagens.forEach((path) => addImageRow(imgsBox, path));
+      });
+    }
+
+    function addSpecRow(box, label, valor) {
+      const row = document.createElement('div');
+      row.className = 'spec-row';
+      row.innerHTML = `
+        <input type="text" class="s-label" placeholder="Rótulo (ex: Material)" value="${escapeAttr(label)}">
+        <input type="text" class="s-valor" placeholder="Valor (ex: Resina)" value="${escapeAttr(valor)}">
+        <button type="button" class="remove-spec">remover</button>
+      `;
+      row.querySelector('.remove-spec').addEventListener('click', () => row.remove());
+      box.appendChild(row);
+    }
+
+    function addImageRow(box, path) {
+      const owner = sessionStorage.getItem('gh_owner');
+      const repo = sessionStorage.getItem('gh_repo');
+      const row = document.createElement('div');
+      row.className = 'img-row';
+      row.dataset.path = path;
+      row.innerHTML = `
+        <img src="https://raw.githubusercontent.com/${owner}/${repo}/main/${path}" onerror="this.style.opacity=0.15">
+        <span style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim);">${path}</span>
+        <input type="file" accept="image/*">
+        <button type="button" class="upload-img">substituir</button>
+      `;
+      const fileInput = row.querySelector('input[type=file]');
+      const btn = row.querySelector('.upload-img');
+      btn.addEventListener('click', async () => {
+        const file = fileInput.files[0];
+        if (!file) { alert('Escolha um arquivo primeiro.'); return; }
+        btn.textContent = 'enviando...';
+        try {
+          await uploadImage(path, file);
+          btn.textContent = 'feito ✓';
+          row.querySelector('img').src = URL.createObjectURL(file);
+        } catch (err) {
+          btn.textContent = 'erro';
+          alert('Não consegui enviar a foto: ' + err.message);
+        }
+      });
+      box.appendChild(row);
+    }
+
+    function readFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function uploadImage(path, file) {
+      const content = await readFileAsBase64(file);
+      // verifica se já existe um arquivo nesse caminho, pra pegar o sha (necessário pra sobrescrever)
+      let sha;
+      const check = await fetch(`${apiBase()}/contents/${path}`, { headers: ghHeaders() });
+      if (check.ok) {
+        const info = await check.json();
+        sha = info.sha;
+      }
+      const body = {
+        message: `Atualiza foto ${path} pelo painel admin`,
+        content,
+        branch: 'main',
+      };
+      if (sha) body.sha = sha;
+
+      const res = await fetch(`${apiBase()}/contents/${path}`, {
+        method: 'PUT',
+        headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || res.status);
+      }
+    }
+
+    function escapeAttr(str) {
+      return (str || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+    }
+    function escapeHtml(str) {
+      return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    document.getElementById('btn-salvar').addEventListener('click', async () => {
+      const status = document.getElementById('save-status');
+      const cards = document.querySelectorAll('.product-card');
+      const novoData = { ...currentData };
+
+      cards.forEach((card) => {
+        const key = card.dataset.key;
+        const specs = [...card.querySelectorAll('.spec-row')].map((row) => ({
+          label: row.querySelector('.s-label').value,
+          valor: row.querySelector('.s-valor').value,
+        }));
+        novoData[key] = {
+          ...novoData[key],
+          numero: card.querySelector('.f-numero').value,
+          titulo: card.querySelector('.f-titulo').value,
+          preco: card.querySelector('.f-preco').value,
+          descricao: card.querySelector('.f-descricao').value,
+          specs,
+        };
+      });
+
+      try {
+        const res = await fetch(`${apiBase()}/contents/${DATA_PATH}`, {
+          method: 'PUT',
+          headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: 'Atualiza textos dos produtos pelo painel admin',
+            content: b64EncodeUnicode(JSON.stringify(novoData, null, 2)),
+            sha: currentSha,
+            branch: 'main',
+          }),
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          showStatus(status, 'Erro ao salvar: ' + (err.message || res.status), false);
+          return;
+        }
+        const result = await res.json();
+        currentSha = result.content.sha;
+        currentData = novoData;
+        showStatus(status, 'Salvo! O site atualiza em 1-2 minutos.', true);
+      } catch (err) {
+        showStatus(status, 'Erro de conexão: ' + err.message, false);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -20,37 +20,27 @@
     <div class="product">
       <div class="gallery">
         <div class="gallery-main">
-          <img id="img-principal" src="assets/img/quadros-1.jpg" alt="Quadro emoldurado do universo da marca">
+          <img id="img-principal" src="" alt="Foto da peça">
         </div>
         <div class="gallery-thumbs" id="miniaturas"></div>
         <div class="zoom-hint">clique na foto pra ampliar</div>
       </div>
       <div class="product-info">
-        <p class="eyebrow">Nº 002</p>
-        <h1>Quadros</h1>
-        <p class="price"><!-- troque pelo preço real -->R$ 180,00</p>
-        <p class="desc">Ilustrações originais do universo do personagem, impressas em papel de alta durabilidade e emolduradas à mão. Ótimas para quem quer levar a estética da marca pra dentro de casa.</p>
+        <p class="eyebrow" id="eyebrow"></p>
+        <h1 id="titulo"></h1>
+        <p class="price" id="preco"></p>
+        <p class="desc" id="descricao"></p>
 
-        <ul class="spec-list">
-          <li><span>Material</span><span>Impressão + moldura</span></li>
-          <li><span>Tamanhos</span><span>Variados, sob consulta</span></li>
-          <li><span>Acabamento</span><span>Emoldurado, pronto para pendurar</span></li>
-          <li><span>Prazo</span><span>Sob encomenda</span></li>
-        </ul>
+        <ul class="spec-list" id="specs"></ul>
 
-        <a href="encomenda.html?produto=Quadro&imagem=assets%2Fimg%2Fquadros-1.jpg&preco=R%24%20180%2C00" class="btn">Encomendar esta peça</a>
+        <a href="encomenda.html" id="btn-encomendar" class="btn">Encomendar esta peça</a>
       </div>
     </div>
   </main>
 
   <script src="js/gallery.js"></script>
-  <script>
-    initGallery('#img-principal', '#miniaturas', [
-      'assets/img/quadros-1.jpg',
-      'assets/img/quadros-2.jpg',
-      'assets/img/quadros-3.jpg',
-    ]);
-  </script>
+  <script>const PRODUCT_KEY = 'quadros';</script>
+  <script src="js/produto.js"></script>
 
   <footer>
     <span>Ateliê — peças autorais</span>

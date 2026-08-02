@@ -20,37 +20,27 @@
     <div class="product">
       <div class="gallery">
         <div class="gallery-main">
-          <img id="img-principal" src="assets/img/abajures-1.jpg" alt="Abajur artesanal com a estética da marca">
+          <img id="img-principal" src="" alt="Foto da peça">
         </div>
         <div class="gallery-thumbs" id="miniaturas"></div>
         <div class="zoom-hint">clique na foto pra ampliar</div>
       </div>
       <div class="product-info">
-        <p class="eyebrow">Nº 003</p>
-        <h1>Abajures</h1>
-        <p class="price"><!-- troque pelo preço real -->R$ 220,00</p>
-        <p class="desc">Luminárias artesanais, feitas à mão, que trazem o universo do personagem para a iluminação do dia a dia. Peças únicas, pensadas como objeto de decoração e colecionável ao mesmo tempo.</p>
+        <p class="eyebrow" id="eyebrow"></p>
+        <h1 id="titulo"></h1>
+        <p class="price" id="preco"></p>
+        <p class="desc" id="descricao"></p>
 
-        <ul class="spec-list">
-          <li><span>Material</span><span>Sob consulta</span></li>
-          <li><span>Tamanho</span><span>Variado</span></li>
-          <li><span>Uso</span><span>Bivolt, lâmpada não inclusa</span></li>
-          <li><span>Prazo</span><span>Sob encomenda</span></li>
-        </ul>
+        <ul class="spec-list" id="specs"></ul>
 
-        <a href="encomenda.html?produto=Abajur&imagem=assets%2Fimg%2Fabajures-1.jpg&preco=R%24%20220%2C00" class="btn">Encomendar esta peça</a>
+        <a href="encomenda.html" id="btn-encomendar" class="btn">Encomendar esta peça</a>
       </div>
     </div>
   </main>
 
   <script src="js/gallery.js"></script>
-  <script>
-    initGallery('#img-principal', '#miniaturas', [
-      'assets/img/abajures-1.jpg',
-      'assets/img/abajures-2.jpg',
-      'assets/img/abajures-3.jpg',
-    ]);
-  </script>
+  <script>const PRODUCT_KEY = 'abajures';</script>
+  <script src="js/produto.js"></script>
 
   <footer>
     <span>Ateliê — peças autorais</span>

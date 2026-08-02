@@ -20,37 +20,27 @@
     <div class="product">
       <div class="gallery">
         <div class="gallery-main">
-          <img id="img-principal" src="assets/img/livros-1.jpg" alt="Livro autoral do universo da marca">
+          <img id="img-principal" src="" alt="Foto da peça">
         </div>
         <div class="gallery-thumbs" id="miniaturas"></div>
         <div class="zoom-hint">clique na foto pra ampliar</div>
       </div>
       <div class="product-info">
-        <p class="eyebrow">Nº 005</p>
-        <h1>Livros</h1>
-        <p class="price"><!-- troque pelo preço real -->R$ 120,00</p>
-        <p class="desc">Publicações autorais que expandem a história e o universo do personagem — texto e ilustrações originais, pensadas junto com o restante da coleção.</p>
+        <p class="eyebrow" id="eyebrow"></p>
+        <h1 id="titulo"></h1>
+        <p class="price" id="preco"></p>
+        <p class="desc" id="descricao"></p>
 
-        <ul class="spec-list">
-          <li><span>Formato</span><span>Sob consulta</span></li>
-          <li><span>Páginas</span><span>Variado</span></li>
-          <li><span>Acabamento</span><span>Capa dura ou brochura</span></li>
-          <li><span>Prazo</span><span>Sob encomenda</span></li>
-        </ul>
+        <ul class="spec-list" id="specs"></ul>
 
-        <a href="encomenda.html?produto=Livro&imagem=assets%2Fimg%2Flivros-1.jpg&preco=R%24%20120%2C00" class="btn">Encomendar esta peça</a>
+        <a href="encomenda.html" id="btn-encomendar" class="btn">Encomendar esta peça</a>
       </div>
     </div>
   </main>
 
   <script src="js/gallery.js"></script>
-  <script>
-    initGallery('#img-principal', '#miniaturas', [
-      'assets/img/livros-1.jpg',
-      'assets/img/livros-2.jpg',
-      'assets/img/livros-3.jpg',
-    ]);
-  </script>
+  <script>const PRODUCT_KEY = 'livros';</script>
+  <script src="js/produto.js"></script>
 
   <footer>
     <span>Ateliê — peças autorais</span>
