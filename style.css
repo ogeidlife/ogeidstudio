@@ -319,10 +319,11 @@ h2.page-title{
 .catalog-banner{
   width:100%;
   aspect-ratio:21/7;
-  max-height:440px;
+  max-height:380px;
   overflow:hidden;
   background:var(--bg-alt);
-  border-bottom:1px solid var(--line);
+  border:1px solid var(--line);
+  margin-bottom:56px;
 }
 .catalog-banner img{
   width:100%; height:100%; object-fit:cover; display:block;
@@ -330,20 +331,7 @@ h2.page-title{
 .catalog-banner-placeholder{
   display:none;
   width:100%; height:100%;
-  align-items:center; justify-content:center;
-  text-align:center;
-  flex-direction:column;
-  gap:6px;
   border:1px dashed var(--line);
-  font-family:var(--f-mono);
-  font-size:12px;
-  letter-spacing:.05em;
-  color:var(--ink-dim);
-  padding:20px;
-}
-.catalog-banner-placeholder span{
-  font-size:11px;
-  opacity:.7;
 }
 .catalog-banner.sem-imagem .catalog-banner-placeholder{ display:flex; }
 
@@ -361,14 +349,7 @@ h2.page-title{
 .catalog-thumb-placeholder{
   display:none;
   width:100%; height:100%;
-  align-items:center; justify-content:center;
-  text-align:center;
   border:1px dashed var(--line);
-  font-family:var(--f-mono);
-  font-size:10px;
-  letter-spacing:.05em;
-  color:var(--ink-dim);
-  padding:10px;
 }
 .catalog-thumb.sem-imagem .catalog-thumb-placeholder{ display:flex; }
 .catalog-card.featured .catalog-thumb{ aspect-ratio:21/8; }
