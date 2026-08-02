@@ -43,6 +43,13 @@
   }
   .hidden{ display:none; }
   .field-mini label{ font-family:var(--f-mono); font-size:10px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:6px; }
+  .card-top-row{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
+  .remove-product{
+    all:unset; cursor:pointer; font-family:var(--f-mono); font-size:11px;
+    color:#e07a52; border:1px solid var(--line); padding:8px 12px; white-space:nowrap;
+  }
+  .remove-product:hover{ border-color:#e07a52; }
+  .destaque-row{ display:flex; align-items:center; gap:8px; margin-top:12px; font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); }
 </style>
 </head>
 <body>
@@ -58,7 +65,7 @@
     <div class="admin-head">
       <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Painel restrito</p>
       <h1>Administração do site</h1>
-      <p>Edite títulos, preços, descrições, especificações e fotos de cada peça. As mudanças são salvas direto no seu repositório do GitHub — o site atualiza sozinho em 1-2 minutos depois de salvar.</p>
+      <p>Edite títulos, preços, descrições, especificações, fotos e a capa animada de cada peça — ou adicione peças novas do zero. As mudanças são salvas direto no seu repositório do GitHub — o site atualiza sozinho em 1-2 minutos depois de salvar.</p>
     </div>
 
     <div class="admin-panel" id="login-panel">
@@ -85,6 +92,7 @@
     </div>
 
     <div id="produtos-area" class="hidden">
+      <button class="btn ghost" id="btn-novo-produto" style="margin-bottom:20px;">+ Adicionar novo produto</button>
       <div id="cards-container"></div>
 
       <div class="save-bar">
@@ -109,10 +117,10 @@
   </div>
 
   <script>
-    const PRODUCT_KEYS = ['cabeca', 'quadros', 'abajures', 'prints', 'livros'];
     const DATA_PATH = 'data/produtos.json';
     let currentSha = null;
     let currentData = null;
+    let removedKeys = new Set();
 
     function b64DecodeUnicode(str) {
       return decodeURIComponent(atob(str).split('').map(c =>
@@ -183,54 +191,107 @@
     function renderCards(data) {
       const container = document.getElementById('cards-container');
       container.innerHTML = '';
-      PRODUCT_KEYS.forEach((key) => {
-        const p = data[key];
-        if (!p) return;
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.dataset.key = key;
-        card.innerHTML = `
-          <h2>${p.titulo}</h2>
-          <div class="admin-row">
-            <div class="field field-mini">
-              <label>Número / categoria</label>
-              <input type="text" class="f-numero" value="${escapeAttr(p.numero)}">
-            </div>
-            <div class="field field-mini">
-              <label>Preço</label>
-              <input type="text" class="f-preco" value="${escapeAttr(p.preco)}">
-            </div>
-          </div>
-          <div class="field field-mini" style="margin-top:12px;">
-            <label>Título</label>
-            <input type="text" class="f-titulo" value="${escapeAttr(p.titulo)}">
-          </div>
-          <div class="field field-mini" style="margin-top:12px;">
-            <label>Descrição</label>
-            <textarea class="f-descricao" rows="3">${escapeHtml(p.descricao)}</textarea>
-          </div>
+      const ordenados = Object.keys(data).sort((a, b) => (data[a].ordem || 0) - (data[b].ordem || 0));
+      ordenados.forEach((key) => addProductCard(key, data[key]));
+    }
 
-          <div class="field field-mini" style="margin-top:16px;">
-            <label>Especificações</label>
-            <div class="specs-box"></div>
-            <button class="btn ghost add-spec" type="button">+ adicionar linha</button>
+    function addProductCard(key, p) {
+      const container = document.getElementById('cards-container');
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.dataset.key = key;
+      card.innerHTML = `
+        <div class="card-top-row">
+          <h2>${escapeHtml(p.titulo || key)} <span style="color:var(--ink-dim); font-size:11px; font-family:var(--f-mono);">(${key})</span></h2>
+          <button type="button" class="remove-product">remover produto</button>
+        </div>
+        <div class="admin-row">
+          <div class="field field-mini">
+            <label>Número / categoria</label>
+            <input type="text" class="f-numero" value="${escapeAttr(p.numero)}">
           </div>
-
-          <div class="field field-mini" style="margin-top:16px;">
-            <label>Fotos (clique em "Substituir" pra trocar o arquivo, mantendo o mesmo nome)</label>
-            <div class="imgs-box"></div>
+          <div class="field field-mini">
+            <label>Preço</label>
+            <input type="text" class="f-preco" value="${escapeAttr(p.preco)}">
           </div>
-        `;
-        container.appendChild(card);
+        </div>
+        <div class="field field-mini" style="margin-top:12px;">
+          <label>Título</label>
+          <input type="text" class="f-titulo" value="${escapeAttr(p.titulo)}">
+        </div>
+        <div class="field field-mini" style="margin-top:12px;">
+          <label>Descrição</label>
+          <textarea class="f-descricao" rows="3">${escapeHtml(p.descricao)}</textarea>
+        </div>
 
-        const specsBox = card.querySelector('.specs-box');
-        p.specs.forEach((s) => addSpecRow(specsBox, s.label, s.valor));
-        card.querySelector('.add-spec').addEventListener('click', () => addSpecRow(specsBox, '', ''));
+        <div class="destaque-row">
+          <input type="checkbox" class="f-destaque" ${p.destaque ? 'checked' : ''}>
+          <label style="margin:0;">Mostrar como peça em destaque (card grande no topo do catálogo)</label>
+        </div>
 
-        const imgsBox = card.querySelector('.imgs-box');
-        p.imagens.forEach((path) => addImageRow(imgsBox, path));
+        <div class="field field-mini" style="margin-top:16px;">
+          <label>Especificações</label>
+          <div class="specs-box"></div>
+          <button class="btn ghost add-spec" type="button">+ adicionar linha</button>
+        </div>
+
+        <div class="field field-mini" style="margin-top:16px;">
+          <label>Capa no catálogo — foto parada e gif animado (aparece ao passar o mouse)</label>
+          <div class="capas-box"></div>
+        </div>
+
+        <div class="field field-mini" style="margin-top:16px;">
+          <label>Fotos da página individual (clique em "substituir" pra trocar o arquivo, mantendo o mesmo nome)</label>
+          <div class="imgs-box"></div>
+        </div>
+      `;
+      container.appendChild(card);
+
+      const specsBox = card.querySelector('.specs-box');
+      (p.specs || []).forEach((s) => addSpecRow(specsBox, s.label, s.valor));
+      card.querySelector('.add-spec').addEventListener('click', () => addSpecRow(specsBox, '', ''));
+
+      const capasBox = card.querySelector('.capas-box');
+      addImageRow(capasBox, p.capaEstatica || `assets/img/${key}-capa.jpg`, 'Foto parada');
+      addImageRow(capasBox, p.capaAnimada || `assets/img/${key}.gif`, 'Gif animado (hover)');
+
+      const imgsBox = card.querySelector('.imgs-box');
+      (p.imagens || []).forEach((path) => addImageRow(imgsBox, path));
+
+      card.querySelector('.remove-product').addEventListener('click', () => {
+        if (confirm(`Remover "${p.titulo}" do site? Isso só some depois que você clicar em "Salvar todas as alterações".`)) {
+          removedKeys.add(key);
+          card.remove();
+        }
       });
     }
+
+    document.getElementById('btn-novo-produto').addEventListener('click', () => {
+      const nome = prompt('Nome da peça nova (ex: Chaveiro):');
+      if (!nome) return;
+      const key = nome.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove acentos
+        .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      if (!key) { alert('Nome inválido.'); return; }
+      if (currentData[key]) { alert('Já existe um produto com essa identificação. Escolha outro nome.'); return; }
+
+      const maiorOrdem = Math.max(0, ...Object.values(currentData).map((p) => p.ordem || 0));
+      const novo = {
+        ordem: maiorOrdem + 1,
+        destaque: false,
+        numero: 'Nº ' + String(maiorOrdem + 1).padStart(3, '0'),
+        titulo: nome,
+        preco: 'R$ 0,00',
+        descricao: 'Descrição da peça.',
+        specs: [{ label: 'Material', valor: 'Sob consulta' }],
+        capaEstatica: `assets/img/${key}-capa.jpg`,
+        capaAnimada: `assets/img/${key}.gif`,
+        imagens: [`assets/img/${key}-1.jpg`, `assets/img/${key}-2.jpg`, `assets/img/${key}-3.jpg`],
+      };
+      currentData[key] = novo;
+      addProductCard(key, novo);
+      document.getElementById('cards-container').lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
 
     function addSpecRow(box, label, valor) {
       const row = document.createElement('div');
@@ -244,7 +305,7 @@
       box.appendChild(row);
     }
 
-    function addImageRow(box, path) {
+    function addImageRow(box, path, label) {
       const owner = sessionStorage.getItem('gh_owner');
       const repo = sessionStorage.getItem('gh_repo');
       const row = document.createElement('div');
@@ -252,8 +313,8 @@
       row.dataset.path = path;
       row.innerHTML = `
         <img src="https://raw.githubusercontent.com/${owner}/${repo}/main/${path}" onerror="this.style.opacity=0.15">
-        <span style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim);">${path}</span>
-        <input type="file" accept="image/*">
+        <span style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim);">${label ? label + ' — ' : ''}${path}</span>
+        <input type="file" accept="image/*,.gif">
         <button type="button" class="upload-img">substituir</button>
       `;
       const fileInput = row.querySelector('input[type=file]');
@@ -322,19 +383,30 @@
       const cards = document.querySelectorAll('.product-card');
       const novoData = { ...currentData };
 
+      removedKeys.forEach((key) => delete novoData[key]);
+
       cards.forEach((card) => {
         const key = card.dataset.key;
         const specs = [...card.querySelectorAll('.spec-row')].map((row) => ({
           label: row.querySelector('.s-label').value,
           valor: row.querySelector('.s-valor').value,
         }));
+        const capaRows = card.querySelectorAll('.capas-box .img-row');
+        const capaEstatica = capaRows[0] ? capaRows[0].dataset.path : novoData[key].capaEstatica;
+        const capaAnimada = capaRows[1] ? capaRows[1].dataset.path : novoData[key].capaAnimada;
+        const imagens = [...card.querySelectorAll('.imgs-box .img-row')].map((row) => row.dataset.path);
+
         novoData[key] = {
           ...novoData[key],
           numero: card.querySelector('.f-numero').value,
           titulo: card.querySelector('.f-titulo').value,
           preco: card.querySelector('.f-preco').value,
           descricao: card.querySelector('.f-descricao').value,
+          destaque: card.querySelector('.f-destaque').checked,
           specs,
+          capaEstatica,
+          capaAnimada,
+          imagens,
         };
       });
 
@@ -343,7 +415,7 @@
           method: 'PUT',
           headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            message: 'Atualiza textos dos produtos pelo painel admin',
+            message: 'Atualiza produtos pelo painel admin',
             content: b64EncodeUnicode(JSON.stringify(novoData, null, 2)),
             sha: currentSha,
             branch: 'main',
@@ -357,6 +429,7 @@
         const result = await res.json();
         currentSha = result.content.sha;
         currentData = novoData;
+        removedKeys.clear();
         showStatus(status, 'Salvo! O site atualiza em 1-2 minutos.', true);
       } catch (err) {
         showStatus(status, 'Erro de conexão: ' + err.message, false);

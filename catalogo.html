@@ -30,75 +30,12 @@
       <p class="page-lede">Tudo produzido, esculpido e pintado à mão. Escolha uma peça para ver os detalhes e encomendar.</p>
     </div>
 
-    <div class="catalog-grid">
-
-      <a href="cabeca.html" class="catalog-card featured">
-        <div class="catalog-thumb" id="thumb-cabeca">
-          <img src="assets/img/cabeca.gif" alt="Cabeça do personagem girando" onerror="this.closest('.catalog-thumb').classList.add('sem-imagem'); this.style.display='none';">
-          <div class="catalog-thumb-placeholder"></div>
-        </div>
-        <span class="catalog-index">Nº 001 — peça principal</span>
-        <h3>Cabeça do Personagem</h3>
-        <p>O item de assinatura da marca: a cabeça em resina, pintada à mão, em escala de colecionador.</p>
-        <span class="go">Ver peça
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </span>
-      </a>
-
-      <a href="quadros.html" class="catalog-card">
-        <div class="catalog-thumb" id="thumb-quadros">
-          <img src="assets/img/quadros.gif" alt="Quadro com efeito de zoom" onerror="this.closest('.catalog-thumb').classList.add('sem-imagem'); this.style.display='none';">
-          <div class="catalog-thumb-placeholder"></div>
-        </div>
-        <span class="catalog-index">Nº 002</span>
-        <h3>Quadros</h3>
-        <p>Ilustrações originais emolduradas, impressão de alta durabilidade.</p>
-        <span class="go">Ver peça
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </span>
-      </a>
-
-      <a href="abajures.html" class="catalog-card">
-        <div class="catalog-thumb" id="thumb-abajures">
-          <img src="assets/img/abajures.gif" alt="Abajur artesanal aceso" onerror="this.closest('.catalog-thumb').classList.add('sem-imagem'); this.style.display='none';">
-          <div class="catalog-thumb-placeholder"></div>
-        </div>
-        <span class="catalog-index">Nº 003</span>
-        <h3>Abajures</h3>
-        <p>Luminárias artesanais com a estética do universo da marca.</p>
-        <span class="go">Ver peça
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </span>
-      </a>
-
-      <a href="prints.html" class="catalog-card">
-        <div class="catalog-thumb" id="thumb-prints">
-          <img src="assets/img/prints.gif" alt="Print de arte em edição limitada" onerror="this.closest('.catalog-thumb').classList.add('sem-imagem'); this.style.display='none';">
-          <div class="catalog-thumb-placeholder"></div>
-        </div>
-        <span class="catalog-index">Nº 004</span>
-        <h3>Prints</h3>
-        <p>Impressões de arte em papel de qualidade museográfica, em edição limitada.</p>
-        <span class="go">Ver peça
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </span>
-      </a>
-
-      <a href="livros.html" class="catalog-card">
-        <div class="catalog-thumb" id="thumb-livros">
-          <img src="assets/img/livros.gif" alt="Livro autoral abrindo as páginas" onerror="this.closest('.catalog-thumb').classList.add('sem-imagem'); this.style.display='none';">
-          <div class="catalog-thumb-placeholder"></div>
-        </div>
-        <span class="catalog-index">Nº 005</span>
-        <h3>Livros</h3>
-        <p>Publicações autorais que expandem a história e o universo do personagem.</p>
-        <span class="go">Ver peça
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </span>
-      </a>
-
+    <div class="catalog-grid" id="catalog-grid">
+      <!-- os cards são montados automaticamente pelo js/catalogo.js a partir de data/produtos.json -->
     </div>
   </main>
+
+  <script src="js/catalogo.js"></script>
 
   <footer>
     <span>Ateliê — peças autorais</span>
