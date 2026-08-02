@@ -30,7 +30,10 @@
       "assets/img/cabeca-1.jpg",
       "assets/img/cabeca-2.jpg",
       "assets/img/cabeca-3.jpg"
-    ]
+    ],
+    "destaque": true,
+    "capaEstatica": "assets/img/cabeca-capa.jpg",
+    "capaAnimada": "assets/img/cabeca.gif"
   },
   "quadros": {
     "numero": "Nº 002",
@@ -59,7 +62,10 @@
       "assets/img/quadros-1.jpg",
       "assets/img/quadros-2.jpg",
       "assets/img/quadros-3.jpg"
-    ]
+    ],
+    "destaque": false,
+    "capaEstatica": "assets/img/quadros-capa.jpg",
+    "capaAnimada": "assets/img/quadros.gif"
   },
   "abajures": {
     "numero": "Nº 003",
@@ -88,7 +94,10 @@
       "assets/img/abajures-1.jpg",
       "assets/img/abajures-2.jpg",
       "assets/img/abajures-3.jpg"
-    ]
+    ],
+    "destaque": false,
+    "capaEstatica": "assets/img/abajures-capa.jpg",
+    "capaAnimada": "assets/img/abajures.gif"
   },
   "prints": {
     "numero": "Nº 004",
@@ -117,7 +126,10 @@
       "assets/img/prints-1.jpg",
       "assets/img/prints-2.jpg",
       "assets/img/prints-3.jpg"
-    ]
+    ],
+    "destaque": false,
+    "capaEstatica": "assets/img/prints-capa.jpg",
+    "capaAnimada": "assets/img/prints.gif"
   },
   "livros": {
     "numero": "Nº 005",
@@ -146,6 +158,9 @@
       "assets/img/livros-1.jpg",
       "assets/img/livros-2.jpg",
       "assets/img/livros-3.jpg"
-    ]
+    ],
+    "destaque": false,
+    "capaEstatica": "assets/img/livros-capa.jpg",
+    "capaAnimada": "assets/img/livros.gif"
   }
 }
