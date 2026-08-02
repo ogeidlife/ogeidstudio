@@ -162,5 +162,26 @@
     "destaque": false,
     "capaEstatica": "assets/img/livros-capa.jpg",
     "capaAnimada": "assets/img/livros.gif"
+  },
+  "adesivos": {
+    "ordem": 1,
+    "destaque": false,
+    "numero": "Nº 001",
+    "titulo": "Adesivos",
+    "preco": "20,00",
+    "descricao": "Descrição da peça.",
+    "specs": [
+      {
+        "label": "Material",
+        "valor": "Sob consulta"
+      }
+    ],
+    "capaEstatica": "assets/img/adesivos-capa.jpg",
+    "capaAnimada": "assets/img/adesivos.gif",
+    "imagens": [
+      "assets/img/adesivos-1.jpg",
+      "assets/img/adesivos-2.jpg",
+      "assets/img/adesivos-3.jpg"
+    ]
   }
 }
