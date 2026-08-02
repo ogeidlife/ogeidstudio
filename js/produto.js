@@ -1,11 +1,13 @@
 /* =========================================================
    Carrega os dados de UM produto a partir de data/produtos.json
    e preenche a página (título, preço, descrição, specs, galeria,
-   link de encomenda). Cada página de produto só precisa definir
-   a variável PRODUCT_KEY antes de chamar este script.
+   link de encomenda). A peça é escolhida pelo endereço da página:
+   produto.html?key=cabeca
    ========================================================= */
 (async function () {
-  if (typeof PRODUCT_KEY === "undefined") return;
+  const params = new URLSearchParams(window.location.search);
+  const PRODUCT_KEY = params.get("key") || (typeof PRODUCT_KEY_FALLBACK !== "undefined" ? PRODUCT_KEY_FALLBACK : null);
+  if (!PRODUCT_KEY) return;
 
   try {
     const res = await fetch("data/produtos.json", { cache: "no-store" });
@@ -28,12 +30,12 @@
     });
 
     const imagemPrincipal = p.imagens[0] || "";
-    const params = new URLSearchParams({
+    const orderParams = new URLSearchParams({
       produto: p.titulo,
       imagem: imagemPrincipal,
       preco: p.preco,
     });
-    document.getElementById("btn-encomendar").href = "encomenda.html?" + params.toString();
+    document.getElementById("btn-encomendar").href = "encomenda.html?" + orderParams.toString();
 
     // inicia a galeria de fotos (função definida em js/gallery.js)
     if (window.initGallery) {
