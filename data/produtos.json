@@ -31,7 +31,7 @@
       "assets/img/cabeca-2.jpg",
       "assets/img/cabeca-3.jpg"
     ],
-    "destaque": true,
+    "destaque": false,
     "capaEstatica": "assets/img/cabeca-capa.jpg",
     "capaAnimada": "assets/img/cabeca.gif"
   },
