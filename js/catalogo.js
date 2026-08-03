@@ -1,7 +1,7 @@
 /* =========================================================
    Monta os cards do catálogo a partir de data/produtos.json.
-   Cada card mostra uma foto parada, e troca pro gif animado
-   só enquanto o mouse está em cima.
+   Cada card mostra o gif animado tocando sozinho, e "pausa"
+   numa foto parada enquanto o mouse está em cima.
    ========================================================= */
 (async function () {
   const grid = document.getElementById("catalog-grid");
@@ -23,10 +23,11 @@
 
       const capaEstatica = p.capaEstatica || (p.imagens && p.imagens[0]) || "";
       const capaAnimada = p.capaAnimada || "";
+      const capaInicial = capaAnimada || capaEstatica;
 
       card.innerHTML = `
         <div class="catalog-thumb" id="thumb-${p.key}">
-          <img src="${capaEstatica}" alt="${p.titulo}"
+          <img src="${capaInicial}" alt="${p.titulo}"
                onerror="this.closest('.catalog-thumb').classList.add('sem-imagem'); this.style.display='none';">
           <div class="catalog-thumb-placeholder"></div>
         </div>
@@ -38,12 +39,12 @@
         </span>
       `;
 
-      // troca pro gif animado só enquanto o mouse está em cima da miniatura
-      if (capaAnimada) {
+      // o gif fica tocando sozinho; ao passar o mouse, "pausa" numa foto parada
+      if (capaAnimada && capaEstatica) {
         const img = card.querySelector(".catalog-thumb img");
         const thumb = card.querySelector(".catalog-thumb");
-        thumb.addEventListener("mouseenter", () => { img.src = capaAnimada; });
-        thumb.addEventListener("mouseleave", () => { img.src = capaEstatica; });
+        thumb.addEventListener("mouseenter", () => { img.src = capaEstatica; });
+        thumb.addEventListener("mouseleave", () => { img.src = capaAnimada; });
       }
 
       grid.appendChild(card);

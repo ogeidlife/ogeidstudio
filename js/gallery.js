@@ -24,22 +24,38 @@ function openZoom(src) {
 }
 window.openZoom = openZoom;
 
+// testa se uma imagem realmente existe antes de contar com ela na galeria
+function testImage(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(src);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
 /**
  * Inicializa a galeria de um produto.
  * @param {string} mainSelector  seletor do <img> principal
  * @param {string} thumbsSelector seletor do container das miniaturas
  * @param {string[]} images       lista de caminhos de imagem
  */
-function initGallery(mainSelector, thumbsSelector, images) {
+async function initGallery(mainSelector, thumbsSelector, images) {
   const mainImg = document.querySelector(mainSelector);
   const thumbsBox = document.querySelector(thumbsSelector);
   if (!mainImg || !images || !images.length) return;
 
+  // só considera fotos que realmente existem, pra não mostrar
+  // miniatura/seta de navegação quando só tem 1 foto de verdade
+  const testadas = await Promise.all(images.map(testImage));
+  const validas = testadas.filter(Boolean);
+  const lista = validas.length ? validas : [images[0]];
+
   let current = 0;
 
   function show(index) {
-    current = (index + images.length) % images.length;
-    mainImg.src = images[current];
+    current = (index + lista.length) % lista.length;
+    mainImg.src = lista[current];
     if (thumbsBox) {
       [...thumbsBox.children].forEach((btn, i) => {
         btn.classList.toggle("active", i === current);
@@ -47,20 +63,27 @@ function initGallery(mainSelector, thumbsSelector, images) {
     }
   }
 
-  if (thumbsBox && images.length > 1) {
+  mainImg.addEventListener("click", () => openZoom(mainImg.src));
+
+  if (lista.length <= 1) {
+    if (thumbsBox) thumbsBox.style.display = "none";
+    show(0);
+    return;
+  }
+
+  if (thumbsBox) {
+    thumbsBox.style.display = "";
     thumbsBox.innerHTML = "";
-    images.forEach((src, i) => {
+    lista.forEach((src, i) => {
       const btn = document.createElement("button");
-      btn.innerHTML = `<img src="${src}" alt="Foto ${i + 1}" onerror="this.closest('button').style.display='none'">`;
+      btn.innerHTML = `<img src="${src}" alt="Foto ${i + 1}">`;
       btn.addEventListener("click", () => show(i));
       thumbsBox.appendChild(btn);
     });
   }
 
-  mainImg.addEventListener("click", () => openZoom(mainImg.src));
-
   const frame = mainImg.closest(".gallery-main");
-  if (frame && images.length > 1) {
+  if (frame) {
     const prev = document.createElement("div");
     prev.className = "gallery-arrow prev";
     prev.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>';
