@@ -223,6 +223,8 @@ h2.page-title{
 @media (max-width: 820px){
   .catalog-grid{ grid-template-columns:1fr; }
   .catalog-card.featured{ grid-column:span 1; }
+  .product{ grid-template-columns:1fr; gap:32px; }
+  .page{ padding:100px 20px 70px; }
 }
 
 /* =========================================================
