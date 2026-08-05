@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+s<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -45,5 +45,124 @@
 
   <script src="js/gallery.js"></script>
   <script src="js/produto.js"></script>
+<style>
+    /* Estilos para fixar a foto ampliada na frente de tudo (Lightbox Overlay) */
+    body.lightbox-lock {
+      overflow: hidden !important;
+    }
+
+    .lightbox-overlay {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      background-color: rgba(0, 0, 0, 0.9) !important;
+      z-index: 999999 !important; /* Mantém na frente do site inteiro */
+      display: none;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+    }
+
+    .lightbox-overlay.show {
+      display: flex !important;
+    }
+
+    .lightbox-stage {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      transition: transform 0.1s ease-out;
+      user-select: none;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      z-index: 1000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000000;
+    }
+
+    .lightbox-arrow.show {
+      display: flex !important;
+    }
+
+    .lightbox-arrow.prev { left: 15px; }
+    .lightbox-arrow.next { right: 15px; }
+
+    .lightbox-counter {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-family: sans-serif;
+      font-size: 14px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 4px 12px;
+      border-radius: 12px;
+      display: none;
+    }
+
+    .lightbox-counter.show {
+      display: block !important;
+    }
+  </style>
+</head>
 </body>
+<main>
+  <!-- Estrutura do seu produto -->
+  <div class="product-gallery">
+    <!-- Imagem única compacta da galeria -->
+    <img id="main-product-img" class="gallery-main-img" src="" alt="Foto do Produto">
+  </div>
+  
+  <!-- Outras informações do produto -->
+</main>
+<!-- Estrutura do seu produto -->
+  <div class="product-gallery">
+    <!-- Imagem única compacta da galeria -->
+    <img id="main-product-img" class="gallery-main-img" src="" alt="Foto do Produto">
+  </div>
+  
+  <!-- Outras informações do produto -->
+</main>
 </html>
