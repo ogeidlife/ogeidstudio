@@ -264,6 +264,115 @@ h2.page-title{
   font-family:var(--f-mono); color:var(--ink-dim); text-transform:uppercase; letter-spacing:.06em;
 }
 
+/* =========================================================
+   GALERIA DE FOTOS (páginas de produto)
+   arraste pros lados pra ver mais fotos, clique pra ampliar
+   ========================================================= */
+.gallery{ position:relative; }
+.gallery-main{
+  width:100%; aspect-ratio:1/1;
+  overflow:hidden;
+  background:var(--bg-alt);
+  border:1px solid var(--line);
+  position:relative;
+  touch-action:pan-y;
+}
+.gallery-main img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  user-select:none; -webkit-user-drag:none;
+}
+.gallery-thumbs{ display:none; }
+
+
+.price{
+  font-family:var(--f-display);
+  font-size:26px;
+  color:var(--accent);
+  margin:2px 0 22px;
+}
+
+/* =========================================================
+   BANNER DO CATÁLOGO (gif do lançamento)
+   ========================================================= */
+.catalog-banner{
+  width:100%;
+  aspect-ratio:21/7;
+  max-height:380px;
+  overflow:hidden;
+  background:var(--bg-alt);
+  border:1px solid var(--line);
+  margin-bottom:56px;
+}
+.catalog-banner img{
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+.catalog-banner-placeholder{
+  display:none;
+  width:100%; height:100%;
+  border:1px dashed var(--line);
+}
+.catalog-banner.sem-imagem .catalog-banner-placeholder{ display:flex; }
+
+/* miniaturas (gif/foto) nos cards do catálogo */
+.catalog-thumb{
+  aspect-ratio:4/3;
+  overflow:hidden;
+  background:var(--bg);
+  border:1px solid var(--line);
+  margin-bottom:4px;
+}
+.catalog-thumb img{
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+.catalog-thumb-placeholder{
+  display:none;
+  width:100%; height:100%;
+  border:1px dashed var(--line);
+}
+.catalog-thumb.sem-imagem .catalog-thumb-placeholder{ display:flex; }
+.catalog-card.featured .catalog-thumb{ aspect-ratio:21/8; }
+
+/* =========================================================
+   ZOOM / LIGHTBOX (galeria + página de encomenda)
+   ========================================================= */
+.lightbox-overlay{
+  position:fixed; inset:0;
+  background:rgba(10,9,8,.96);
+  display:none;
+  align-items:center; justify-content:center;
+  z-index:500;
+  overflow:hidden;
+}
+.lightbox-overlay.show{ display:flex; }
+.lightbox-overlay img{
+  max-width:70vw; max-height:70vh;
+  object-fit:contain;
+  touch-action:none;
+  will-change:transform;
+}
+.lightbox-close{
+  all:unset; cursor:pointer;
+  position:absolute; top:20px; right:24px;
+  width:36px; height:36px;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--line);
+  border-radius:50%;
+  color:var(--ink);
+  font-size:22px; line-height:1;
+  background:rgba(18,17,16,.7);
+  z-index:501;
+}
+.lightbox-close:hover{ border-color:var(--accent); }
+.zoom-hint{
+  position:absolute; bottom:10px; right:12px;
+  font-family:var(--f-mono); font-size:10px; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--ink-dim);
+  background:rgba(18,17,16,.75);
+  padding:5px 9px;
+  pointer-events:none;
+  z-index:5;
+}
+
 .btn{
   display:inline-flex; align-items:center; gap:10px;
   font-family:var(--f-mono); font-size:12px; letter-spacing:.1em;
