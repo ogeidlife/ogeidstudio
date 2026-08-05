@@ -183,5 +183,26 @@
       "assets/img/adesivos-2.jpg",
       "assets/img/adesivos-3.jpg"
     ]
+  },
+  "print-ogeid-2": {
+    "ordem": 2,
+    "destaque": false,
+    "numero": "Nº 002",
+    "titulo": "PRINT OGEID #2",
+    "preco": "R$ 0,00",
+    "descricao": "Descrição da peça.",
+    "specs": [
+      {
+        "label": "Material",
+        "valor": "Sob consulta"
+      }
+    ],
+    "capaEstatica": "assets/img/print-ogeid-2-capa.jpg",
+    "capaAnimada": "assets/img/print-ogeid-2.gif",
+    "imagens": [
+      "assets/img/print-ogeid-2-1.jpg",
+      "assets/img/print-ogeid-2-2.jpg",
+      "assets/img/print-ogeid-2-3.jpg"
+    ]
   }
 }
