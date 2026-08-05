@@ -12,7 +12,7 @@ function ensureLightbox() {
   overlay = document.createElement("div");
   overlay.id = "lightbox-overlay";
   overlay.className = "lightbox-overlay";
-  overlay.innerHTML = '<button class="lightbox-close" aria-label="Fechar">&times;</button><img id="lightbox-img" src="" alt="">';
+  overlay.innerHTML = '<button class="lightbox-close" aria-label="Fechar">&times;</button><img id="lightbox-img" src="" alt="" draggable="false" ondragstart="return false;">';
   document.body.appendChild(overlay);
   overlay.querySelector(".lightbox-close").addEventListener("click", () => closeZoom(overlay));
   document.addEventListener("keydown", (e) => {
