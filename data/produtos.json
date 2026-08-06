@@ -180,5 +180,26 @@
       "assets/img/adesivos-2.jpg",
       "assets/img/adesivos-3.jpg"
     ]
+  },
+  "quadro-ogeid": {
+    "ordem": 7,
+    "destaque": false,
+    "numero": "Nº 007",
+    "titulo": "quadro ogeid",
+    "preco": "300,00R$",
+    "descricao": "",
+    "specs": [
+      {
+        "label": "Técnica mista ",
+        "valor": "Sob consulta"
+      }
+    ],
+    "capaEstatica": "assets/img/quadro-ogeid-capa.jpg",
+    "capaAnimada": "assets/img/quadro-ogeid.gif",
+    "imagens": [
+      "assets/img/quadro-ogeid-1.jpg",
+      "assets/img/quadro-ogeid-2.jpg",
+      "assets/img/quadro-ogeid-3.jpg"
+    ]
   }
 }
