@@ -183,26 +183,5 @@
       "assets/img/adesivos-2.jpg",
       "assets/img/adesivos-3.jpg"
     ]
-  },
-  "print-ogeid-2": {
-    "ordem": 2,
-    "destaque": false,
-    "numero": "Nº 002",
-    "titulo": "PRINT OGEID #2",
-    "preco": "80,00 R$",
-    "descricao": "Desenhado a mão e pintado digitalmente e Impresso em papel couche 180 g/m ",
-    "specs": [
-      {
-        "label": "Material",
-        "valor": "Sob consulta"
-      }
-    ],
-    "capaEstatica": "assets/img/print-ogeid-2-capa.jpg",
-    "capaAnimada": "assets/img/print-ogeid-2.gif",
-    "imagens": [
-      "assets/img/print-ogeid-2-1.jpg",
-      "assets/img/print-ogeid-2-2.jpg",
-      "assets/img/print-ogeid-2-3.jpg"
-    ]
   }
 }
