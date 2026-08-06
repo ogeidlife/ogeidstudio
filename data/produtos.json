@@ -138,25 +138,17 @@
   "livros": {
     "ordem": 5,
     "numero": "Nº 005",
-    "titulo": "Livros",
-    "preco": "R$ 120,00",
-    "descricao": "Publicações autorais que expandem a história e o universo do personagem — texto e ilustrações originais, pensadas junto com o restante da coleção.",
+    "titulo": "Print 3 ",
+    "preco": "80,00R$",
+    "descricao": "",
     "specs": [
       {
-        "label": "Formato",
-        "valor": "Sob consulta"
+        "label": "Tamanho",
+        "valor": "A3"
       },
       {
-        "label": "Páginas",
-        "valor": "Variado"
-      },
-      {
-        "label": "Acabamento",
-        "valor": "Capa dura ou brochura"
-      },
-      {
-        "label": "Prazo",
-        "valor": "Sob encomenda"
+        "label": "Papel",
+        "valor": "couchê 180 g/m"
       }
     ],
     "imagens": [
