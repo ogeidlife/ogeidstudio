@@ -1,12 +1,12 @@
 {
   "cabeca": {
     "ordem": 1,
-    "destaque": true,
+    "destaque": false,
     "capaEstatica": "assets/img/cabeca-capa.jpg",
     "capaAnimada": "assets/img/cabeca.gif",
-    "numero": "Nº 001 · Peça principal",
+    "numero": "Nº 001 · Cabeça",
     "titulo": "Cabeça do Personagem",
-    "preco": "R$ 450,00",
+    "preco": "150,00 R$",
     "descricao": "O item de assinatura do ateliê: a cabeça do personagem esculpida e pintada à mão, em escala de colecionador. Cada peça é finalizada individualmente — pequenas variações fazem parte do caráter artesanal do trabalho.",
     "specs": [
       {
@@ -15,7 +15,7 @@
       },
       {
         "label": "Altura",
-        "valor": "≈ 14 cm"
+        "valor": "≈ 12cm"
       },
       {
         "label": "Acabamento",
