@@ -79,28 +79,35 @@ function testImage(src) {
  * @param {string} thumbsSelector (não usado mais, mantido por compatibilidade)
  * @param {string[]} images       lista de caminhos de imagem
  */
-async function initGallery(mainSelector, thumbsSelector, images) {
+function initGallery(mainSelector, thumbsSelector, images) {
   const mainImg = document.querySelector(mainSelector);
   if (!mainImg || !images || !images.length) return;
 
   const thumbsBox = document.querySelector(thumbsSelector);
   if (thumbsBox) thumbsBox.style.display = "none"; // sem miniaturas
 
-  const testadas = await Promise.all(images.map(testImage));
-  const validas = testadas.filter(Boolean);
-  const lista = validas.length ? validas : [images[0]];
-
+  // mostra a primeira foto na hora, sem esperar checar as outras
+  let lista = [images[0]];
   let current = 0;
+  mainImg.src = images[0];
+
   function show(i) {
     current = (i + lista.length) % lista.length;
     mainImg.src = lista[current];
   }
-  show(0);
 
-  if (lista.length <= 1) {
-    mainImg.style.cursor = "zoom-in";
-    mainImg.addEventListener("click", () => openZoom(mainImg.src));
-    return;
+  // por trás, confirma quais das outras fotos realmente existem
+  // (sem travar a exibição da primeira foto)
+  if (images.length > 1) {
+    Promise.all(images.map(testImage)).then((testadas) => {
+      const validas = testadas.filter(Boolean);
+      if (validas.length) {
+        const fotoAtual = lista[current];
+        lista = validas;
+        const idx = lista.indexOf(fotoAtual);
+        current = idx === -1 ? 0 : idx;
+      }
+    });
   }
 
   // arraste pros lados pra trocar de foto; toque parado abre o zoom
@@ -123,7 +130,7 @@ async function initGallery(mainSelector, thumbsSelector, images) {
     mainImg.style.transition = "transform .2s ease, opacity .2s ease";
     mainImg.style.transform = "";
     mainImg.style.opacity = "";
-    if (Math.abs(dx) > 45) {
+    if (Math.abs(dx) > 45 && lista.length > 1) {
       dx < 0 ? show(current + 1) : show(current - 1);
     } else if (Math.abs(dx) < 6) {
       openZoom(mainImg.src);
