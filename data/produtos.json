@@ -1,10 +1,6 @@
 {
   "cabeca": {
-    "ordem": 1,
-    "destaque": false,
-    "capaEstatica": "assets/img/cabeca-capa.jpg",
-    "capaAnimada": "assets/img/cabeca.gif",
-    "numero": "Nº 001 · Cabeça",
+    "numero": "Nº 001 · Peça principal",
     "titulo": "Cabeça do Personagem",
     "preco": "150,00 R$",
     "descricao": "O item de assinatura do ateliê: a cabeça do personagem esculpida e pintada à mão, em escala de colecionador. Cada peça é finalizada individualmente — pequenas variações fazem parte do caráter artesanal do trabalho.",
@@ -15,7 +11,7 @@
       },
       {
         "label": "Altura",
-        "valor": "≈ 12cm"
+        "valor": "≈ 12 cm"
       },
       {
         "label": "Acabamento",
@@ -34,17 +30,16 @@
       "assets/img/cabeca-1.jpg",
       "assets/img/cabeca-2.jpg",
       "assets/img/cabeca-3.jpg"
-    ]
-  },
-  "quadros": {
-    "ordem": 2,
+    ],
     "destaque": false,
-    "capaEstatica": "assets/img/quadros-capa.jpg",
-    "capaAnimada": "assets/img/quadros.gif",
+    "capaEstatica": "assets/img/cabeca-capa.jpg",
+    "capaAnimada": "assets/img/cabeca.gif"
+  },
+  "Print": {
     "numero": "Nº 002",
-    "titulo": "PRINT #1 OGEID UNIVERSO",
-    "preco": "R$ 180,00",
-    "descricao": "Ilustrações originais do universo do personagem, impressas em papel de alta durabilidade e emolduradas à mão. Ótimas para quem quer levar a estética da marca pra dentro de casa.",
+    "titulo": "Print ogeid ",
+    "preco": "R$ 80,00",
+    "descricao": "Ilustrações originais do universo do personagem, impressas em papel de alta durabilidade e. Ótimas para quem quer levar a estética da marca pra dentro de casa.",
     "specs": [
       {
         "label": "Material",
@@ -67,25 +62,24 @@
       "assets/img/quadros-1.jpg",
       "assets/img/quadros-2.jpg",
       "assets/img/quadros-3.jpg"
-    ]
+    ],
+    "destaque": false,
+    "capaEstatica": "assets/img/quadros-capa.jpg",
+    "capaAnimada": "assets/img/quadros.gif"
   },
   "abajures": {
-    "ordem": 3,
-    "destaque": false,
-    "capaEstatica": "assets/img/abajures-capa.jpg",
-    "capaAnimada": "assets/img/abajures.gif",
     "numero": "Nº 003",
-    "titulo": "Abajures",
+    "titulo": "Abajur Ogeid #1",
     "preco": "R$ 220,00",
     "descricao": "Luminárias artesanais, feitas à mão, que trazem o universo do personagem para a iluminação do dia a dia. Peças únicas, pensadas como objeto de decoração e colecionável ao mesmo tempo.",
     "specs": [
       {
         "label": "Material",
-        "valor": "Sob consulta"
+        "valor": "impressão 3d PLA"
       },
       {
         "label": "Tamanho",
-        "valor": "Variado"
+        "valor": "15 cm "
       },
       {
         "label": "Uso",
@@ -100,21 +94,20 @@
       "assets/img/abajures-1.jpg",
       "assets/img/abajures-2.jpg",
       "assets/img/abajures-3.jpg"
-    ]
-  },
-  "prints": {
-    "ordem": 4,
+    ],
     "destaque": false,
-    "capaEstatica": "assets/img/prints-capa.jpg",
-    "capaAnimada": "assets/img/prints.gif",
+    "capaEstatica": "assets/img/abajures-capa.jpg",
+    "capaAnimada": "assets/img/abajures.gif"
+  },
+  "print": {
     "numero": "Nº 004",
-    "titulo": "Prints",
+    "titulo": "Print Ogeid ",
     "preco": "R$ 90,00",
     "descricao": "Impressões de arte do universo da marca, em papel de qualidade museográfica, feitas em pequenos lotes. Ideais para quem quer uma peça de colecionador com preço mais acessível.",
     "specs": [
       {
         "label": "Material",
-        "valor": "Papel couche 180 g/m"
+        "valor": "Papel museográfico"
       },
       {
         "label": "Tamanhos",
@@ -133,13 +126,12 @@
       "assets/img/prints-1.jpg",
       "assets/img/prints-2.jpg",
       "assets/img/prints-3.jpg"
-    ]
+    ],
+    "destaque": false,
+    "capaEstatica": "assets/img/prints-capa.jpg",
+    "capaAnimada": "assets/img/prints.gif"
   },
   "livros": {
-    "ordem": 5,
-    "destaque": false,
-    "capaEstatica": "assets/img/livros-capa.jpg",
-    "capaAnimada": "assets/img/livros.gif",
     "numero": "Nº 005",
     "titulo": "Livros",
     "preco": "R$ 120,00",
@@ -166,6 +158,51 @@
       "assets/img/livros-1.jpg",
       "assets/img/livros-2.jpg",
       "assets/img/livros-3.jpg"
+    ],
+    "destaque": false,
+    "capaEstatica": "assets/img/livros-capa.jpg",
+    "capaAnimada": "assets/img/livros.gif"
+  },
+  "adesivos": {
+    "ordem": 1,
+    "destaque": false,
+    "numero": "Nº 001",
+    "titulo": "Adesivos",
+    "preco": "20,00",
+    "descricao": "Descrição da peça.",
+    "specs": [
+      {
+        "label": "Material",
+        "valor": "Sob consulta"
+      }
+    ],
+    "capaEstatica": "assets/img/adesivos-capa.jpg",
+    "capaAnimada": "assets/img/adesivos.gif",
+    "imagens": [
+      "assets/img/adesivos-1.jpg",
+      "assets/img/adesivos-2.jpg",
+      "assets/img/adesivos-3.jpg"
+    ]
+  },
+  "print-ogeid-2": {
+    "ordem": 2,
+    "destaque": false,
+    "numero": "Nº 002",
+    "titulo": "PRINT OGEID #2",
+    "preco": "80,00 R$",
+    "descricao": "Desenhado a mão e pintado digitalmente e Impresso em papel couche 180 g/m ",
+    "specs": [
+      {
+        "label": "Material",
+        "valor": "Sob consulta"
+      }
+    ],
+    "capaEstatica": "assets/img/print-ogeid-2-capa.jpg",
+    "capaAnimada": "assets/img/print-ogeid-2.gif",
+    "imagens": [
+      "assets/img/print-ogeid-2-1.jpg",
+      "assets/img/print-ogeid-2-2.jpg",
+      "assets/img/print-ogeid-2-3.jpg"
     ]
   }
 }
