@@ -6,11 +6,26 @@
     "preco": "150,00 R$",
     "descricao": "O item de assinatura do ateliê: a cabeça do personagem esculpida e pintada à mão, em escala de colecionador. Cada peça é finalizada individualmente — pequenas variações fazem parte do caráter artesanal do trabalho.",
     "specs": [
-      { "label": "Material", "valor": "impressão 3d PLA" },
-      { "label": "Altura", "valor": "≈ 12 cm" },
-      { "label": "Acabamento", "valor": "Pintura manual" },
-      { "label": "Edição", "valor": "Peça autoral" },
-      { "label": "Prazo", "valor": "Sob encomenda" }
+      {
+        "label": "Material",
+        "valor": "impressão 3d PLA"
+      },
+      {
+        "label": "Altura",
+        "valor": "≈ 12 cm"
+      },
+      {
+        "label": "Acabamento",
+        "valor": "Pintura manual"
+      },
+      {
+        "label": "Edição",
+        "valor": "Peça autoral"
+      },
+      {
+        "label": "Prazo",
+        "valor": "Sob encomenda"
+      }
     ],
     "imagens": [
       "assets/img/cabeca-1.jpg",
@@ -28,10 +43,22 @@
     "preco": "R$ 80,00",
     "descricao": "Ilustrações originais do universo do personagem, impressas em papel de alta durabilidade. Ótimas para quem quer levar a estética da marca pra dentro de casa.",
     "specs": [
-      { "label": "Material", "valor": "Impressão" },
-      { "label": "Tamanhos", "valor": "Variados, sob consulta" },
-      { "label": "Acabamento", "valor": "Emoldurado, pronto para pendurar" },
-      { "label": "Prazo", "valor": "Sob encomenda" }
+      {
+        "label": "Material",
+        "valor": "Impressão"
+      },
+      {
+        "label": "Tamanhos",
+        "valor": "Variados, sob consulta"
+      },
+      {
+        "label": "Acabamento",
+        "valor": "Emoldurado, pronto para pendurar"
+      },
+      {
+        "label": "Prazo",
+        "valor": "Sob encomenda"
+      }
     ],
     "imagens": [
       "assets/img/quadros-1.jpg",
@@ -45,14 +72,26 @@
   "abajures": {
     "ordem": 3,
     "numero": "Nº 003",
-    "titulo": "Abajur Ogeid #1",
+    "titulo": "Abajur Ogeid ",
     "preco": "R$ 220,00",
     "descricao": "Luminárias artesanais, feitas à mão, que trazem o universo do personagem para a iluminação do dia a dia. Peças únicas, pensadas como objeto de decoração e colecionável ao mesmo tempo.",
     "specs": [
-      { "label": "Material", "valor": "impressão 3d PLA" },
-      { "label": "Tamanho", "valor": "15 cm" },
-      { "label": "Uso", "valor": "Bivolt, lâmpada não inclusa" },
-      { "label": "Prazo", "valor": "Sob encomenda" }
+      {
+        "label": "Material",
+        "valor": "impressão 3d PLA"
+      },
+      {
+        "label": "Tamanho",
+        "valor": "15 cm"
+      },
+      {
+        "label": "Uso",
+        "valor": "Bivolt, lâmpada não inclusa"
+      },
+      {
+        "label": "Prazo",
+        "valor": "Sob encomenda"
+      }
     ],
     "imagens": [
       "assets/img/abajures-1.jpg",
@@ -70,10 +109,22 @@
     "preco": "R$ 90,00",
     "descricao": "Impressões de arte do universo da marca, em papel de qualidade museográfica, feitas em pequenos lotes. Ideais para quem quer uma peça de colecionador com preço mais acessível.",
     "specs": [
-      { "label": "Material", "valor": "Papel museográfico" },
-      { "label": "Tamanhos", "valor": "A4 / A3" },
-      { "label": "Edição", "valor": "Lote limitado" },
-      { "label": "Prazo", "valor": "Sob encomenda" }
+      {
+        "label": "Material",
+        "valor": "Papel museográfico"
+      },
+      {
+        "label": "Tamanhos",
+        "valor": "A4 / A3"
+      },
+      {
+        "label": "Edição",
+        "valor": "Lote limitado"
+      },
+      {
+        "label": "Prazo",
+        "valor": "Sob encomenda"
+      }
     ],
     "imagens": [
       "assets/img/prints-1.jpg",
@@ -87,14 +138,18 @@
   "livros": {
     "ordem": 5,
     "numero": "Nº 005",
-    "titulo": "Livros",
-    "preco": "R$ 120,00",
-    "descricao": "Publicações autorais que expandem a história e o universo do personagem — texto e ilustrações originais, pensadas junto com o restante da coleção.",
+    "titulo": "Print 3 ",
+    "preco": "80,00R$",
+    "descricao": "",
     "specs": [
-      { "label": "Formato", "valor": "Sob consulta" },
-      { "label": "Páginas", "valor": "Variado" },
-      { "label": "Acabamento", "valor": "Capa dura ou brochura" },
-      { "label": "Prazo", "valor": "Sob encomenda" }
+      {
+        "label": "Tamanho",
+        "valor": "A3"
+      },
+      {
+        "label": "Papel",
+        "valor": "couchê 180 g/m"
+      }
     ],
     "imagens": [
       "assets/img/livros-1.jpg",
@@ -113,7 +168,10 @@
     "preco": "20,00",
     "descricao": "Descrição da peça.",
     "specs": [
-      { "label": "Material", "valor": "Sob consulta" }
+      {
+        "label": "Material",
+        "valor": "Sob consulta"
+      }
     ],
     "capaEstatica": "assets/img/adesivos-capa.jpg",
     "capaAnimada": "assets/img/adesivos.gif",
@@ -121,6 +179,27 @@
       "assets/img/adesivos-1.jpg",
       "assets/img/adesivos-2.jpg",
       "assets/img/adesivos-3.jpg"
+    ]
+  },
+  "quadro-ogeid": {
+    "ordem": 7,
+    "destaque": false,
+    "numero": "Nº 007",
+    "titulo": "quadro ogeid",
+    "preco": "300,00R$",
+    "descricao": "",
+    "specs": [
+      {
+        "label": "Técnica mista ",
+        "valor": "Sob consulta"
+      }
+    ],
+    "capaEstatica": "assets/img/quadro-ogeid-capa.jpg",
+    "capaAnimada": "assets/img/quadro-ogeid.gif",
+    "imagens": [
+      "assets/img/quadro-ogeid-1.jpg",
+      "assets/img/quadro-ogeid-2.jpg",
+      "assets/img/quadro-ogeid-3.jpg"
     ]
   }
 }
