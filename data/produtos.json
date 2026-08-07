@@ -185,13 +185,17 @@
     "ordem": 7,
     "destaque": false,
     "numero": "Nº 007",
-    "titulo": "quadro ogeid",
+    "titulo": "Quadro Ogeid ",
     "preco": "300,00R$",
-    "descricao": "",
+    "descricao": "Uma cena urbana em movimento, onde personagens, moto, símbolos e cores se sobrepõem como fragmentos de uma experiência de rua. O vermelho cria um campo de tensão, enquanto os contornos negros e as formas exageradas transformam a cena cotidiana em uma composição gráfica e expressiva. A obra mistura velocidade, identidade, cultura urbana e espontaneidade através de uma linguagem neoexpressionista.",
     "specs": [
       {
-        "label": "Técnica mista ",
-        "valor": "Sob consulta"
+        "label": "Técnica mista sobre canvas ",
+        "valor": "tinta acrílica, giz oleoso, lápis grafite, caneta hidrográfica "
+      },
+      {
+        "label": "Tamanho ",
+        "valor": "60 x 60 cm"
       }
     ],
     "capaEstatica": "assets/img/quadro-ogeid-capa.jpg",
