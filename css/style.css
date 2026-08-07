@@ -2,14 +2,14 @@
    TOKENS
    ========================================================= */
 :root{
-  --bg:        #121110;
-  --bg-alt:    #1a1815;
-  --panel:     #1f1c18;
-  --ink:       #ede6d9;
-  --ink-dim:   #a89f8f;
+  --bg:        #ffffff;
+  --bg-alt:    #f6f3ee;
+  --panel:     #f6f3ee;
+  --ink:       #201d18;
+  --ink-dim:   #6b6355;
   --accent:    #b5502a;   /* resina queimada */
-  --accent-2:  #6f8c6a;   /* verde musgo, selo/carimbo */
-  --line:      #37332c;
+  --accent-2:  #5f7c5a;   /* verde musgo, selo/carimbo */
+  --line:      #ddd6c9;
   --radius:    2px;
 
   --f-display: "Archivo Black", "Arial Black", sans-serif;
@@ -55,7 +55,7 @@ img{ max-width:100%; display:block; }
   border:1px solid var(--line);
   padding:8px 14px;
   border-radius:var(--radius);
-  background:rgba(18,17,16,.6);
+  background:rgba(255,255,255,.75);
   backdrop-filter:blur(6px);
 }
 
@@ -64,7 +64,7 @@ img{ max-width:100%; display:block; }
   border:1px solid var(--line);
   border-radius:999px;
   padding:5px;
-  background:rgba(18,17,16,.6);
+  background:rgba(255,255,255,.75);
   backdrop-filter:blur(6px);
 }
 .nav-pill a{
@@ -90,7 +90,7 @@ img{ max-width:100%; display:block; }
   display:flex; align-items:center; justify-content:center;
   border:1px solid var(--line);
   border-radius:50%;
-  background:rgba(18,17,16,.7);
+  background:rgba(255,255,255,.8);
   backdrop-filter:blur(6px);
   z-index:200;
   transition:border-color .2s ease, transform .2s ease;
@@ -176,6 +176,11 @@ h2.page-title{
   font-family:var(--f-display);
   font-size:clamp(30px, 4vw, 46px);
   margin:0;
+}
+.page-logo{
+  max-width:260px;
+  height:auto;
+  margin:0 0 4px;
 }
 .page-lede{ color:var(--ink-dim); max-width:56ch; margin-top:14px; }
 
@@ -296,12 +301,12 @@ h2.page-title{
    ========================================================= */
 .catalog-banner{
   width:100%;
-  aspect-ratio:21/7;
-  max-height:380px;
+  aspect-ratio:21/9;
+  max-height:480px;
   overflow:hidden;
   background:var(--bg-alt);
   border:1px solid var(--line);
-  margin-bottom:56px;
+  margin-bottom:32px;
 }
 .catalog-banner img{
   width:100%; height:100%; object-fit:cover; display:block;
