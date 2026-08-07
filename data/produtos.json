@@ -205,5 +205,30 @@
       "assets/img/quadro-ogeid-2.jpg",
       "assets/img/quadro-ogeid-3.jpg"
     ]
+  },
+  "ajude-seus-amigos": {
+    "ordem": 8,
+    "destaque": false,
+    "numero": "Nº 008",
+    "titulo": "AJUDE SEUS AMIGOS ",
+    "preco": "300,00 R$",
+    "descricao": "Quadro Ogeid pintado a mão 1/1 ",
+    "specs": [
+      {
+        "label": "Técnica mista sobre canvas ",
+        "valor": "tinta acrílica, giz oleoso, lápis grafite, caneta hidrográfica "
+      },
+      {
+        "label": "Tamanho",
+        "valor": "50 x50 cm"
+      }
+    ],
+    "capaEstatica": "assets/img/ajude-seus-amigos-capa.jpg",
+    "capaAnimada": "assets/img/ajude-seus-amigos.gif",
+    "imagens": [
+      "assets/img/ajude-seus-amigos-1.jpg",
+      "assets/img/ajude-seus-amigos-2.jpg",
+      "assets/img/ajude-seus-amigos-3.jpg"
+    ]
   }
 }
