@@ -4,15 +4,12 @@
    ========================================================= */
 import * as THREE from "three";
 import { STLLoader } from "three/addons/loaders/STLLoader.js";
-import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
-import { MTLLoader } from "three/addons/loaders/MTLLoader.js";
 
 const stage  = document.getElementById("hero-stage");
 const canvas = document.getElementById("viewer-canvas");
 
 if (stage && canvas) {
-  // <- troque pelo seu arquivo .stl OU .obj (a extensão decide o loader usado)
-  const STL_PATH = "assets/models/cabeca.obj";
+  const STL_PATH = "assets/models/cabeca.stl"; // <- troque pelo seu arquivo .stl
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -57,95 +54,36 @@ if (stage && canvas) {
     return scale;
   }
 
-  const material = new THREE.MeshStandardMaterial({
-    color: 0xede6d9,
-    metalness: 0.15,
-    roughness: 0.55,
-  });
-
-  function showPlaceholder() {
-    const geo = new THREE.IcosahedronGeometry(48, 1);
-    const mat = new THREE.MeshStandardMaterial({
-      color: 0x2a2723, metalness: 0.1, roughness: 0.8, wireframe: true,
-    });
-    mesh = new THREE.Mesh(geo, mat);
-    orientFix.add(mesh);
-    console.warn(
-      "[viewer] Não encontrei " + STL_PATH +
-      " — mostrando placeholder. Coloque seu arquivo .stl ou .obj em assets/models/"
-    );
-  }
-
   function loadModel(path) {
-    const ext = path.split(".").pop().toLowerCase();
-
-    if (ext === "obj") {
-      // pasta e nome base, pra achar o .mtl e as texturas do lado do .obj
-      const folder = path.substring(0, path.lastIndexOf("/") + 1);
-      const baseName = path.substring(path.lastIndexOf("/") + 1).replace(/\.obj$/i, "");
-      const mtlPath = folder + baseName + ".mtl";
-
-      function loadObj(materials) {
-        const objLoader = new OBJLoader();
-        if (materials) {
-          materials.preload();
-          objLoader.setMaterials(materials);
-        }
-        objLoader.load(
-          path,
-          (object) => {
-            // se não achou .mtl, aplica a cor padrão em tudo
-            if (!materials) {
-              object.traverse((child) => {
-                if (child.isMesh) child.material = material;
-              });
-            }
-            // calcula um raio aproximado a partir do bounding box pra escalar
-            const box = new THREE.Box3().setFromObject(object);
-            const sphere = new THREE.Sphere();
-            box.getBoundingSphere(sphere);
-            const scale = 55 / (sphere.radius || 50);
-            object.scale.setScalar(scale);
-            // recentraliza o grupo inteiro (o center() por peça acima já ajuda,
-            // mas com várias peças o pivô do object pode não estar no meio)
-            const center = new THREE.Vector3();
-            box.getCenter(center);
-            object.position.sub(center);
-            mesh = object;
-            orientFix.add(mesh);
-          },
-          undefined,
-          showPlaceholder
+    const loader = new STLLoader();
+    loader.load(
+      path,
+      (geometry) => {
+        const scale = fitAndCenter(geometry);
+        const material = new THREE.MeshStandardMaterial({
+          color: 0xede6d9,
+          metalness: 0.15,
+          roughness: 0.55,
+        });
+        mesh = new THREE.Mesh(geometry, material);
+        mesh.scale.setScalar(scale);
+        orientFix.add(mesh);
+      },
+      undefined,
+      () => {
+        // fallback: se o .stl ainda não foi adicionado, mostra uma forma provisória
+        const geo = new THREE.IcosahedronGeometry(48, 1);
+        const mat = new THREE.MeshStandardMaterial({
+          color: 0x2a2723, metalness: 0.1, roughness: 0.8, wireframe: true,
+        });
+        mesh = new THREE.Mesh(geo, mat);
+        orientFix.add(mesh);
+        console.warn(
+          "[viewer] Não encontrei " + STL_PATH +
+          " — mostrando placeholder. Coloque seu arquivo .stl em assets/models/cabeca.stl"
         );
       }
-
-      // tenta carregar o .mtl (materiais + cores + texturas); se não existir, usa cor padrão
-      const mtlLoader = new MTLLoader();
-      mtlLoader.setPath(folder);
-      mtlLoader.load(
-        baseName + ".mtl",
-        (materials) => loadObj(materials),
-        undefined,
-        () => {
-          console.warn("[viewer] Não encontrei " + mtlPath + " — carregando .obj sem cores do .mtl.");
-          loadObj(null);
-        }
-      );
-    } else {
-      // padrão: .stl (Geometry única)
-      const loader = new STLLoader();
-      loader.load(
-        path,
-        (geometry) => {
-          const scale = fitAndCenter(geometry);
-          mesh = new THREE.Mesh(geometry, material);
-          mesh.scale.setScalar(scale);
-          orientFix.add(mesh);
-        },
-        undefined,
-        showPlaceholder
-      );
-    }
+    );
   }
 
   loadModel(STL_PATH);
