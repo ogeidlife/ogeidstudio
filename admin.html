@@ -96,6 +96,17 @@
       <p id="stats-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:14px; max-width:60ch;"></p>
     </div>
 
+    <div class="admin-panel" id="dono-panel">
+      <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Não contar minhas visitas</p>
+      <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 10px;">Este navegador é seu?</h2>
+      <p style="color:var(--ink-dim); font-size:14px; max-width:60ch; margin:0 0 16px;">Marque este navegador/dispositivo como seu — a partir daí, suas próprias visitas de teste não entram mais no total nem no "online agora". Repita em cada navegador ou aparelho que você usar pra mexer no site (ex: celular e computador contam separado).</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn ghost" id="btn-marcar-dono" type="button">Marcar este navegador como meu</button>
+        <button class="btn ghost" id="btn-desmarcar-dono" type="button">Desmarcar</button>
+      </div>
+      <p id="dono-status" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:14px;"></p>
+    </div>
+
     <div class="admin-panel" id="login-panel">
       <div class="admin-row">
         <div class="field field-mini">
@@ -192,6 +203,29 @@
   </script>
 
   <script>
+    // Liga os botões "marcar/desmarcar este navegador como meu" (independe do
+    // login do GitHub). Usa a mesma chave no localStorage que js/visitas.js lê
+    // pra decidir se conta essa visita ou não.
+    (function () {
+      const statusEl = document.getElementById('dono-status');
+      function atualizarStatusDono() {
+        if (localStorage.getItem('ogeid_sou_dono') === '1') {
+          statusEl.textContent = 'Este navegador está marcado como seu — suas visitas daqui não entram nas estatísticas.';
+        } else {
+          statusEl.textContent = 'Este navegador conta como visitante normal.';
+        }
+      }
+      document.getElementById('btn-marcar-dono').addEventListener('click', () => {
+        localStorage.setItem('ogeid_sou_dono', '1');
+        atualizarStatusDono();
+      });
+      document.getElementById('btn-desmarcar-dono').addEventListener('click', () => {
+        localStorage.removeItem('ogeid_sou_dono');
+        atualizarStatusDono();
+      });
+      atualizarStatusDono();
+    })();
+
     const DATA_PATH = 'data/produtos.json';
     let currentSha = null;
     let currentData = null;
