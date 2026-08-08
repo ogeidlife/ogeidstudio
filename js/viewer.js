@@ -12,7 +12,7 @@ const canvas = document.getElementById("viewer-canvas");
 
 if (stage && canvas) {
   // <- troque pelo seu arquivo .stl OU .obj (a extensão decide o loader usado)
-  const STL_PATH = "assets/models/cabeca.stl";
+  const STL_PATH = "assets/models/cabeca.obj";
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
