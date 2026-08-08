@@ -39,9 +39,9 @@
   "print": {
     "ordem": 3,
     "numero": "Nº 002",
-    "titulo": "Print Ogeid",
+    "titulo": "Print Ogeid - ta escrito ",
     "preco": "R$ 80,00",
-    "descricao": "Ilustrações originais do universo do personagem, impressas em papel de alta durabilidade. Ótimas para quem quer levar a estética da marca pra dentro de casa.",
+    "descricao": "Ilustrações originais do universo do personagem, impressas em papel de alta durabilidade. Ótimas para quem quer levar a estética Ogeid pra dentro de casa.",
     "specs": [
       {
         "label": "Material",
@@ -49,11 +49,7 @@
       },
       {
         "label": "Tamanhos",
-        "valor": "Variados, sob consulta"
-      },
-      {
-        "label": "Acabamento",
-        "valor": "Emoldurado, pronto para pendurar"
+        "valor": "A3"
       },
       {
         "label": "Prazo",
