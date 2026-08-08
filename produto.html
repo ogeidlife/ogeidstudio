@@ -6,6 +6,25 @@
 <title>Peça — Ateliê</title>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v=3">
+<style>
+  .variacoes{ margin:0 0 28px; }
+  .variacao-grupo{ margin-bottom:18px; }
+  .variacao-grupo:last-child{ margin-bottom:0; }
+  .variacao-nome{
+    font-family:var(--f-mono); font-size:11px; color:var(--ink-dim);
+    text-transform:uppercase; letter-spacing:.08em; margin:0 0 10px;
+  }
+  .variacao-opcoes{ display:flex; flex-wrap:wrap; gap:8px; }
+  .variacao-chip{
+    all:unset; cursor:pointer; font-family:var(--f-body); font-size:13px;
+    color:var(--ink); border:1px solid var(--line); padding:9px 16px;
+    border-radius:var(--radius); transition:border-color .15s ease, background .15s ease;
+  }
+  .variacao-chip:hover{ border-color:var(--accent); }
+  .variacao-chip.selected{
+    border-color:var(--accent); background:var(--accent); color:var(--bg);
+  }
+</style>
 </head>
 <body>
 
@@ -32,6 +51,8 @@
         <p class="desc" id="descricao"></p>
 
         <ul class="spec-list" id="specs"></ul>
+
+        <div class="variacoes" id="variacoes"></div>
 
         <a href="encomenda.html" id="btn-encomendar" class="btn">Encomendar esta peça</a>
       </div>

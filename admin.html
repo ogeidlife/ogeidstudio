@@ -326,6 +326,13 @@
         </div>
 
         <div class="field field-mini" style="margin-top:16px;">
+          <label>Variações (cor, tamanho, material etc. — deixe vazio se a peça não tiver opções)</label>
+          <p class="reorder-hint" style="margin:0 0 10px;">Cada linha é um grupo de escolha. Ex: nome "Cor" e opções "Preto, Branco, Terracota". No site, o cliente escolhe uma opção de cada grupo antes de encomendar.</p>
+          <div class="variacoes-box"></div>
+          <button class="btn ghost add-variacao" type="button">+ adicionar grupo de variação</button>
+        </div>
+
+        <div class="field field-mini" style="margin-top:16px;">
           <label>Capa no catálogo — foto parada e gif animado (aparece ao passar o mouse)</label>
           <div class="capas-box"></div>
         </div>
@@ -341,6 +348,10 @@
       const specsBox = card.querySelector('.specs-box');
       (p.specs || []).forEach((s) => addSpecRow(specsBox, s.label, s.valor));
       card.querySelector('.add-spec').addEventListener('click', () => addSpecRow(specsBox, '', ''));
+
+      const variacoesBox = card.querySelector('.variacoes-box');
+      (p.variacoes || []).forEach((v) => addVariacaoRow(variacoesBox, v.nome, (v.opcoes || []).join(', ')));
+      card.querySelector('.add-variacao').addEventListener('click', () => addVariacaoRow(variacoesBox, '', ''));
 
       const capasBox = card.querySelector('.capas-box');
       addImageRow(capasBox, p.capaEstatica || `assets/img/${key}-capa.jpg`, 'Foto parada');
@@ -404,6 +415,7 @@
         preco: 'R$ 0,00',
         descricao: 'Descrição da peça.',
         specs: [{ label: 'Material', valor: 'Sob consulta' }],
+        variacoes: [],
         capaEstatica: `assets/img/${key}-capa.jpg`,
         capaAnimada: `assets/img/${key}.gif`,
         imagens: [`assets/img/${key}-1.jpg`, `assets/img/${key}-2.jpg`, `assets/img/${key}-3.jpg`],
@@ -420,6 +432,20 @@
       row.innerHTML = `
         <input type="text" class="s-label" placeholder="Rótulo (ex: Material)" value="${escapeAttr(label)}">
         <input type="text" class="s-valor" placeholder="Valor (ex: Resina)" value="${escapeAttr(valor)}">
+        <button type="button" class="remove-spec">remover</button>
+      `;
+      row.querySelector('.remove-spec').addEventListener('click', () => row.remove());
+      box.appendChild(row);
+    }
+
+    // Cada linha aqui vira um "grupo" de variação (ex: Cor, Tamanho).
+    // As opções ficam num só campo separadas por vírgula pra ser rápido de editar.
+    function addVariacaoRow(box, nome, opcoes) {
+      const row = document.createElement('div');
+      row.className = 'spec-row variacao-row';
+      row.innerHTML = `
+        <input type="text" class="v-nome" placeholder="Nome do grupo (ex: Cor)" value="${escapeAttr(nome)}">
+        <input type="text" class="v-opcoes" placeholder="Opções separadas por vírgula (ex: Preto, Branco, Terracota)" value="${escapeAttr(opcoes)}">
         <button type="button" class="remove-spec">remover</button>
       `;
       row.querySelector('.remove-spec').addEventListener('click', () => row.remove());
@@ -512,10 +538,15 @@
 
       cards.forEach((card) => {
         const key = card.dataset.key;
-        const specs = [...card.querySelectorAll('.spec-row')].map((row) => ({
+        const specs = [...card.querySelectorAll('.specs-box .spec-row')].map((row) => ({
           label: row.querySelector('.s-label').value,
           valor: row.querySelector('.s-valor').value,
         }));
+        // Cada grupo de variação só entra se tiver nome e pelo menos uma opção preenchida.
+        const variacoes = [...card.querySelectorAll('.variacoes-box .variacao-row')].map((row) => ({
+          nome: row.querySelector('.v-nome').value.trim(),
+          opcoes: row.querySelector('.v-opcoes').value.split(',').map((s) => s.trim()).filter(Boolean),
+        })).filter((v) => v.nome && v.opcoes.length > 0);
         const capaRows = card.querySelectorAll('.capas-box .img-row');
         const capaEstatica = capaRows[0] ? capaRows[0].dataset.path : novoData[key].capaEstatica;
         const capaAnimada = capaRows[1] ? capaRows[1].dataset.path : novoData[key].capaAnimada;
@@ -529,6 +560,7 @@
           descricao: card.querySelector('.f-descricao').value,
           destaque: card.querySelector('.f-destaque').checked,
           specs,
+          variacoes,
           capaEstatica,
           capaAnimada,
           imagens,

@@ -42,11 +42,17 @@
         <input type="hidden" name="Item_desejado" id="produto-hidden" value="">
         <input type="hidden" name="Preço" id="preco-hidden" value="">
         <input type="hidden" name="Foto_do_item" id="imagem-hidden" value="">
+        <input type="hidden" name="Variação_escolhida" id="variacao-hidden" value="">
         <input type="hidden" name="_subject" id="subject-hidden" value="Nova encomenda pelo site">
 
         <div class="field">
           <label for="produto-label">Peça desejada</label>
           <input type="text" id="produto-label" readonly>
+        </div>
+
+        <div class="field" id="variacao-field" style="display:none;">
+          <label for="variacao-label">Variação escolhida</label>
+          <input type="text" id="variacao-label" readonly>
         </div>
 
         <div class="field">
@@ -82,6 +88,7 @@
     const produto = params.get('produto') || 'Peça personalizada';
     const imagemRelativa = params.get('imagem') || '';
     const preco = params.get('preco') || '';
+    const variacao = params.get('variacao') || '';
 
     // monta o endereço completo da foto, pra ela aparecer certinho no seu email
     const imagemAbsoluta = imagemRelativa ? new URL(imagemRelativa, window.location.href).href : '';
@@ -91,6 +98,11 @@
     document.getElementById('produto-label').value = produto;
     document.getElementById('preco-hidden').value = preco;
     document.getElementById('imagem-hidden').value = imagemAbsoluta;
+    document.getElementById('variacao-hidden').value = variacao;
+    if (variacao) {
+      document.getElementById('variacao-label').value = variacao;
+      document.getElementById('variacao-field').style.display = '';
+    }
     // assunto do email já vem com o nome do item, pra você bater o olho e saber do que se trata
     document.getElementById('subject-hidden').value = 'Nova encomenda: ' + produto;
     document.getElementById('produto-preco').textContent = preco;
@@ -119,6 +131,8 @@
           document.getElementById('produto-hidden').value = produto;
           document.getElementById('preco-hidden').value = preco;
           document.getElementById('imagem-hidden').value = imagemAbsoluta;
+          document.getElementById('variacao-hidden').value = variacao;
+          if (variacao) document.getElementById('variacao-label').value = variacao;
           document.getElementById('subject-hidden').value = 'Nova encomenda: ' + produto;
         } else {
           alert('Não consegui enviar agora. Tenta de novo em instantes.');
