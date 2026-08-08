@@ -37,7 +37,7 @@
     "capaAnimada": "assets/img/cabeca.gif"
   },
   "print": {
-    "ordem": 2,
+    "ordem": 3,
     "numero": "Nº 002",
     "titulo": "Print Ogeid",
     "preco": "R$ 80,00",
@@ -70,7 +70,7 @@
     "capaAnimada": "assets/img/quadros.gif"
   },
   "abajures": {
-    "ordem": 3,
+    "ordem": 2,
     "numero": "Nº 003",
     "titulo": "Abajur Ogeid ",
     "preco": "R$ 220,00",
