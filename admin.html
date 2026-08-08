@@ -27,7 +27,7 @@
     color:var(--ink-dim); border:1px solid var(--line); padding:8px 10px; text-align:center;
   }
   .spec-row button:hover, .img-row button:hover{ border-color:var(--accent); color:var(--ink); }
-  .img-row{ display:grid; grid-template-columns:70px 1fr auto auto; gap:10px; align-items:center; margin-bottom:10px; }
+  .img-row{ display:grid; grid-template-columns:70px 1fr auto auto auto; gap:10px; align-items:center; margin-bottom:10px; }
   .img-row img{ width:70px; height:70px; object-fit:cover; border:1px solid var(--line); background:var(--bg); }
   .img-row input[type=file]{ font-size:11px; color:var(--ink-dim); }
   .add-spec{ margin-top:4px; }
@@ -333,6 +333,7 @@
         <div class="field field-mini" style="margin-top:16px;">
           <label>Fotos da página individual (clique em "substituir" pra trocar o arquivo, mantendo o mesmo nome)</label>
           <div class="imgs-box"></div>
+          <button class="btn ghost add-img" type="button" style="margin-top:8px;">+ adicionar foto</button>
         </div>
       `;
       container.appendChild(card);
@@ -347,6 +348,17 @@
 
       const imgsBox = card.querySelector('.imgs-box');
       (p.imagens || []).forEach((path) => addImageRow(imgsBox, path));
+
+      card.querySelector('.add-img').addEventListener('click', () => {
+        // gera um novo caminho de arquivo que ainda não existe nessa peça
+        // (ex: se já tem foto-1, foto-2, foto-3, a próxima vira foto-4)
+        let n = imgsBox.querySelectorAll('.img-row').length + 1;
+        let novoPath = `assets/img/${key}-${n}.jpg`;
+        const existentes = new Set([...imgsBox.querySelectorAll('.img-row')].map((r) => r.dataset.path));
+        while (existentes.has(novoPath)) { n++; novoPath = `assets/img/${key}-${n}.jpg`; }
+        addImageRow(imgsBox, novoPath, null, true);
+        imgsBox.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
 
       card.querySelector('.remove-product').addEventListener('click', () => {
         if (confirm(`Remover "${p.titulo}" do site? Isso só some depois que você clicar em "Salvar todas as alterações".`)) {
@@ -414,7 +426,7 @@
       box.appendChild(row);
     }
 
-    function addImageRow(box, path, label) {
+    function addImageRow(box, path, label, removable) {
       const owner = sessionStorage.getItem('gh_owner');
       const repo = sessionStorage.getItem('gh_repo');
       const row = document.createElement('div');
@@ -425,6 +437,7 @@
         <span style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim);">${label ? label + ' — ' : ''}${path}</span>
         <input type="file" accept="image/*,.gif">
         <button type="button" class="upload-img">substituir</button>
+        ${removable ? '<button type="button" class="remove-img">remover</button>' : ''}
       `;
       const fileInput = row.querySelector('input[type=file]');
       const btn = row.querySelector('.upload-img');
@@ -441,6 +454,9 @@
           alert('Não consegui enviar a foto: ' + err.message);
         }
       });
+      if (removable) {
+        row.querySelector('.remove-img').addEventListener('click', () => row.remove());
+      }
       box.appendChild(row);
     }
 
