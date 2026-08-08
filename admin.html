@@ -49,6 +49,18 @@
     color:#e07a52; border:1px solid var(--line); padding:8px 12px; white-space:nowrap;
   }
   .remove-product:hover{ border-color:#e07a52; }
+  .card-actions{ display:flex; gap:8px; flex-shrink:0; }
+  .move-btn{
+    all:unset; cursor:pointer; font-family:var(--f-mono); font-size:13px;
+    color:var(--ink-dim); border:1px solid var(--line); padding:8px 12px; text-align:center;
+  }
+  .move-btn:hover{ border-color:var(--accent-2); color:var(--accent-2); }
+  .move-btn:disabled{ opacity:.3; cursor:default; }
+  .move-btn:disabled:hover{ border-color:var(--line); color:var(--ink-dim); }
+  .reorder-hint{
+    font-family:var(--f-mono); font-size:12px; color:var(--ink-dim);
+    margin:0 0 16px; max-width:60ch;
+  }
   .destaque-row{ display:flex; align-items:center; gap:8px; margin-top:12px; font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); }
 </style>
 </head>
@@ -66,6 +78,22 @@
       <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Painel restrito</p>
       <h1>Administração do site</h1>
       <p>Edite títulos, preços, descrições, especificações, fotos e a capa animada de cada peça — ou adicione peças novas do zero. As mudanças são salvas direto no seu repositório do GitHub — o site atualiza sozinho em 1-2 minutos depois de salvar.</p>
+    </div>
+
+    <div class="admin-panel" id="stats-panel">
+      <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Estatísticas</p>
+      <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 14px;">Visitantes do site</h2>
+      <div style="display:flex; gap:40px; flex-wrap:wrap;">
+        <div>
+          <div style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em;">Total de visitas</div>
+          <div style="font-family:var(--f-display); font-size:34px; margin-top:4px;" id="total-visitas">—</div>
+        </div>
+        <div>
+          <div style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em;">Online agora</div>
+          <div style="font-family:var(--f-display); font-size:34px; margin-top:4px; color:var(--accent-2);" id="online-agora">—</div>
+        </div>
+      </div>
+      <p id="stats-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:14px; max-width:60ch;"></p>
     </div>
 
     <div class="admin-panel" id="login-panel">
@@ -93,6 +121,7 @@
 
     <div id="produtos-area" class="hidden">
       <button class="btn ghost" id="btn-novo-produto" style="margin-bottom:20px;">+ Adicionar novo produto</button>
+      <p class="reorder-hint">Use as setas ▲ ▼ em cada peça pra mudar a ordem em que ela aparece no catálogo. A nova ordem só é gravada quando você clica em "Salvar todas as alterações".</p>
       <div id="cards-container"></div>
 
       <div class="save-bar">
@@ -115,6 +144,52 @@
       <p class="form-note">Guarde essa chave como uma senha. Qualquer pessoa com ela consegue editar o site. Se desconfiar que ela vazou, volte nessa mesma página do GitHub e clique em "Delete" na chave — ela para de funcionar na hora.</p>
     </div>
   </div>
+
+  <script src="js/firebase-config.js"></script>
+  <script type="module">
+    /* =========================================================
+       Painel de estatísticas: total de visitas + quem está online.
+       Independe do login do GitHub — carrega sozinho ao abrir a página.
+       Se o Firebase não estiver configurado ou algo falhar, mostra um
+       aviso e não quebra o resto do admin.
+       ========================================================= */
+    (async function () {
+      const msg = document.getElementById('stats-msg');
+      const cfg = window.FIREBASE_CONFIG;
+      if (!cfg || cfg.apiKey === 'COLE_AQUI') {
+        msg.textContent = 'Estatísticas ainda não configuradas — veja o passo a passo do Firebase que veio junto com esses arquivos.';
+        return;
+      }
+      try {
+        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js');
+        const { getDatabase, ref, onValue } = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js');
+
+        const app = initializeApp(cfg);
+        const db = getDatabase(app);
+
+        onValue(ref(db, 'estatisticas/totalVisitas'), (snap) => {
+          document.getElementById('total-visitas').textContent = snap.val() || 0;
+        }, () => { msg.textContent = 'Não consegui carregar o total de visitas.'; });
+
+        let ultimoSnapshotOnline = null;
+        function recalcularOnline() {
+          if (!ultimoSnapshotOnline) return;
+          const agora = Date.now();
+          let contagem = 0;
+          ultimoSnapshotOnline.forEach((child) => {
+            const desde = child.val() && child.val().desde;
+            if (desde && agora - desde < 45000) contagem++;
+          });
+          document.getElementById('online-agora').textContent = contagem;
+        }
+        onValue(ref(db, 'online'), (snap) => { ultimoSnapshotOnline = snap; recalcularOnline(); },
+          () => { msg.textContent = 'Não consegui carregar quem está online.'; });
+        setInterval(recalcularOnline, 5000);
+      } catch (err) {
+        msg.textContent = 'Não consegui carregar as estatísticas agora.';
+      }
+    })();
+  </script>
 
   <script>
     const DATA_PATH = 'data/produtos.json';
@@ -193,6 +268,17 @@
       container.innerHTML = '';
       const ordenados = Object.keys(data).sort((a, b) => (data[a].ordem || 0) - (data[b].ordem || 0));
       ordenados.forEach((key) => addProductCard(key, data[key]));
+      atualizarBotoesDeOrdem();
+    }
+
+    // Desativa a seta ▲ no primeiro card e a ▼ no último, pra ficar claro
+    // quando não dá mais pra mover naquela direção.
+    function atualizarBotoesDeOrdem() {
+      const cards = [...document.querySelectorAll('.product-card')];
+      cards.forEach((card, i) => {
+        card.querySelector('.move-up').disabled = (i === 0);
+        card.querySelector('.move-down').disabled = (i === cards.length - 1);
+      });
     }
 
     function addProductCard(key, p) {
@@ -203,7 +289,11 @@
       card.innerHTML = `
         <div class="card-top-row">
           <h2>${escapeHtml(p.titulo || key)} <span style="color:var(--ink-dim); font-size:11px; font-family:var(--f-mono);">(${key})</span></h2>
-          <button type="button" class="remove-product">remover produto</button>
+          <div class="card-actions">
+            <button type="button" class="move-btn move-up" title="Mover pra cima">▲</button>
+            <button type="button" class="move-btn move-down" title="Mover pra baixo">▼</button>
+            <button type="button" class="remove-product">remover produto</button>
+          </div>
         </div>
         <div class="admin-row">
           <div class="field field-mini">
@@ -262,6 +352,24 @@
         if (confirm(`Remover "${p.titulo}" do site? Isso só some depois que você clicar em "Salvar todas as alterações".`)) {
           removedKeys.add(key);
           card.remove();
+          atualizarBotoesDeOrdem();
+        }
+      });
+
+      card.querySelector('.move-up').addEventListener('click', () => {
+        const prev = card.previousElementSibling;
+        if (prev) {
+          container.insertBefore(card, prev);
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          atualizarBotoesDeOrdem();
+        }
+      });
+      card.querySelector('.move-down').addEventListener('click', () => {
+        const next = card.nextElementSibling;
+        if (next) {
+          container.insertBefore(next, card);
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          atualizarBotoesDeOrdem();
         }
       });
     }
@@ -291,6 +399,7 @@
       currentData[key] = novo;
       addProductCard(key, novo);
       document.getElementById('cards-container').lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      atualizarBotoesDeOrdem();
     });
 
     function addSpecRow(box, label, valor) {
@@ -408,6 +517,14 @@
           capaAnimada,
           imagens,
         };
+      });
+
+      // A ordem gravada é a posição em que cada card está na tela agora
+      // (o que as setas ▲ ▼ mudaram), assim o catálogo reflete exatamente
+      // a sequência que você organizou aqui.
+      cards.forEach((card, i) => {
+        const key = card.dataset.key;
+        if (novoData[key]) novoData[key].ordem = i + 1;
       });
 
       try {

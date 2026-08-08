@@ -37,7 +37,7 @@
     "capaAnimada": "assets/img/cabeca.gif"
   },
   "print": {
-    "ordem": 2,
+    "ordem": 3,
     "numero": "Nº 002",
     "titulo": "Print Ogeid",
     "preco": "R$ 80,00",
@@ -70,7 +70,7 @@
     "capaAnimada": "assets/img/quadros.gif"
   },
   "abajures": {
-    "ordem": 3,
+    "ordem": 2,
     "numero": "Nº 003",
     "titulo": "Abajur Ogeid ",
     "preco": "R$ 220,00",
@@ -204,6 +204,52 @@
       "assets/img/quadro-ogeid-1.jpg",
       "assets/img/quadro-ogeid-2.jpg",
       "assets/img/quadro-ogeid-3.jpg"
+    ]
+  },
+  "ajude-seus-amigos": {
+    "ordem": 8,
+    "destaque": false,
+    "numero": "Nº 008",
+    "titulo": "AJUDE SEUS AMIGOS ",
+    "preco": "300,00 R$",
+    "descricao": "Quadro Ogeid pintado a mão 1/1 ",
+    "specs": [
+      {
+        "label": "Técnica mista sobre canvas ",
+        "valor": "tinta acrílica, giz oleoso, lápis grafite, caneta hidrográfica "
+      },
+      {
+        "label": "Tamanho",
+        "valor": "50 x50 cm"
+      }
+    ],
+    "capaEstatica": "assets/img/ajude-seus-amigos-capa.jpg",
+    "capaAnimada": "assets/img/ajude-seus-amigos.gif",
+    "imagens": [
+      "assets/img/ajude-seus-amigos-1.jpg",
+      "assets/img/ajude-seus-amigos-2.jpg",
+      "assets/img/ajude-seus-amigos-3.jpg"
+    ]
+  },
+  "quadro-ogeid-3": {
+    "ordem": 9,
+    "destaque": false,
+    "numero": "Nº 009",
+    "titulo": "Quadro Ogeid 3",
+    "preco": "300,00 R$",
+    "descricao": "Descrição da peça.",
+    "specs": [
+      {
+        "label": "Material",
+        "valor": "Sob consulta"
+      }
+    ],
+    "capaEstatica": "assets/img/quadro-ogeid-3-capa.jpg",
+    "capaAnimada": "assets/img/quadro-ogeid-3.gif",
+    "imagens": [
+      "assets/img/quadro-ogeid-3-1.jpg",
+      "assets/img/quadro-ogeid-3-2.jpg",
+      "assets/img/quadro-ogeid-3-3.jpg"
     ]
   }
 }
