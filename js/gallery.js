@@ -96,6 +96,19 @@ function initGallery(mainSelector, thumbsSelector, images) {
     mainImg.src = lista[current];
   }
 
+  // pula pra uma foto específica (usado quando o cliente troca de variação).
+  // se a foto já estiver confirmada na lista, troca com a mesma animação de swipe;
+  // senão, exibe direto (ex: logo na carga da página, antes da lista ser validada).
+  function goTo(src) {
+    if (!src) return;
+    const idx = lista.indexOf(src);
+    if (idx !== -1) {
+      show(idx);
+    } else {
+      mainImg.src = src;
+    }
+  }
+
   // por trás, confirma quais das outras fotos realmente existem
   // (sem travar a exibição da primeira foto)
   if (images.length > 1) {
@@ -145,5 +158,7 @@ function initGallery(mainSelector, thumbsSelector, images) {
     mainImg.style.opacity = "";
     dx = 0;
   });
+
+  return { goTo };
 }
 window.initGallery = initGallery;
