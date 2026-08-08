@@ -72,8 +72,14 @@
       {
         "nome": "COR",
         "opcoes": [
-          "Amarelo",
-          "Preto"
+          {
+            "valor": "Amarelo",
+            "imagem": "assets/img/quadros-1.jpg"
+          },
+          {
+            "valor": "Preto",
+            "imagem": "assets/img/print-4.jpg"
+          }
         ]
       }
     ]
