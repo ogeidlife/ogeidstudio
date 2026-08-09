@@ -1,10 +1,10 @@
 {
   "cabeca": {
     "ordem": 1,
-    "numero": "Nº 001 · Peça principal",
+    "numero": "Nº 001",
     "titulo": "Cabeça do Personagem",
     "preco": "150,00 R$",
-    "descricao": "O item de assinatura do ateliê: a cabeça do personagem esculpida e pintada à mão, em escala de colecionador. Cada peça é finalizada individualmente — pequenas variações fazem parte do caráter artesanal do trabalho.",
+    "descricao": "O item de assinatura do ateliê: a cabeça do personagem modelado em 3d, e finalizada individualmente — pequenas variações fazem parte do caráter artesanal do trabalho.",
     "specs": [
       {
         "label": "Material",
@@ -30,7 +30,8 @@
     "imagens": [
       "assets/img/cabeca-1.jpg",
       "assets/img/cabeca-2.jpg",
-      "assets/img/cabeca-3.jpg"
+      "assets/img/cabeca-3.jpg",
+      "assets/img/cabeca-4.jpg"
     ],
     "destaque": false,
     "capaEstatica": "assets/img/cabeca-capa.jpg",
@@ -40,13 +41,13 @@
   "print": {
     "ordem": 3,
     "numero": "Nº 002",
-    "titulo": "Print Ogeid - ta escrito ",
+    "titulo": "Ta escrito ",
     "preco": "R$ 80,00",
-    "descricao": "Ilustrações originais do universo do personagem, impressas em papel de alta durabilidade. Ótimas para quem quer levar a estética Ogeid pra dentro de casa.",
+    "descricao": "Ilustração original do universo do personagem impresso em papel couche 180 g/m ",
     "specs": [
       {
         "label": "Material",
-        "valor": "Impressão"
+        "valor": "Impressão em papel couche 180 g/m"
       },
       {
         "label": "Tamanhos",
@@ -81,15 +82,28 @@
             "imagem": "assets/img/print-4.jpg"
           }
         ]
+      },
+      {
+        "nome": "Tamanho",
+        "opcoes": [
+          {
+            "valor": "A4",
+            "preco": "60,00 R$"
+          },
+          {
+            "valor": "A3",
+            "preco": "80,00 R$"
+          }
+        ]
       }
     ]
   },
   "abajures": {
     "ordem": 2,
     "numero": "Nº 003",
-    "titulo": "Abajur Ogeid ",
+    "titulo": "Abajur Ogeid melancolia",
     "preco": "R$ 220,00",
-    "descricao": "Luminárias artesanais, feitas à mão, que trazem o universo do personagem para a iluminação do dia a dia. Peças únicas, pensadas como objeto de decoração e colecionável ao mesmo tempo.",
+    "descricao": "Luminárias artesanal, feitas à mão em cerâmica fria e impressão 3D, que trazem o universo do personagem para a iluminação do dia a dia. Peças únicas, pensadas como objeto de decoração e colecionável ao mesmo tempo.",
     "specs": [
       {
         "label": "Material",
@@ -101,7 +115,7 @@
       },
       {
         "label": "Uso",
-        "valor": "Bivolt, lâmpada não inclusa"
+        "valor": "Bivolt, interruptor, lâmpada não inclusa"
       },
       {
         "label": "Prazo",
@@ -111,7 +125,8 @@
     "imagens": [
       "assets/img/abajures-1.jpg",
       "assets/img/abajures-2.jpg",
-      "assets/img/abajures-3.jpg"
+      "assets/img/abajures-3.jpg",
+      "assets/img/abajures-4.jpg"
     ],
     "destaque": false,
     "capaEstatica": "assets/img/abajures-capa.jpg",
@@ -121,9 +136,9 @@
   "print-museografico": {
     "ordem": 4,
     "numero": "Nº 004",
-    "titulo": "Print Ogeid",
+    "titulo": "Minha cidade ",
     "preco": "R$ 90,00",
-    "descricao": "Impressões de arte do universo da marca, em papel de qualidade museográfica, feitas em pequenos lotes. Ideais para quem quer uma peça de colecionador com preço mais acessível.",
+    "descricao": "Ilustração original do universo do personagem impresso em papel couche 180 g/m ",
     "specs": [
       {
         "label": "Material",
@@ -150,14 +165,28 @@
     "destaque": false,
     "capaEstatica": "assets/img/prints-capa.jpg",
     "capaAnimada": "assets/img/prints.gif",
-    "variacoes": []
+    "variacoes": [
+      {
+        "nome": "Tamanho",
+        "opcoes": [
+          {
+            "valor": "A4",
+            "preco": "60,00 R$"
+          },
+          {
+            "valor": "A3",
+            "preco": "80,00 R$"
+          }
+        ]
+      }
+    ]
   },
   "livros": {
     "ordem": 5,
     "numero": "Nº 005",
-    "titulo": "Print 3 ",
+    "titulo": "Sem problemas",
     "preco": "80,00R$",
-    "descricao": "",
+    "descricao": "Ilustração original do universo do personagem impresso em papel couche 180 g/m ",
     "specs": [
       {
         "label": "Tamanho",
@@ -176,7 +205,21 @@
     "destaque": false,
     "capaEstatica": "assets/img/livros-capa.jpg",
     "capaAnimada": "assets/img/livros.gif",
-    "variacoes": []
+    "variacoes": [
+      {
+        "nome": "Tamanho",
+        "opcoes": [
+          {
+            "valor": "A4",
+            "preco": "60,00 R$"
+          },
+          {
+            "valor": "A3",
+            "preco": "80,00 R$"
+          }
+        ]
+      }
+    ]
   },
   "adesivos": {
     "ordem": 6,
@@ -184,11 +227,19 @@
     "numero": "Nº 006",
     "titulo": "Adesivos",
     "preco": "20,00",
-    "descricao": "Descrição da peça.",
+    "descricao": "pack de adesivos do universo Ogeid ",
     "specs": [
       {
         "label": "Material",
-        "valor": "Sob consulta"
+        "valor": "Impressão a laser sobre vinil"
+      },
+      {
+        "label": "Quantidade de adesivos ",
+        "valor": "10"
+      },
+      {
+        "label": "Tamanho",
+        "valor": "Variados "
       }
     ],
     "capaEstatica": "assets/img/adesivos-capa.jpg",
@@ -204,9 +255,9 @@
     "ordem": 7,
     "destaque": false,
     "numero": "Nº 007",
-    "titulo": "Quadro Ogeid ",
+    "titulo": "Tranquilo mas nem tanto ",
     "preco": "300,00R$",
-    "descricao": "Uma cena urbana em movimento, onde personagens, moto, símbolos e cores se sobrepõem como fragmentos de uma experiência de rua. O vermelho cria um campo de tensão, enquanto os contornos negros e as formas exageradas transformam a cena cotidiana em uma composição gráfica e expressiva. A obra mistura velocidade, identidade, cultura urbana e espontaneidade através de uma linguagem neoexpressionista.",
+    "descricao": "",
     "specs": [
       {
         "label": "Técnica mista sobre canvas ",
