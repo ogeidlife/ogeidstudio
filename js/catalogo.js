@@ -3,7 +3,7 @@
    Cada card mostra o gif animado tocando sozinho, e "pausa"
    numa foto parada enquanto o mouse está em cima.
    ========================================================= */
-(async function () {
+async function montarCatalogo() {
   const grid = document.getElementById("catalog-grid");
   if (!grid) return;
 
@@ -52,4 +52,18 @@
   } catch (err) {
     console.error("Não consegui carregar o catálogo", err);
   }
-})();
+}
+
+montarCatalogo();
+
+// quando você clica num produto e depois volta, o navegador às vezes
+// restaura essa página do próprio cache (bfcache) em vez de recarregar
+// do zero. Se alguma foto ainda estava carregando no instante em que
+// você saiu, o pedido dela é cancelado e ela fica "quebrada" nessa
+// versão salva. Remontar o catálogo nesse momento resolve sem precisar
+// dar F5.
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) {
+    montarCatalogo();
+  }
+});
