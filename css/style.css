@@ -98,6 +98,10 @@ img{ max-width:100%; display:block; }
 .home-btn:hover{ border-color:var(--accent); transform:translateY(-2px); }
 .home-btn svg{ width:18px; height:18px; stroke:var(--ink); }
 
+/* botão voltar — mesmo estilo do home, mas fica colado do lado dele
+   (ao invés de deixar o "voltar" só lá embaixo, longe do fluxo) */
+.back-btn{ right:80px; }
+
 /* =========================================================
    HERO 3D (home)
    ========================================================= */
