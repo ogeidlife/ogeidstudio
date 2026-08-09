@@ -226,8 +226,39 @@ h2.page-title{
 .catalog-card.featured h3{ font-size:30px; }
 
 @media (max-width: 820px){
-  .catalog-grid{ grid-template-columns:1fr; }
-  .catalog-card.featured{ grid-column:span 1; }
+  /* estilo "Instagram": 3 fotos por linha, sem descrição no catálogo.
+     A descrição continua aparecendo normalmente na página do produto. */
+  .catalog-grid{
+    grid-template-columns:repeat(3, 1fr);
+    gap:2px;
+  }
+  .catalog-card{
+    padding:0;
+    gap:0;
+    min-height:auto;
+  }
+  .catalog-card .catalog-index,
+  .catalog-card p,
+  .catalog-card .go{
+    display:none;
+  }
+  .catalog-card h3{
+    font-size:11px;
+    padding:6px 6px 8px;
+    margin:0;
+    line-height:1.2;
+  }
+  .catalog-thumb{
+    aspect-ratio:1/1;
+    border:none;
+    margin-bottom:0;
+  }
+  .catalog-card.featured{
+    grid-column:span 3;
+  }
+  .catalog-card.featured .catalog-thumb{
+    aspect-ratio:1/1;
+  }
 }
 
 /* =========================================================
