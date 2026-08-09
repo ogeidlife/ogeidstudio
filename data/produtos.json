@@ -52,7 +52,7 @@
       },
       {
         "label": "Tamanhos",
-        "valor": "A3"
+        "valor": "A3 / A4"
       },
       {
         "label": "Prazo",
@@ -191,7 +191,7 @@
     "specs": [
       {
         "label": "Tamanho",
-        "valor": "A3"
+        "valor": "A3 / A4"
       },
       {
         "label": "Papel",
