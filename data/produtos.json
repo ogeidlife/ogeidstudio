@@ -2,7 +2,7 @@
   "cabeca": {
     "ordem": 1,
     "numero": "Nº 001",
-    "titulo": "Cabeça do Personagem",
+    "titulo": "Tranquilo",
     "preco": "150,00 R$",
     "descricao": "O item de assinatura do ateliê: a cabeça do personagem modelado em 3d, e finalizada individualmente — pequenas variações fazem parte do caráter artesanal do trabalho.",
     "specs": [
@@ -273,7 +273,8 @@
     "imagens": [
       "assets/img/quadro-ogeid-1.jpg",
       "assets/img/quadro-ogeid-2.jpg",
-      "assets/img/quadro-ogeid-3.jpg"
+      "assets/img/quadro-ogeid-3.jpg",
+      "assets/img/quadro-ogeid-4.jpg"
     ],
     "variacoes": []
   },
@@ -299,7 +300,8 @@
     "imagens": [
       "assets/img/ajude-seus-amigos-1.jpg",
       "assets/img/ajude-seus-amigos-2.jpg",
-      "assets/img/ajude-seus-amigos-3.jpg"
+      "assets/img/ajude-seus-amigos-3.jpg",
+      "assets/img/ajude-seus-amigos-4.jpg"
     ],
     "variacoes": []
   },
@@ -321,7 +323,8 @@
     "imagens": [
       "assets/img/quadro-ogeid-3-1.jpg",
       "assets/img/quadro-ogeid-3-2.jpg",
-      "assets/img/quadro-ogeid-3-3.jpg"
+      "assets/img/quadro-ogeid-3-3.jpg",
+      "assets/img/quadro-ogeid-3-4.jpg"
     ],
     "variacoes": []
   }
