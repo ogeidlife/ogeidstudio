@@ -40,7 +40,7 @@
     "variacoes": []
   },
   "print": {
-    "ordem": 3,
+    "ordem": 4,
     "numero": "Nº 002",
     "titulo": "Ta escrito ",
     "preco": "R$ 80,00",
@@ -135,7 +135,7 @@
     "variacoes": []
   },
   "print-museografico": {
-    "ordem": 4,
+    "ordem": 5,
     "numero": "Nº 004",
     "titulo": "Minha cidade ",
     "preco": "R$ 90,00",
@@ -183,7 +183,7 @@
     ]
   },
   "livros": {
-    "ordem": 5,
+    "ordem": 6,
     "numero": "Nº 005",
     "titulo": "Sem problemas",
     "preco": "80,00R$",
@@ -223,7 +223,7 @@
     ]
   },
   "adesivos": {
-    "ordem": 6,
+    "ordem": 3,
     "destaque": false,
     "numero": "Nº 006",
     "titulo": "Adesivos",
