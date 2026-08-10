@@ -74,6 +74,41 @@
     margin:0 0 16px; max-width:60ch;
   }
   .destaque-row{ display:flex; align-items:center; gap:8px; margin-top:12px; font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); }
+
+  /* ---- abas (Produtos / Pedidos) ---- */
+  .tab-nav{ display:flex; gap:8px; margin-bottom:20px; border-bottom:1px solid var(--line); }
+  .tab-btn{
+    all:unset; cursor:pointer; font-family:var(--f-mono); font-size:12px; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--ink-dim); padding:12px 4px; margin-right:20px;
+    border-bottom:2px solid transparent;
+  }
+  .tab-btn.active{ color:var(--ink); border-bottom-color:var(--accent-2); }
+  .tab-panel.hidden{ display:none; }
+
+  /* ---- pedidos ---- */
+  .pedido-card{ border:1px solid var(--line); padding:24px; margin-bottom:20px; }
+  .pedido-card h2{ font-family:var(--f-display); font-size:18px; margin:0 0 4px; color:var(--accent-2); }
+  .pedido-id-tag{ font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); margin:0 0 18px; }
+  .pedido-link-box{
+    display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+    border:1px solid var(--line); background:var(--bg); padding:12px 14px; margin-top:14px;
+  }
+  .pedido-link-box input{ flex:1; min-width:180px; font-family:var(--f-mono); font-size:12px; }
+  .pedido-link-box button{
+    all:unset; cursor:pointer; font-family:var(--f-mono); font-size:11px;
+    color:var(--ink-dim); border:1px solid var(--line); padding:8px 12px; white-space:nowrap;
+  }
+  .pedido-link-box button:hover{ border-color:var(--accent); color:var(--ink); }
+  .pedido-qr-row{ display:grid; grid-template-columns:70px 1fr auto; gap:10px; align-items:center; margin-top:6px; }
+  .pedido-qr-row img{ width:70px; height:70px; object-fit:cover; border:1px solid var(--line); background:var(--bg); }
+  .pedido-qr-row input[type=file]{ font-size:11px; color:var(--ink-dim); }
+  .pedido-pago-row{ display:flex; align-items:center; gap:8px; margin-top:14px; font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); }
+  .pedido-actions{ display:flex; gap:8px; margin-top:18px; flex-wrap:wrap; }
+  .pedido-actions .btn.ghost.danger{ color:#e07a52; }
+  .pedido-actions .btn.ghost.danger:hover{ border-color:#e07a52; }
+  .pedido-save-status{ font-family:var(--f-mono); font-size:11px; margin-top:10px; }
+  .pedido-save-status.ok{ color:var(--accent-2); }
+  .pedido-save-status.err{ color:#e07a52; }
 </style>
 </head>
 <body>
@@ -142,16 +177,32 @@
       <div class="status-msg" id="login-status"></div>
     </div>
 
-    <div id="produtos-area" class="hidden">
-      <button class="btn ghost" id="btn-novo-produto" style="margin-bottom:20px;">+ Adicionar novo produto</button>
-      <p class="reorder-hint">Use as setas ▲ ▼ em cada peça pra mudar a ordem em que ela aparece no catálogo. A nova ordem só é gravada quando você clica em "Salvar todas as alterações".</p>
-      <div id="cards-container"></div>
-
-      <div class="save-bar">
-        <button class="btn" id="btn-salvar">Salvar todas as alterações</button>
-        <button class="btn ghost" id="btn-sair">Sair</button>
+    <div id="produtos-wrap" class="hidden">
+      <div class="tab-nav">
+        <button type="button" class="tab-btn active" id="tab-btn-produtos">Produtos</button>
+        <button type="button" class="tab-btn" id="tab-btn-pedidos">Pedidos</button>
       </div>
-      <div class="status-msg" id="save-status"></div>
+
+      <div id="produtos-area" class="tab-panel">
+        <button class="btn ghost" id="btn-novo-produto" style="margin-bottom:20px;">+ Adicionar novo produto</button>
+        <p class="reorder-hint">Use as setas ▲ ▼ em cada peça pra mudar a ordem em que ela aparece no catálogo. A nova ordem só é gravada quando você clica em "Salvar todas as alterações".</p>
+        <div id="cards-container"></div>
+
+        <div class="save-bar">
+          <button class="btn" id="btn-salvar">Salvar todas as alterações</button>
+          <button class="btn ghost" id="btn-sair">Sair</button>
+        </div>
+        <div class="status-msg" id="save-status"></div>
+      </div>
+
+      <div id="pedidos-area" class="tab-panel hidden">
+        <p class="reorder-hint">
+          Aqui você gera a página individual de pagamento pra cada cliente. Como funciona: 1) o pedido chega no seu email pelo formulário de encomenda; 2) você cria um pedido aqui com os dados dele, sobe a foto do QR code (Pix ou o que você usar) e cola o link de pagamento; 3) clique em "Salvar este pedido" pra gerar o link da página; 4) copie o link (e baixe o QR se quiser anexar como imagem) e mande pro cliente por email ou WhatsApp junto com a confirmação do pedido. O link só passa a funcionar 1-2 minutos depois de salvar.
+        </p>
+        <button class="btn ghost" id="btn-novo-pedido" style="margin-bottom:20px;">+ Novo pedido</button>
+        <div id="pedidos-container"></div>
+        <button class="btn ghost" id="btn-sair-pedidos" style="margin-top:8px;">Sair</button>
+      </div>
     </div>
 
     <div class="admin-panel" style="margin-top:48px;">
@@ -298,7 +349,8 @@
         currentData = JSON.parse(b64DecodeUnicode(json.content));
         renderCards(currentData);
         document.getElementById('login-panel').classList.add('hidden');
-        document.getElementById('produtos-area').classList.remove('hidden');
+        document.getElementById('produtos-wrap').classList.remove('hidden');
+        carregarPedidos();
       } catch (err) {
         showStatus(status, 'Erro de conexão: ' + err.message, false);
       }
@@ -308,6 +360,20 @@
       sessionStorage.clear();
       location.reload();
     });
+    document.getElementById('btn-sair-pedidos').addEventListener('click', () => {
+      sessionStorage.clear();
+      location.reload();
+    });
+
+    // ---- abas ----
+    document.getElementById('tab-btn-produtos').addEventListener('click', () => trocarAba('produtos'));
+    document.getElementById('tab-btn-pedidos').addEventListener('click', () => trocarAba('pedidos'));
+    function trocarAba(nome) {
+      document.getElementById('produtos-area').classList.toggle('hidden', nome !== 'produtos');
+      document.getElementById('pedidos-area').classList.toggle('hidden', nome !== 'pedidos');
+      document.getElementById('tab-btn-produtos').classList.toggle('active', nome === 'produtos');
+      document.getElementById('tab-btn-pedidos').classList.toggle('active', nome === 'pedidos');
+    }
 
     function renderCards(data) {
       const container = document.getElementById('cards-container');
@@ -705,6 +771,230 @@
       } catch (err) {
         showStatus(status, 'Erro de conexão: ' + err.message, false);
       }
+    });
+
+    /* =========================================================
+       PEDIDOS — gera a página individual de pagamento de cada cliente
+       (pedido.html?id=...), com resumo, QR code e link de pagamento
+       personalizáveis. Usa o mesmo login e a mesma API do GitHub já
+       usados pra produtos; os dados ficam em data/pedidos.json e as
+       fotos de QR code em assets/img/pedidos/.
+       ========================================================= */
+    const DATA_PATH_PEDIDOS = 'data/pedidos.json';
+    let currentPedidos = null;
+    let currentPedidosSha = null;
+
+    async function carregarPedidos() {
+      try {
+        const res = await fetch(`${apiBase()}/contents/${DATA_PATH_PEDIDOS}`, { headers: ghHeaders() });
+        if (res.ok) {
+          const json = await res.json();
+          currentPedidosSha = json.sha;
+          currentPedidos = JSON.parse(b64DecodeUnicode(json.content));
+        } else {
+          // o arquivo ainda não existe no repositório — começa vazio,
+          // ele é criado sozinho quando o primeiro pedido é salvo
+          currentPedidosSha = null;
+          currentPedidos = {};
+        }
+      } catch (err) {
+        currentPedidosSha = null;
+        currentPedidos = {};
+      }
+      renderPedidoCards(currentPedidos);
+    }
+
+    function renderPedidoCards(data) {
+      const container = document.getElementById('pedidos-container');
+      container.innerHTML = '';
+      const ids = Object.keys(data).sort((a, b) => (data[b].criadoEm || '').localeCompare(data[a].criadoEm || ''));
+      ids.forEach((id) => addPedidoCard(id, data[id]));
+    }
+
+    function gerarIdPedido() {
+      let id;
+      do {
+        id = Math.random().toString(36).slice(2, 8);
+      } while (currentPedidos && currentPedidos[id]);
+      return id;
+    }
+
+    async function salvarPedidosNoGithub() {
+      const body = {
+        message: 'Atualiza pedidos pelo painel admin',
+        content: b64EncodeUnicode(JSON.stringify(currentPedidos, null, 2)),
+        branch: 'main',
+      };
+      if (currentPedidosSha) body.sha = currentPedidosSha;
+      const res = await fetch(`${apiBase()}/contents/${DATA_PATH_PEDIDOS}`, {
+        method: 'PUT',
+        headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || res.status);
+      }
+      const result = await res.json();
+      currentPedidosSha = result.content.sha;
+    }
+
+    function addPedidoQrRow(box, id, path) {
+      const owner = sessionStorage.getItem('gh_owner');
+      const repo = sessionStorage.getItem('gh_repo');
+      const row = document.createElement('div');
+      row.className = 'pedido-qr-row';
+      row.dataset.path = path || '';
+      row.innerHTML = `
+        <img src="${path ? `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}` : ''}" onerror="this.style.opacity=0.15">
+        <input type="file" accept="image/*">
+        <button type="button" class="upload-qr">enviar qrcode</button>
+      `;
+      const fileInput = row.querySelector('input[type=file]');
+      const btn = row.querySelector('.upload-qr');
+      btn.addEventListener('click', async () => {
+        const file = fileInput.files[0];
+        if (!file) { alert('Escolha uma imagem do QR code primeiro.'); return; }
+        const ext = (file.name.split('.').pop() || 'png').toLowerCase();
+        const novoPath = `assets/img/pedidos/${id}-qr.${ext}`;
+        btn.textContent = 'enviando...';
+        try {
+          await uploadImage(novoPath, file);
+          row.dataset.path = novoPath;
+          row.querySelector('img').src = URL.createObjectURL(file);
+          btn.textContent = 'feito ✓';
+        } catch (err) {
+          btn.textContent = 'erro';
+          alert('Não consegui enviar o QR code: ' + err.message);
+        }
+      });
+      box.appendChild(row);
+    }
+
+    function addPedidoCard(id, pedido) {
+      const container = document.getElementById('pedidos-container');
+      const card = document.createElement('div');
+      card.className = 'pedido-card';
+      card.dataset.id = id;
+      const linkCompleto = `${window.location.origin}/pedido.html?id=${id}`;
+      card.innerHTML = `
+        <div class="card-top-row">
+          <h2>${escapeHtml(pedido.comprador) || 'Novo pedido'}</h2>
+          <div class="card-actions">
+            <button type="button" class="remove-product remove-pedido">remover pedido</button>
+          </div>
+        </div>
+        <p class="pedido-id-tag">id: ${id}${pedido.criadoEm ? ' · criado em ' + pedido.criadoEm : ''}${pedido.pago ? ' · pago ✓' : ''}</p>
+
+        <div class="field field-mini">
+          <label>Nome do comprador</label>
+          <input type="text" class="p-comprador" value="${escapeAttr(pedido.comprador)}">
+        </div>
+
+        <div class="field field-mini" style="margin-top:12px;">
+          <label>Resumo do pedido (peça, variação, frete... o que o cliente vai ver na página)</label>
+          <textarea class="p-resumo" rows="4" placeholder="Ex: Cabeça Ogeid — variação Preta&#10;Frete para SP: R$ 22,00">${escapeHtml(pedido.resumo)}</textarea>
+        </div>
+
+        <div class="admin-row" style="margin-top:12px;">
+          <div class="field field-mini">
+            <label>Valor total</label>
+            <input type="text" class="p-valor" placeholder="R$ 150,00" value="${escapeAttr(pedido.valor)}">
+          </div>
+          <div class="field field-mini">
+            <label>Link de pagamento</label>
+            <input type="text" class="p-link-pagamento" placeholder="https://..." value="${escapeAttr(pedido.linkPagamento)}">
+          </div>
+        </div>
+
+        <div class="field field-mini" style="margin-top:16px;">
+          <label>QR code do pagamento (foto ou print do Pix, ou de outro método)</label>
+          <div class="pedido-qr-box"></div>
+        </div>
+
+        <div class="pedido-pago-row">
+          <input type="checkbox" class="p-pago" ${pedido.pago ? 'checked' : ''}>
+          <label style="margin:0;">Marcar como pago (a página do cliente passa a mostrar "pagamento confirmado" em vez do botão de pagar)</label>
+        </div>
+
+        <div class="pedido-link-box">
+          <input type="text" class="p-link-final" readonly value="${linkCompleto}">
+          <button type="button" class="copy-link">copiar link</button>
+        </div>
+        <p class="form-note" style="margin-top:8px;">Esse é o link que vai pro cliente. Ele só funciona 1-2 minutos depois de você salvar este pedido pela primeira vez.</p>
+
+        <div class="pedido-actions">
+          <button type="button" class="btn salvar-pedido">Salvar este pedido</button>
+        </div>
+        <div class="pedido-save-status" style="display:none;"></div>
+      `;
+      container.appendChild(card);
+
+      const qrBox = card.querySelector('.pedido-qr-box');
+      addPedidoQrRow(qrBox, id, pedido.qrcode || '');
+
+      card.querySelector('.copy-link').addEventListener('click', () => {
+        const input = card.querySelector('.p-link-final');
+        input.select();
+        const btn = card.querySelector('.copy-link');
+        const original = btn.textContent;
+        const marcarCopiado = () => { btn.textContent = 'copiado ✓'; setTimeout(() => btn.textContent = original, 1500); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(input.value).then(marcarCopiado).catch(() => document.execCommand('copy') && marcarCopiado());
+        } else {
+          document.execCommand('copy');
+          marcarCopiado();
+        }
+      });
+
+      card.querySelector('.salvar-pedido').addEventListener('click', async () => {
+        const statusEl = card.querySelector('.pedido-save-status');
+        const qrPath = card.querySelector('.pedido-qr-box .pedido-qr-row').dataset.path;
+        currentPedidos[id] = {
+          comprador: card.querySelector('.p-comprador').value.trim(),
+          resumo: card.querySelector('.p-resumo').value.trim(),
+          valor: card.querySelector('.p-valor').value.trim(),
+          linkPagamento: card.querySelector('.p-link-pagamento').value.trim(),
+          qrcode: qrPath || '',
+          pago: card.querySelector('.p-pago').checked,
+          criadoEm: pedido.criadoEm || new Date().toISOString().slice(0, 10),
+        };
+        statusEl.style.display = 'block';
+        statusEl.className = 'pedido-save-status';
+        statusEl.textContent = 'Salvando...';
+        try {
+          await salvarPedidosNoGithub();
+          pedido = currentPedidos[id];
+          statusEl.textContent = 'Salvo! O link do cliente atualiza em 1-2 minutos.';
+          statusEl.className = 'pedido-save-status ok';
+          card.querySelector('h2').textContent = pedido.comprador || 'Novo pedido';
+        } catch (err) {
+          statusEl.textContent = 'Erro ao salvar: ' + err.message;
+          statusEl.className = 'pedido-save-status err';
+        }
+      });
+
+      card.querySelector('.remove-pedido').addEventListener('click', async () => {
+        if (!confirm(`Remover o pedido de "${pedido.comprador || id}"? Isso apaga a página desse cliente assim que você confirmar.`)) return;
+        const existiaSalvo = !!currentPedidos[id];
+        delete currentPedidos[id];
+        card.remove();
+        if (existiaSalvo) {
+          try {
+            await salvarPedidosNoGithub();
+          } catch (err) {
+            alert('Não consegui remover no GitHub: ' + err.message);
+          }
+        }
+      });
+    }
+
+    document.getElementById('btn-novo-pedido').addEventListener('click', () => {
+      if (!currentPedidos) currentPedidos = {};
+      const id = gerarIdPedido();
+      const novo = { comprador: '', resumo: '', valor: '', linkPagamento: '', qrcode: '', pago: false, criadoEm: new Date().toISOString().slice(0, 10) };
+      addPedidoCard(id, novo);
+      document.getElementById('pedidos-container').lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   </script>
 </body>
