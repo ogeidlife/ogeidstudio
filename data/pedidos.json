@@ -1,0 +1,11 @@
+{
+  "8pjx3e": {
+    "comprador": "Diego",
+    "resumo": "Item_desejado\n\nTa escrito\nPreço\n\n80,00 R$\nFoto_do_item\n\nhttps://ogeidstudio.com.br/assets/img/print-4.jpg\nVariação_escolhida\n\nCOR: Preto · Tamanho: A3\nFrete_estimado\n\nR$ 15,00\nValor_total_estimado\n\nR$ 95,00\nCEP\n\n06110-260\nEndereço\n\nRua Gasparino Lunardi\nNúmero\n\n185\nComplemento\n\ngarde brecho\nBairro\n\nJardim das Flores\nCidade\n\nOsasco\nEstado\n\nSP\nNome\n\nDiego Vulcanis\nEmail\n\nlifeogeid@gmail.com\nCelular\n\n11940569974",
+    "valor": "95,00 R$",
+    "linkPagamento": "https://mpago.la/2QyxrDB",
+    "qrcode": "",
+    "pago": false,
+    "criadoEm": "2026-08-10"
+  }
+}
