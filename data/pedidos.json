@@ -1,12 +1,1 @@
-{
-  "8pjx3e": {
-    "comprador": "Diego",
-    "resumo": "Adesivo\nFrete: R$ 15,00\nValor total: R$ 95,00\nCEP: 06110-260\nEndereço: Rua Gasparino Lunardi\nNúmero: 185\nComplemento: garde brecho\nBairro: Jardim das Flores\nCidade: Osasco\nEstado: SP\nNome: Diego Vulcanis\nEmail: lifeogeid@gmail.com\nCelular: 11940569974",
-    "valor": "95,00 R$",
-    "linkPagamento": "https://mpago.la/2QyxrDB",
-    "imagem": "assets/img/pedidos/8pjx3e-capa.gif",
-    "qrcode": "assets/img/pedidos/8pjx3e-qr.jpeg",
-    "pago": true,
-    "criadoEm": "2026-08-10"
-  }
-}
+{}
