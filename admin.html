@@ -182,6 +182,13 @@
           <div id="horarios-lista" style="font-family:var(--f-mono); font-size:13px; color:var(--ink); display:flex; flex-wrap:wrap; gap:8px;"></div>
           <p id="horarios-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:10px; max-width:60ch;"></p>
         </div>
+
+        <div style="margin-top:24px; border-top:1px solid var(--line); padding-top:18px;">
+          <div style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px;">Zerar contagem</div>
+          <p style="color:var(--ink-dim); font-size:14px; max-width:60ch; margin:0 0 12px;">Isso apaga o total de visitas e os horários registrados até agora (as visitas de teste que você já fez) e começa uma contagem oficial do zero. Não dá pra desfazer.</p>
+          <button class="btn ghost" id="btn-zerar-contagem" type="button">Zerar contagem e começar oficial</button>
+          <p id="zerar-status" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:10px;"></p>
+        </div>
       </div>
 
       <div class="tab-nav">
@@ -242,7 +249,7 @@
       }
       try {
         const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js');
-        const { getDatabase, ref, onValue, query, limitToLast } = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js');
+        const { getDatabase, ref, onValue, query, limitToLast, set, remove } = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js');
 
         const app = initializeApp(cfg);
         const db = getDatabase(app);
@@ -295,6 +302,22 @@
           }).join('');
           horariosMsg.textContent = '';
         }, () => { horariosMsg.textContent = 'Não consegui carregar os horários agora.'; });
+
+        // Zerar contagem — apaga o total e os horários registrados até
+        // agora e começa do zero. Não mexe em 'online' (isso é só sessão
+        // ativa no momento, já se limpa sozinho).
+        const zerarStatus = document.getElementById('zerar-status');
+        document.getElementById('btn-zerar-contagem').addEventListener('click', async () => {
+          const ok = confirm('Isso vai apagar o total de visitas e os horários registrados até agora, e começar uma contagem oficial do zero. Não dá pra desfazer. Confirma?');
+          if (!ok) return;
+          try {
+            await set(ref(db, 'estatisticas/totalVisitas'), 0);
+            await remove(ref(db, 'estatisticas/entradas'));
+            zerarStatus.textContent = 'Pronto — contagem zerada. A partir de agora as visitas são a contagem oficial.';
+          } catch (err) {
+            zerarStatus.textContent = 'Não consegui zerar agora, tenta de novo em instantes.';
+          }
+        });
       } catch (err) {
         msg.textContent = 'Não consegui carregar as estatísticas agora.';
       }
