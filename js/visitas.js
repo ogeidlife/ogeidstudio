@@ -2,12 +2,17 @@
    Registra as visitas do site no Firebase Realtime Database, em três
    lugares que o admin.html já sabe ler:
 
-   - estatisticas/totalVisitas   → contador total, +1 a cada carregamento de página
+   - estatisticas/totalVisitas   → contador total, +1 uma vez por sessão de
+                                    navegação (não uma vez por página — clicar
+                                    em várias páginas na mesma visita conta
+                                    como 1 só, até fechar a aba)
    - estatisticas/entradas       → uma entrada por visita, só com o horário
                                     (sem IP, sem nenhum outro dado pessoal)
    - online/{sessionId}.desde    → marca a sessão como "ativa agora"; o admin
                                     considera "online" quem teve heartbeat
-                                    nos últimos 45s
+                                    nos últimos 45s. Esse SIM é atualizado em
+                                    toda página, pra "online agora" continuar
+                                    certo enquanto a pessoa navega pelo site.
 
    Visitas de quem marcou "este navegador é meu" no admin (localStorage
    'ogeid_sou_dono' = '1') são ignoradas — não entram em nada disso.
@@ -28,20 +33,32 @@
     const app = initializeApp(cfg);
     const db = getDatabase(app);
 
-    // total de visitas — soma 1 a cada vez que essa página carrega
-    runTransaction(ref(db, 'estatisticas/totalVisitas'), (atual) => (atual || 0) + 1);
-
-    // horário desta visita, pro admin mostrar em "Horários de entrada"
-    push(ref(db, 'estatisticas/entradas'), { horario: serverTimestamp() });
-
-    // sessão "online agora" — um id por aba/sessão do navegador
+    // sessão desta visita — um id por aba/sessão do navegador, usado tanto
+    // pra "online agora" quanto pra saber se já contamos essa visita
     let sessionId = sessionStorage.getItem('ogeid_session_id');
     if (!sessionId) {
       sessionId = 'v' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
       sessionStorage.setItem('ogeid_session_id', sessionId);
     }
+
+    // total de visitas + horário de entrada — só na PRIMEIRA página vista
+    // nesta sessão (sessionStorage dura até a aba fechar, sobrevive a
+    // navegação entre páginas do site)
+    if (!sessionStorage.getItem('ogeid_visita_contada')) {
+      sessionStorage.setItem('ogeid_visita_contada', '1');
+
+      runTransaction(ref(db, 'estatisticas/totalVisitas'), (atual) => (atual || 0) + 1)
+        .catch((err) => console.warn('[visitas] não consegui gravar totalVisitas:', err.message));
+
+      push(ref(db, 'estatisticas/entradas'), { horario: serverTimestamp() })
+        .catch((err) => console.warn('[visitas] não consegui gravar entradas (verifique as regras do Firebase para este caminho):', err.message));
+    }
+
+    // "online agora" — atualizado em toda página, continua contando
+    // enquanto a pessoa navega pelo site
     const onlineRef = ref(db, 'online/' + sessionId);
-    set(onlineRef, { desde: serverTimestamp() });
+    set(onlineRef, { desde: serverTimestamp() })
+      .catch((err) => console.warn('[visitas] não consegui gravar online:', err.message));
     onDisconnect(onlineRef).remove();
 
     // heartbeat: renova "desde" a cada 20s pra sessão continuar contando
@@ -55,6 +72,6 @@
       remove(onlineRef);
     });
   } catch (err) {
-    // silencioso de propósito — estatísticas nunca podem quebrar o site
+    console.warn('[visitas] erro ao inicializar estatísticas:', err);
   }
 })();
