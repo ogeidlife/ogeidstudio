@@ -127,22 +127,6 @@
       <p>Edite títulos, preços, descrições, especificações, fotos e a capa animada de cada peça — ou adicione peças novas do zero. As mudanças são salvas direto no seu repositório do GitHub — o site atualiza sozinho em 1-2 minutos depois de salvar.</p>
     </div>
 
-    <div class="admin-panel" id="stats-panel">
-      <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Estatísticas</p>
-      <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 14px;">Visitantes do site</h2>
-      <div style="display:flex; gap:40px; flex-wrap:wrap;">
-        <div>
-          <div style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em;">Total de visitas</div>
-          <div style="font-family:var(--f-display); font-size:34px; margin-top:4px;" id="total-visitas">—</div>
-        </div>
-        <div>
-          <div style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em;">Online agora</div>
-          <div style="font-family:var(--f-display); font-size:34px; margin-top:4px; color:var(--accent-2);" id="online-agora">—</div>
-        </div>
-      </div>
-      <p id="stats-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:14px; max-width:60ch;"></p>
-    </div>
-
     <div class="admin-panel" id="dono-panel">
       <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Não contar minhas visitas</p>
       <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 10px;">Este navegador é seu?</h2>
@@ -178,6 +162,28 @@
     </div>
 
     <div id="produtos-wrap" class="hidden">
+      <div class="admin-panel" id="stats-panel">
+        <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Estatísticas</p>
+        <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 14px;">Visitantes do site</h2>
+        <div style="display:flex; gap:40px; flex-wrap:wrap;">
+          <div>
+            <div style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em;">Total de visitas</div>
+            <div style="font-family:var(--f-display); font-size:34px; margin-top:4px;" id="total-visitas">—</div>
+          </div>
+          <div>
+            <div style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em;">Online agora</div>
+            <div style="font-family:var(--f-display); font-size:34px; margin-top:4px; color:var(--accent-2);" id="online-agora">—</div>
+          </div>
+        </div>
+        <p id="stats-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:14px; max-width:60ch;"></p>
+
+        <div style="margin-top:24px; border-top:1px solid var(--line); padding-top:18px;">
+          <div style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px;">Horários de entrada (últimas visitas)</div>
+          <div id="horarios-lista" style="font-family:var(--f-mono); font-size:13px; color:var(--ink); display:flex; flex-wrap:wrap; gap:8px;"></div>
+          <p id="horarios-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:10px; max-width:60ch;"></p>
+        </div>
+      </div>
+
       <div class="tab-nav">
         <button type="button" class="tab-btn active" id="tab-btn-produtos">Produtos</button>
         <button type="button" class="tab-btn" id="tab-btn-pedidos">Pedidos</button>
@@ -236,7 +242,7 @@
       }
       try {
         const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js');
-        const { getDatabase, ref, onValue } = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js');
+        const { getDatabase, ref, onValue, query, limitToLast } = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js');
 
         const app = initializeApp(cfg);
         const db = getDatabase(app);
@@ -259,6 +265,36 @@
         onValue(ref(db, 'online'), (snap) => { ultimoSnapshotOnline = snap; recalcularOnline(); },
           () => { msg.textContent = 'Não consegui carregar quem está online.'; });
         setInterval(recalcularOnline, 5000);
+
+        // Horários de entrada — lê a lista de visitas registradas em
+        // 'estatisticas/entradas' (só o horário, sem IP nem outro dado
+        // pessoal). Se esse caminho ainda não existir no seu Firebase,
+        // mostra um aviso em vez de dar erro.
+        const horariosBox = document.getElementById('horarios-lista');
+        const horariosMsg = document.getElementById('horarios-msg');
+        onValue(query(ref(db, 'estatisticas/entradas'), limitToLast(60)), (snap) => {
+          const timestamps = [];
+          snap.forEach((child) => {
+            const v = child.val();
+            const ts = typeof v === 'number' ? v : (v && v.horario);
+            if (ts) timestamps.push(ts);
+          });
+          if (!timestamps.length) {
+            horariosMsg.textContent = 'Ainda não há registros de horário — esse recurso precisa de um pequeno ajuste no js/visitas.js do site pra começar a gravar o horário de cada visita.';
+            horariosBox.innerHTML = '';
+            return;
+          }
+          timestamps.sort((a, b) => b - a);
+          const hoje = new Date().toDateString();
+          horariosBox.innerHTML = timestamps.map((ts) => {
+            const d = new Date(ts);
+            const mesmodia = d.toDateString() === hoje;
+            const hora = d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            const label = mesmodia ? hora : d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) + ' ' + hora;
+            return `<span style="border:1px solid var(--line); padding:5px 10px;">${label}</span>`;
+          }).join('');
+          horariosMsg.textContent = '';
+        }, () => { horariosMsg.textContent = 'Não consegui carregar os horários agora.'; });
       } catch (err) {
         msg.textContent = 'Não consegui carregar as estatísticas agora.';
       }
@@ -839,7 +875,7 @@
       currentPedidosSha = result.content.sha;
     }
 
-    function addPedidoQrRow(box, id, path) {
+    function addPedidoImageRow(box, id, path, sufixo, rotuloBotao) {
       const owner = sessionStorage.getItem('gh_owner');
       const repo = sessionStorage.getItem('gh_repo');
       const row = document.createElement('div');
@@ -848,27 +884,61 @@
       row.innerHTML = `
         <img src="${path ? `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}` : ''}" onerror="this.style.opacity=0.15">
         <input type="file" accept="image/*">
-        <button type="button" class="upload-qr">enviar qrcode</button>
+        <button type="button" class="upload-pedido-img">${rotuloBotao}</button>
       `;
       const fileInput = row.querySelector('input[type=file]');
-      const btn = row.querySelector('.upload-qr');
+      const btn = row.querySelector('.upload-pedido-img');
       btn.addEventListener('click', async () => {
         const file = fileInput.files[0];
-        if (!file) { alert('Escolha uma imagem do QR code primeiro.'); return; }
-        const ext = (file.name.split('.').pop() || 'png').toLowerCase();
-        const novoPath = `assets/img/pedidos/${id}-qr.${ext}`;
+        if (!file) { alert('Escolha uma imagem primeiro.'); return; }
+        const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+        const novoPath = `assets/img/pedidos/${id}-${sufixo}.${ext}`;
         btn.textContent = 'enviando...';
         try {
           await uploadImage(novoPath, file);
           row.dataset.path = novoPath;
           row.querySelector('img').src = URL.createObjectURL(file);
           btn.textContent = 'feito ✓';
+          // salva o pedido na hora, pra não depender de lembrar de clicar em "Salvar" depois do upload
+          const card = box.closest('.pedido-card');
+          if (card) await salvarPedidoCard(card, id, { silencioso: true });
         } catch (err) {
           btn.textContent = 'erro';
-          alert('Não consegui enviar o QR code: ' + err.message);
+          alert('Não consegui enviar a imagem: ' + err.message);
         }
       });
       box.appendChild(row);
+    }
+
+    async function salvarPedidoCard(card, id, opts) {
+      opts = opts || {};
+      const statusEl = card.querySelector('.pedido-save-status');
+      const imagemPath = card.querySelector('.pedido-imagem-box .pedido-qr-row')?.dataset.path || '';
+      const qrPath = card.querySelector('.pedido-qr-box .pedido-qr-row')?.dataset.path || '';
+      const anterior = currentPedidos[id] || {};
+      currentPedidos[id] = {
+        comprador: card.querySelector('.p-comprador').value.trim(),
+        resumo: card.querySelector('.p-resumo').value.trim(),
+        valor: card.querySelector('.p-valor').value.trim(),
+        linkPagamento: card.querySelector('.p-link-pagamento').value.trim(),
+        imagem: imagemPath,
+        qrcode: qrPath,
+        pago: card.querySelector('.p-pago').checked,
+        criadoEm: anterior.criadoEm || new Date().toISOString().slice(0, 10),
+      };
+      statusEl.style.display = 'block';
+      statusEl.className = 'pedido-save-status';
+      statusEl.textContent = 'Salvando...';
+      try {
+        await salvarPedidosNoGithub();
+        statusEl.textContent = 'Salvo! O link do cliente atualiza em 1-2 minutos.';
+        statusEl.className = 'pedido-save-status ok';
+        card.querySelector('h2').textContent = currentPedidos[id].comprador || 'Novo pedido';
+      } catch (err) {
+        statusEl.textContent = 'Erro ao salvar: ' + err.message;
+        statusEl.className = 'pedido-save-status err';
+        if (!opts.silencioso) throw err;
+      }
     }
 
     function addPedidoCard(id, pedido) {
@@ -892,8 +962,8 @@
         </div>
 
         <div class="field field-mini" style="margin-top:12px;">
-          <label>Resumo do pedido (peça, variação, frete... o que o cliente vai ver na página)</label>
-          <textarea class="p-resumo" rows="4" placeholder="Ex: Cabeça Ogeid — variação Preta&#10;Frete para SP: R$ 22,00">${escapeHtml(pedido.resumo)}</textarea>
+          <label>Resumo do pedido (uma informação por linha — cada linha vira uma linha da grade na página do cliente. Use "Rótulo: valor" pra virar duas colunas, ex: "Frete: R$ 22,00")</label>
+          <textarea class="p-resumo" rows="4" placeholder="Peça: Cabeça Ogeid&#10;Variação: Preta&#10;Frete: R$ 22,00">${escapeHtml(pedido.resumo)}</textarea>
         </div>
 
         <div class="admin-row" style="margin-top:12px;">
@@ -905,6 +975,11 @@
             <label>Link de pagamento</label>
             <input type="text" class="p-link-pagamento" placeholder="https://..." value="${escapeAttr(pedido.linkPagamento)}">
           </div>
+        </div>
+
+        <div class="field field-mini" style="margin-top:16px;">
+          <label>Imagem de topo da página (a capa da peça, ou um banner da coleção — o que enviar aqui aparece no topo da página do cliente)</label>
+          <div class="pedido-imagem-box"></div>
         </div>
 
         <div class="field field-mini" style="margin-top:16px;">
@@ -930,8 +1005,11 @@
       `;
       container.appendChild(card);
 
+      const imagemBox = card.querySelector('.pedido-imagem-box');
+      addPedidoImageRow(imagemBox, id, pedido.imagem || '', 'capa', 'enviar imagem');
+
       const qrBox = card.querySelector('.pedido-qr-box');
-      addPedidoQrRow(qrBox, id, pedido.qrcode || '');
+      addPedidoImageRow(qrBox, id, pedido.qrcode || '', 'qr', 'enviar qrcode');
 
       card.querySelector('.copy-link').addEventListener('click', () => {
         const input = card.querySelector('.p-link-final');
@@ -947,31 +1025,8 @@
         }
       });
 
-      card.querySelector('.salvar-pedido').addEventListener('click', async () => {
-        const statusEl = card.querySelector('.pedido-save-status');
-        const qrPath = card.querySelector('.pedido-qr-box .pedido-qr-row').dataset.path;
-        currentPedidos[id] = {
-          comprador: card.querySelector('.p-comprador').value.trim(),
-          resumo: card.querySelector('.p-resumo').value.trim(),
-          valor: card.querySelector('.p-valor').value.trim(),
-          linkPagamento: card.querySelector('.p-link-pagamento').value.trim(),
-          qrcode: qrPath || '',
-          pago: card.querySelector('.p-pago').checked,
-          criadoEm: pedido.criadoEm || new Date().toISOString().slice(0, 10),
-        };
-        statusEl.style.display = 'block';
-        statusEl.className = 'pedido-save-status';
-        statusEl.textContent = 'Salvando...';
-        try {
-          await salvarPedidosNoGithub();
-          pedido = currentPedidos[id];
-          statusEl.textContent = 'Salvo! O link do cliente atualiza em 1-2 minutos.';
-          statusEl.className = 'pedido-save-status ok';
-          card.querySelector('h2').textContent = pedido.comprador || 'Novo pedido';
-        } catch (err) {
-          statusEl.textContent = 'Erro ao salvar: ' + err.message;
-          statusEl.className = 'pedido-save-status err';
-        }
+      card.querySelector('.salvar-pedido').addEventListener('click', () => {
+        salvarPedidoCard(card, id).catch(() => {});
       });
 
       card.querySelector('.remove-pedido').addEventListener('click', async () => {
@@ -992,7 +1047,7 @@
     document.getElementById('btn-novo-pedido').addEventListener('click', () => {
       if (!currentPedidos) currentPedidos = {};
       const id = gerarIdPedido();
-      const novo = { comprador: '', resumo: '', valor: '', linkPagamento: '', qrcode: '', pago: false, criadoEm: new Date().toISOString().slice(0, 10) };
+      const novo = { comprador: '', resumo: '', valor: '', linkPagamento: '', imagem: '', qrcode: '', pago: false, criadoEm: new Date().toISOString().slice(0, 10) };
       addPedidoCard(id, novo);
       document.getElementById('pedidos-container').lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
