@@ -5,7 +5,7 @@
     "valor": "95,00 R$",
     "linkPagamento": "https://mpago.la/2QyxrDB",
     "imagem": "assets/img/pedidos/8pjx3e-capa.gif",
-    "qrcode": "",
+    "qrcode": "assets/img/pedidos/8pjx3e-qr.jpeg",
     "pago": false,
     "criadoEm": "2026-08-10"
   }
