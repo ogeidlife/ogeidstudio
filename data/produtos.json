@@ -324,8 +324,12 @@
     "descricao": "1/1 Pintura sobre o universo Ogeid feita a mão em tela 60 x60cm ",
     "specs": [
       {
-        "label": "Material",
-        "valor": "Sob consulta"
+        "label": "técnica mista sobre canvas ",
+        "valor": "Tinta acrílica, giz oleoso, caneta hidrográfica, lápis grafite "
+      },
+      {
+        "label": "tamanho",
+        "valor": "60x 60cm"
       }
     ],
     "capaEstatica": "assets/img/quadro-ogeid-3-capa.jpg",
