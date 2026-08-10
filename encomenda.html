@@ -27,7 +27,7 @@
     <div class="page-head">
       <p class="eyebrow">Encomenda</p>
       <h2 class="page-title" id="titulo-produto">Encomendar peça</h2>
-      <p class="page-lede">Preencha seus dados. Seu pedido cai direto na minha caixa de entrada e eu retorno o combinado por email ou whatsapp.</p>
+      <p class="page-lede">Preencha seus dados. Digite seu CEP pra eu já preencher o endereço e você ver o frete estimado e o valor total. Seu pedido cai direto na minha caixa de entrada e eu retorno o combinado por email ou whatsapp — com as opções de pagamento e o prazo de entrega.</p>
     </div>
 
     <div class="product">
@@ -51,6 +51,8 @@
         <input type="hidden" name="Foto_do_item" id="imagem-hidden" value="">
         <input type="hidden" name="Variação_escolhida" id="variacao-hidden" value="">
         <input type="hidden" name="_subject" id="subject-hidden" value="Nova encomenda pelo site">
+        <input type="hidden" name="Frete_estimado" id="frete-hidden" value="">
+        <input type="hidden" name="Valor_total_estimado" id="total-hidden" value="">
 
         <div class="field">
           <label for="produto-label">Peça desejada</label>
@@ -60,6 +62,54 @@
         <div class="field" id="variacao-field" style="display:none;">
           <label for="variacao-label">Variação escolhida</label>
           <input type="text" id="variacao-label" readonly>
+        </div>
+
+        <div class="field">
+          <label for="cep">CEP</label>
+          <input type="text" id="cep" name="CEP" placeholder="00000-000" inputmode="numeric" maxlength="9" required>
+          <p class="form-note" id="cep-status" style="margin-top:8px;">Digite o CEP pra eu já preencher o endereço.</p>
+        </div>
+
+        <div class="field">
+          <label for="rua">Endereço</label>
+          <input type="text" id="rua" name="Endereço" placeholder="Rua, avenida..." required>
+        </div>
+
+        <div style="display:flex; gap:16px;">
+          <div class="field" style="flex:1;">
+            <label for="numero">Número</label>
+            <input type="text" id="numero" name="Número" placeholder="123" required>
+          </div>
+          <div class="field" style="flex:2;">
+            <label for="complemento">Complemento</label>
+            <input type="text" id="complemento" name="Complemento" placeholder="Apto, bloco... (opcional)">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="bairro">Bairro</label>
+          <input type="text" id="bairro" name="Bairro" required>
+        </div>
+
+        <div style="display:flex; gap:16px;">
+          <div class="field" style="flex:2;">
+            <label for="cidade">Cidade</label>
+            <input type="text" id="cidade" name="Cidade" required>
+          </div>
+          <div class="field" style="flex:1;">
+            <label for="uf">Estado</label>
+            <input type="text" id="uf" name="Estado" placeholder="UF" maxlength="2" style="text-transform:uppercase;" required>
+          </div>
+        </div>
+
+        <div class="field" id="resumo-valores" style="display:none;">
+          <label>Resumo do pedido</label>
+          <div class="price-summary">
+            <div class="price-summary-row"><span>Peça</span><span id="resumo-peca">—</span></div>
+            <div class="price-summary-row"><span>Frete estimado</span><span id="resumo-frete">—</span></div>
+            <div class="price-summary-row price-summary-total"><span>Total estimado</span><span id="resumo-total">—</span></div>
+          </div>
+          <p class="form-note" style="margin-top:10px;">Frete estimado — o valor final é confirmado por mim junto com as opções de pagamento e o prazo de entrega, após você enviar o pedido.</p>
         </div>
 
         <div class="field">
@@ -90,12 +140,62 @@
 
   <script src="js/gallery.js?v=3"></script>
   <script>
-    // pega os dados da peça pela URL (produto, imagem, preco)
+    // pega os dados da peça pela URL (produto, imagem, preco, porte)
     const params = new URLSearchParams(window.location.search);
     const produto = params.get('produto') || 'Peça personalizada';
     const imagemRelativa = params.get('imagem') || '';
     const preco = params.get('preco') || '';
     const variacao = params.get('variacao') || '';
+    // "porte" é o tamanho/fragilidade da peça: P (pequena/leve), M (média) ou G (grande/frágil).
+    // vem da URL (definido em data/produtos.json); se não vier, assume M por segurança.
+    const porte = (params.get('porte') || 'M').toUpperCase();
+
+    /* =========================================================
+       CALCULADORA DE FRETE (estimado)
+       Isso NÃO é uma cotação real dos Correios — é uma tabela fixa
+       que você define, pra dar uma ideia de valor total pro cliente
+       antes de ele confirmar o pedido. Pra ajustar os preços, edite
+       só os números aqui embaixo.
+       ========================================================= */
+
+    // cada estado (UF) cai numa dessas 4 faixas de região
+    const REGIAO_POR_UF = {
+      SP: 'sp',
+      PR: 'sul_sudeste', SC: 'sul_sudeste', RS: 'sul_sudeste',
+      RJ: 'sul_sudeste', MG: 'sul_sudeste', ES: 'sul_sudeste',
+      DF: 'centro_nordeste', GO: 'centro_nordeste', MT: 'centro_nordeste', MS: 'centro_nordeste',
+      BA: 'centro_nordeste', SE: 'centro_nordeste', AL: 'centro_nordeste', PE: 'centro_nordeste',
+      PB: 'centro_nordeste', RN: 'centro_nordeste', CE: 'centro_nordeste', PI: 'centro_nordeste', MA: 'centro_nordeste',
+      AC: 'norte', AM: 'norte', AP: 'norte', PA: 'norte', RO: 'norte', RR: 'norte', TO: 'norte',
+    };
+
+    // valor do frete (R$) por região x porte — AJUSTE ESSES NÚMEROS quando quiser
+    const TABELA_FRETE = {
+      sp:              { P: 15, M: 22, G: 38 },
+      sul_sudeste:     { P: 22, M: 32, G: 55 },
+      centro_nordeste: { P: 28, M: 42, G: 70 },
+      norte:           { P: 35, M: 50, G: 90 },
+    };
+
+    // transforma "R$ 80,00" / "80,00 R$" / "80,00R$" / "20,00" em número 80
+    function precoParaNumero(str) {
+      if (!str) return 0;
+      const limpo = str.replace(/R\$/gi, '').trim();
+      const numero = limpo.replace(/\./g, '').replace(',', '.').replace(/[^\d.]/g, '');
+      return parseFloat(numero) || 0;
+    }
+
+    function formatarReal(valor) {
+      return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    const valorPeca = precoParaNumero(preco);
+
+    function calcularFrete(uf) {
+      const regiao = REGIAO_POR_UF[uf];
+      if (!regiao) return null;
+      return TABELA_FRETE[regiao][porte] ?? TABELA_FRETE[regiao].M;
+    }
 
     // monta o endereço completo da foto, pra ela aparecer certinho no seu email
     const imagemAbsoluta = imagemRelativa ? new URL(imagemRelativa, window.location.href).href : '';
@@ -124,6 +224,75 @@
       document.querySelector('.zoom-hint').style.display = 'none';
     }
 
+    // toda vez que o CEP tem 8 dígitos, busca o endereço na API pública ViaCEP
+    // (gratuita, não precisa de servidor nem chave de acesso) e preenche os campos.
+    // se o CEP não for encontrado, a pessoa preenche o endereço na mão mesmo.
+    const cepInput = document.getElementById('cep');
+    const cepStatus = document.getElementById('cep-status');
+    const ruaInput = document.getElementById('rua');
+    const bairroInput = document.getElementById('bairro');
+    const cidadeInput = document.getElementById('cidade');
+    const ufInput = document.getElementById('uf');
+    const resumoBox = document.getElementById('resumo-valores');
+    const freteHidden = document.getElementById('frete-hidden');
+    const totalHidden = document.getElementById('total-hidden');
+
+    // aplica a máscara 00000-000 enquanto a pessoa digita
+    cepInput.addEventListener('input', () => {
+      let v = cepInput.value.replace(/\D/g, '').slice(0, 8);
+      if (v.length > 5) v = v.slice(0, 5) + '-' + v.slice(5);
+      cepInput.value = v;
+      const digits = v.replace(/\D/g, '');
+      if (digits.length === 8) buscarEndereco(digits);
+    });
+
+    async function buscarEndereco(cep) {
+      cepStatus.textContent = 'Buscando endereço...';
+      try {
+        const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await res.json();
+        if (data.erro) {
+          cepStatus.textContent = 'CEP não encontrado — preencha o endereço manualmente.';
+          return;
+        }
+        ruaInput.value = data.logradouro || '';
+        bairroInput.value = data.bairro || '';
+        cidadeInput.value = data.localidade || '';
+        ufInput.value = data.uf || '';
+        cepStatus.textContent = 'Endereço encontrado! Confira os dados e complete o número.';
+        document.getElementById('numero').focus();
+        atualizarResumo();
+      } catch (err) {
+        cepStatus.textContent = 'Não consegui buscar o CEP agora — preencha o endereço manualmente.';
+      }
+    }
+
+    // recalcula frete + total sempre que o estado (uf) muda — seja por busca automática
+    // do CEP ou porque a pessoa digitou/corrigiu na mão
+    ufInput.addEventListener('input', () => {
+      ufInput.value = ufInput.value.toUpperCase().slice(0, 2);
+      atualizarResumo();
+    });
+
+    function atualizarResumo() {
+      const frete = calcularFrete(ufInput.value);
+      if (frete === null) {
+        resumoBox.style.display = 'none';
+        freteHidden.value = '';
+        totalHidden.value = '';
+        return;
+      }
+      const total = valorPeca + frete;
+
+      document.getElementById('resumo-peca').textContent = formatarReal(valorPeca);
+      document.getElementById('resumo-frete').textContent = formatarReal(frete);
+      document.getElementById('resumo-total').textContent = formatarReal(total);
+      resumoBox.style.display = '';
+
+      freteHidden.value = formatarReal(frete);
+      totalHidden.value = formatarReal(total);
+    }
+
     const form = document.getElementById('form-encomenda');
     const success = document.getElementById('success-msg');
     form.addEventListener('submit', async (e) => {
@@ -141,6 +310,10 @@
           document.getElementById('variacao-hidden').value = variacao;
           if (variacao) document.getElementById('variacao-label').value = variacao;
           document.getElementById('subject-hidden').value = 'Nova encomenda: ' + produto;
+          resumoBox.style.display = 'none';
+          freteHidden.value = '';
+          totalHidden.value = '';
+          cepStatus.textContent = 'Digite o CEP pra eu já preencher o endereço.';
         } else {
           alert('Não consegui enviar agora. Tenta de novo em instantes.');
         }

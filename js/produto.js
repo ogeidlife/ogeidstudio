@@ -87,6 +87,7 @@
         produto: p.titulo,
         imagem: imagem,
         preco: preco,
+        porte: p.porte || "M",
       });
       const variacaoTexto = textoVariacaoEscolhida();
       if (variacaoTexto) orderParams.set("variacao", variacaoTexto);

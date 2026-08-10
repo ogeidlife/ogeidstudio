@@ -4,6 +4,7 @@
     "numero": "Nº 001",
     "titulo": "Cabeça Ogeid ",
     "preco": "150,00 R$",
+    "porte": "P",
     "descricao": "O item de assinatura do ateliê: a cabeça do personagem modelado em 3d, e finalizada individualmente — pequenas variações fazem parte do caráter artesanal do trabalho.",
     "specs": [
       {
@@ -44,6 +45,7 @@
     "numero": "Nº 002",
     "titulo": "Ta escrito ",
     "preco": "R$ 80,00",
+    "porte": "P",
     "descricao": "Ilustração original do universo do personagem impresso em papel couche 180 g/m ",
     "specs": [
       {
@@ -104,6 +106,7 @@
     "numero": "Nº 003",
     "titulo": "Abajur Ogeid melancolia",
     "preco": "R$ 220,00",
+    "porte": "M",
     "descricao": "Luminárias artesanal, feitas à mão em cerâmica fria e impressão 3D, que trazem o universo do personagem para a iluminação do dia a dia. Peças únicas, pensadas como objeto de decoração e colecionável ao mesmo tempo.",
     "specs": [
       {
@@ -139,6 +142,7 @@
     "numero": "Nº 004",
     "titulo": "Minha cidade ",
     "preco": "R$ 90,00",
+    "porte": "P",
     "descricao": "Ilustração original do universo do personagem impresso em papel couche 180 g/m ",
     "specs": [
       {
@@ -187,6 +191,7 @@
     "numero": "Nº 005",
     "titulo": "Sem problemas",
     "preco": "80,00R$",
+    "porte": "P",
     "descricao": "Ilustração original do universo do personagem impresso em papel couche 180 g/m ",
     "specs": [
       {
@@ -228,6 +233,7 @@
     "numero": "Nº 006",
     "titulo": "Adesivos",
     "preco": "20,00",
+    "porte": "P",
     "descricao": "pack de adesivos do universo Ogeid ",
     "specs": [
       {
@@ -258,6 +264,7 @@
     "numero": "Nº 007",
     "titulo": "Tranquilo mas nem tanto ",
     "preco": "300,00R$",
+    "porte": "G",
     "descricao": "1/1 Pintura sobre o universo Ogeid feita a mão em tela 60 x60cm ",
     "specs": [
       {
@@ -285,6 +292,7 @@
     "numero": "Nº 008",
     "titulo": "Ajude seus amigos ",
     "preco": "300,00 R$",
+    "porte": "G",
     "descricao": "1/1 Pintura sobre o universo Ogeid feita a mão em tela 50 x 50cm ",
     "specs": [
       {
@@ -312,6 +320,7 @@
     "numero": "Nº 009",
     "titulo": "Tranquilo mas nem tanto 2",
     "preco": "300,00 R$",
+    "porte": "G",
     "descricao": "1/1 Pintura sobre o universo Ogeid feita a mão em tela 60 x60cm ",
     "specs": [
       {
