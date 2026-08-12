@@ -111,7 +111,7 @@
     "specs": [
       {
         "label": "Material",
-        "valor": "impressão 3d PLA"
+        "valor": "cerâmica fria e impressão 3d PLA"
       },
       {
         "label": "Tamanho",
@@ -123,7 +123,7 @@
       },
       {
         "label": "Prazo",
-        "valor": "Sob encomenda"
+        "valor": "7 dias úteis após o pagamento"
       }
     ],
     "imagens": [
