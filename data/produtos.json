@@ -50,7 +50,7 @@
     "specs": [
       {
         "label": "Material",
-        "valor": "Impressão em papel couche 180 g/m"
+        "valor": "Impressão em papel Hahnemühle 308 g/m²"
       },
       {
         "label": "Tamanhos",
@@ -147,7 +147,7 @@
     "specs": [
       {
         "label": "Material",
-        "valor": "Papel museográfico"
+        "valor": "papel Hahnemühle 308 g/m²"
       },
       {
         "label": "Tamanhos",
@@ -200,7 +200,7 @@
       },
       {
         "label": "Papel",
-        "valor": "couchê 180 g/m"
+        "valor": "papel Hahnemühle 308 g/m²"
       }
     ],
     "imagens": [
