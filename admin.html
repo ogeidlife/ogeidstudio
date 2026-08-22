@@ -811,10 +811,10 @@
     }
 
     function escapeAttr(str) {
-      return (str || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+      return String(str == null ? '' : str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
     }
     function escapeHtml(str) {
-      return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return String(str == null ? '' : str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
     document.getElementById('btn-salvar').addEventListener('click', async () => {
@@ -1247,11 +1247,11 @@
         <div class="admin-row" style="margin-top:12px;">
           <div class="field field-mini">
             <label>Lance inicial (R$)</label>
-            <input type="number" step="0.01" min="0" class="lo-start" value="${escapeAttr(lot.startingPrice != null ? lot.startingPrice : '')}">
+            <input type="number" step="0.01" min="0" class="lo-start" value="${lot.startingPrice != null ? lot.startingPrice : ''}">
           </div>
           <div class="field field-mini">
             <label>Incremento mínimo (R$)</label>
-            <input type="number" step="0.01" min="0" class="lo-incr" value="${escapeAttr(lot.minIncrement != null ? lot.minIncrement : '')}">
+            <input type="number" step="0.01" min="0" class="lo-incr" value="${lot.minIncrement != null ? lot.minIncrement : ''}">
           </div>
         </div>
         <div class="field field-mini" style="margin-top:12px;">
