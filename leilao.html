@@ -637,20 +637,33 @@ function refreshLotDisplay(item){
 function watchLots(){
   fbUnsubs.forEach((unsub) => { try{ unsub(); }catch(e){} });
   fbUnsubs = [];
-  if(!FB){
-    // sem Firebase configurado: mostra os lotes com o lance inicial, sem lances ao vivo
-    CONFIG.lots.forEach((item) => { lotState[item.id] = {value:item.startingPrice, bidder:null, manualEnd:false}; });
-    renderGallery();
-    return;
-  }
+
+  // desenha a galeria JÁ, com o lance inicial de cada lote — assim o(s) lote(s)
+  // sempre aparecem na tela mesmo que o Firebase demore, falhe ou esteja sem
+  // permissão de leitura. O que vier do Firebase depois só atualiza os valores.
+  CONFIG.lots.forEach((item) => {
+    if(!lotState[item.id]) lotState[item.id] = {value:item.startingPrice, bidder:null, manualEnd:false};
+  });
+  renderGallery();
+
+  if(!FB) return; // sem Firebase configurado: fica só com o lance inicial, sem lances ao vivo
+
   const { db, ref, onValue } = FB;
   CONFIG.lots.forEach((item) => {
-    const unsub = onValue(ref(db, `leilao/lotes/${item.id}`), (snap) => {
-      const v = snap.val();
-      lotState[item.id] = v ? { value: v.value, bidder: v.bidder || null, manualEnd: !!v.manualEnd } : { value: item.startingPrice, bidder: null, manualEnd: false };
-      if(document.getElementById('card-'+item.id)) refreshLotDisplay(item);
-      else renderGallery();
-    });
+    const unsub = onValue(
+      ref(db, `leilao/lotes/${item.id}`),
+      (snap) => {
+        const v = snap.val();
+        lotState[item.id] = v ? { value: v.value, bidder: v.bidder || null, manualEnd: !!v.manualEnd } : { value: item.startingPrice, bidder: null, manualEnd: false };
+        if(document.getElementById('card-'+item.id)) refreshLotDisplay(item);
+        else renderGallery();
+      },
+      (err) => {
+        // erro de permissão/conexão no Firebase: o lote já está visível com o
+        // lance inicial (desenhado acima), só não vai atualizar ao vivo
+        console.error('Firebase onValue falhou para', item.id, err);
+      }
+    );
     fbUnsubs.push(unsub);
   });
 }
