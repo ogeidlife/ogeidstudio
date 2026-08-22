@@ -13,7 +13,7 @@
       },
       {
         "label": "Altura",
-        "valor": "≈ 12 cm"
+        "valor": "≈ 10 cm"
       },
       {
         "label": "Acabamento",
@@ -46,11 +46,11 @@
     "titulo": "Ta escrito ",
     "preco": "R$ 80,00",
     "porte": "P",
-    "descricao": "Ilustração original do universo do personagem impresso em papel couche 180 g/m ",
+    "descricao": "Ilustração original do universo do personagem impresso em papel Hahnemühle\n308 g/m²",
     "specs": [
       {
         "label": "Material",
-        "valor": "Impressão em papel couche 180 g/m"
+        "valor": "Impressão em papel Hahnemühle 308 g/m²"
       },
       {
         "label": "Tamanhos",
@@ -111,11 +111,11 @@
     "specs": [
       {
         "label": "Material",
-        "valor": "impressão 3d PLA"
+        "valor": "cerâmica fria e impressão 3d PLA"
       },
       {
         "label": "Tamanho",
-        "valor": "15 cm"
+        "valor": "19cm de altura 11,5cm de largura "
       },
       {
         "label": "Uso",
@@ -123,7 +123,7 @@
       },
       {
         "label": "Prazo",
-        "valor": "Sob encomenda"
+        "valor": "7 dias úteis após o pagamento"
       }
     ],
     "imagens": [
@@ -143,11 +143,11 @@
     "titulo": "Minha cidade ",
     "preco": "R$ 90,00",
     "porte": "P",
-    "descricao": "Ilustração original do universo do personagem impresso em papel couche 180 g/m ",
+    "descricao": "Ilustração original do universo do personagem impresso em papel Hahnemühle\n308 g/m²",
     "specs": [
       {
         "label": "Material",
-        "valor": "Papel museográfico"
+        "valor": "papel Hahnemühle 308 g/m²"
       },
       {
         "label": "Tamanhos",
@@ -192,7 +192,7 @@
     "titulo": "Sem problemas",
     "preco": "80,00R$",
     "porte": "P",
-    "descricao": "Ilustração original do universo do personagem impresso em papel couche 180 g/m ",
+    "descricao": "Ilustração original do universo do personagem impresso em papel Hahnemühle\n308 g/m²",
     "specs": [
       {
         "label": "Tamanho",
@@ -200,7 +200,7 @@
       },
       {
         "label": "Papel",
-        "valor": "couchê 180 g/m"
+        "valor": "papel Hahnemühle 308 g/m²"
       }
     ],
     "imagens": [
@@ -242,7 +242,7 @@
       },
       {
         "label": "Quantidade de adesivos ",
-        "valor": "10"
+        "valor": "8"
       },
       {
         "label": "Tamanho",
