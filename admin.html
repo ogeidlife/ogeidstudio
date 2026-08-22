@@ -182,18 +182,12 @@
           <div id="horarios-lista" style="font-family:var(--f-mono); font-size:13px; color:var(--ink); display:flex; flex-wrap:wrap; gap:8px;"></div>
           <p id="horarios-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:10px; max-width:60ch;"></p>
         </div>
-
-        <div style="margin-top:24px; border-top:1px solid var(--line); padding-top:18px;">
-          <div style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px;">Zerar contagem</div>
-          <p style="color:var(--ink-dim); font-size:14px; max-width:60ch; margin:0 0 12px;">Isso apaga o total de visitas e os horários registrados até agora (as visitas de teste que você já fez) e começa uma contagem oficial do zero. Não dá pra desfazer.</p>
-          <button class="btn ghost" id="btn-zerar-contagem" type="button">Zerar contagem e começar oficial</button>
-          <p id="zerar-status" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:10px;"></p>
-        </div>
       </div>
 
       <div class="tab-nav">
         <button type="button" class="tab-btn active" id="tab-btn-produtos">Produtos</button>
         <button type="button" class="tab-btn" id="tab-btn-pedidos">Pedidos</button>
+        <button type="button" class="tab-btn" id="tab-btn-leilao">Leilão</button>
       </div>
 
       <div id="produtos-area" class="tab-panel">
@@ -216,6 +210,72 @@
         <div id="pedidos-container"></div>
         <button class="btn ghost" id="btn-sair-pedidos" style="margin-top:8px;">Sair</button>
       </div>
+
+      <div id="leilao-area" class="tab-panel hidden">
+        <p class="reorder-hint">
+          Configure aqui os textos, o banner e as obras/lotes do leilão (isso salva no GitHub, igual aos produtos, e o site atualiza em 1-2 minutos). Os <strong>lances em tempo real</strong> dos visitantes ficam num painel à parte, mais abaixo, que lê direto do Firebase — esses não passam pelo "Salvar alterações do leilão".
+        </p>
+
+        <div class="admin-panel">
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 14px;">Textos do site do leilão</h2>
+          <div class="field field-mini"><label>Título do banner</label><input type="text" id="lx-eventTitle"></div>
+          <div class="field field-mini" style="margin-top:12px;"><label>Subtítulo do banner</label><textarea id="lx-eventSubtitle" rows="2"></textarea></div>
+          <div class="admin-row" style="margin-top:12px;">
+            <div class="field field-mini"><label>Passo 1 — título</label><input type="text" id="lx-how1Title"></div>
+            <div class="field field-mini"><label>Passo 1 — texto</label><input type="text" id="lx-how1Text"></div>
+          </div>
+          <div class="admin-row" style="margin-top:12px;">
+            <div class="field field-mini"><label>Passo 2 — título</label><input type="text" id="lx-how2Title"></div>
+            <div class="field field-mini"><label>Passo 2 — texto</label><input type="text" id="lx-how2Text"></div>
+          </div>
+          <div class="admin-row" style="margin-top:12px;">
+            <div class="field field-mini"><label>Passo 3 — título</label><input type="text" id="lx-how3Title"></div>
+            <div class="field field-mini"><label>Passo 3 — texto</label><input type="text" id="lx-how3Text"></div>
+          </div>
+          <div class="field field-mini" style="margin-top:12px;"><label>Texto do rodapé</label><input type="text" id="lx-footerText"></div>
+        </div>
+
+        <div class="admin-panel">
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 6px;">Imagem do banner</h2>
+          <p style="color:var(--ink-dim); font-size:13px; margin:0 0 14px;">Foto de fundo do topo da página do leilão (opcional).</p>
+          <div class="img-row-box" id="leilao-banner-box"></div>
+        </div>
+
+        <div class="admin-panel">
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 6px;">Obras / lotes</h2>
+          <p style="color:var(--ink-dim); font-size:13px; margin:0 0 14px;">Título, descrição, foto, lance inicial, incremento mínimo e prazo de cada lote.</p>
+          <div id="leilao-lotes-container"></div>
+          <button class="btn ghost" id="btn-novo-lote" type="button">+ adicionar novo lote</button>
+        </div>
+
+        <div class="admin-panel">
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 6px;">Aviso por e-mail a cada lance</h2>
+          <p style="color:var(--ink-dim); font-size:13px; margin:0 0 14px; max-width:70ch; line-height:1.6;">
+            Usa o EmailJS pra mandar um e-mail direto do navegador de quem der o lance. Crie uma conta em
+            <a href="https://www.emailjs.com" target="_blank" style="color:var(--accent-2);">emailjs.com</a>, configure um serviço e um template com as variáveis
+            <code>{{bidder_name}}</code>, <code>{{bidder_contact}}</code>, <code>{{bid_value}}</code>, <code>{{lot_title}}</code> e <code>{{bid_time}}</code>.
+          </p>
+          <div class="field field-mini"><label>Seu e-mail (quem recebe o aviso)</label><input type="email" id="lx-eToEmail" placeholder="voce@exemplo.com"></div>
+          <div class="admin-row" style="margin-top:12px;">
+            <div class="field field-mini"><label>Service ID</label><input type="text" id="lx-eServiceId"></div>
+            <div class="field field-mini"><label>Template ID</label><input type="text" id="lx-eTemplateId"></div>
+          </div>
+          <div class="field field-mini" style="margin-top:12px;"><label>Public Key</label><input type="text" id="lx-ePublicKey"></div>
+        </div>
+
+        <div class="save-bar">
+          <button class="btn" id="btn-salvar-leilao">Salvar alterações do leilão</button>
+        </div>
+        <div class="status-msg" id="leilao-save-status"></div>
+
+        <div class="admin-panel" style="margin-top:36px;">
+          <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Ao vivo, via Firebase</p>
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 6px;">Lances recebidos</h2>
+          <p style="color:var(--ink-dim); font-size:13px; margin:0 0 16px;">Nome, contato e valor de cada lance, por lote. Atualiza sozinho.</p>
+          <div id="leilao-bids-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-bottom:12px;"></div>
+          <div id="leilao-bids-container"></div>
+        </div>
+      </div>
     </div>
 
     <div class="admin-panel" style="margin-top:48px;">
@@ -235,6 +295,26 @@
   <script src="js/firebase-config.js"></script>
   <script type="module">
     /* =========================================================
+       Inicialização única do Firebase, compartilhada entre o painel
+       de estatísticas e a aba "Leilão" (lances ao vivo). Guarda tudo
+       em window.__fb e resolve window.__fbReady quando terminar —
+       assim qualquer outro <script type="module"> desta página pode
+       fazer `await window.__fbReady` e usar window.__fb sem duplicar
+       a inicialização do Firebase (o que daria erro).
+       ========================================================= */
+    window.__fbReady = (async function initFirebase() {
+      const cfg = window.FIREBASE_CONFIG;
+      if (!cfg || cfg.apiKey === 'COLE_AQUI') return null;
+      const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js');
+      const dbMod = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js');
+      const app = initializeApp(cfg);
+      const db = dbMod.getDatabase(app);
+      window.__fb = { db, ...dbMod };
+      return window.__fb;
+    })().catch((err) => { console.error('Firebase init falhou', err); return null; });
+  </script>
+  <script type="module">
+    /* =========================================================
        Painel de estatísticas: total de visitas + quem está online.
        Independe do login do GitHub — carrega sozinho ao abrir a página.
        Se o Firebase não estiver configurado ou algo falhar, mostra um
@@ -242,17 +322,13 @@
        ========================================================= */
     (async function () {
       const msg = document.getElementById('stats-msg');
-      const cfg = window.FIREBASE_CONFIG;
-      if (!cfg || cfg.apiKey === 'COLE_AQUI') {
+      const fb = await window.__fbReady;
+      if (!fb) {
         msg.textContent = 'Estatísticas ainda não configuradas — veja o passo a passo do Firebase que veio junto com esses arquivos.';
         return;
       }
       try {
-        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js');
-        const { getDatabase, ref, onValue, query, limitToLast, set, remove } = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js');
-
-        const app = initializeApp(cfg);
-        const db = getDatabase(app);
+        const { db, ref, onValue, query, limitToLast } = fb;
 
         onValue(ref(db, 'estatisticas/totalVisitas'), (snap) => {
           document.getElementById('total-visitas').textContent = snap.val() || 0;
@@ -302,22 +378,6 @@
           }).join('');
           horariosMsg.textContent = '';
         }, () => { horariosMsg.textContent = 'Não consegui carregar os horários agora.'; });
-
-        // Zerar contagem — apaga o total e os horários registrados até
-        // agora e começa do zero. Não mexe em 'online' (isso é só sessão
-        // ativa no momento, já se limpa sozinho).
-        const zerarStatus = document.getElementById('zerar-status');
-        document.getElementById('btn-zerar-contagem').addEventListener('click', async () => {
-          const ok = confirm('Isso vai apagar o total de visitas e os horários registrados até agora, e começar uma contagem oficial do zero. Não dá pra desfazer. Confirma?');
-          if (!ok) return;
-          try {
-            await set(ref(db, 'estatisticas/totalVisitas'), 0);
-            await remove(ref(db, 'estatisticas/entradas'));
-            zerarStatus.textContent = 'Pronto — contagem zerada. A partir de agora as visitas são a contagem oficial.';
-          } catch (err) {
-            zerarStatus.textContent = 'Não consegui zerar agora, tenta de novo em instantes.';
-          }
-        });
       } catch (err) {
         msg.textContent = 'Não consegui carregar as estatísticas agora.';
       }
@@ -427,11 +487,17 @@
     // ---- abas ----
     document.getElementById('tab-btn-produtos').addEventListener('click', () => trocarAba('produtos'));
     document.getElementById('tab-btn-pedidos').addEventListener('click', () => trocarAba('pedidos'));
+    document.getElementById('tab-btn-leilao').addEventListener('click', () => {
+      trocarAba('leilao');
+      if (!currentLeilao) carregarLeilao();
+    });
     function trocarAba(nome) {
       document.getElementById('produtos-area').classList.toggle('hidden', nome !== 'produtos');
       document.getElementById('pedidos-area').classList.toggle('hidden', nome !== 'pedidos');
+      document.getElementById('leilao-area').classList.toggle('hidden', nome !== 'leilao');
       document.getElementById('tab-btn-produtos').classList.toggle('active', nome === 'produtos');
       document.getElementById('tab-btn-pedidos').classList.toggle('active', nome === 'pedidos');
+      document.getElementById('tab-btn-leilao').classList.toggle('active', nome === 'leilao');
     }
 
     function renderCards(data) {
@@ -1074,6 +1140,291 @@
       addPedidoCard(id, novo);
       document.getElementById('pedidos-container').lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
+
+    /* =========================================================
+       LEILÃO — textos, banner e lotes ficam em data/leilao.json
+       (mesmo esquema GitHub de produtos/pedidos). Os LANCES ao vivo
+       (visitante sem login dando lance) não podem ser gravados pelo
+       token do GitHub, então ficam no Firebase Realtime Database —
+       o mesmo já configurado pras estatísticas (js/firebase-config.js).
+       ========================================================= */
+    const DATA_PATH_LEILAO = 'data/leilao.json';
+    const LEILAO_DEFAULTS = {
+      texts: {
+        eventTitle: 'Leilão', eventSubtitle: '',
+        how1Title: '', how1Text: '', how2Title: '', how2Text: '', how3Title: '', how3Text: '',
+        footerText: '',
+      },
+      banner: '',
+      lots: [],
+      email: { toEmail: '', serviceId: '', templateId: '', publicKey: '' },
+    };
+    let currentLeilao = null;
+    let currentLeilaoSha = null;
+    let leilaoBidsUnsubs = [];
+
+    async function carregarLeilao() {
+      try {
+        const res = await fetch(`${apiBase()}/contents/${DATA_PATH_LEILAO}`, { headers: ghHeaders() });
+        if (res.ok) {
+          const json = await res.json();
+          currentLeilaoSha = json.sha;
+          currentLeilao = JSON.parse(b64DecodeUnicode(json.content));
+        } else {
+          // arquivo ainda não existe no repositório — começa com os padrões,
+          // é criado sozinho quando salvar pela primeira vez
+          currentLeilaoSha = null;
+          currentLeilao = JSON.parse(JSON.stringify(LEILAO_DEFAULTS));
+        }
+      } catch (err) {
+        currentLeilaoSha = null;
+        currentLeilao = JSON.parse(JSON.stringify(LEILAO_DEFAULTS));
+      }
+      currentLeilao.texts = { ...LEILAO_DEFAULTS.texts, ...(currentLeilao.texts || {}) };
+      currentLeilao.email = { ...LEILAO_DEFAULTS.email, ...(currentLeilao.email || {}) };
+      currentLeilao.lots = currentLeilao.lots || [];
+      renderLeilaoTexts(currentLeilao);
+      renderLeilaoLotes(currentLeilao.lots);
+      renderLeilaoBids(currentLeilao.lots);
+    }
+
+    function renderLeilaoTexts(data) {
+      const t = data.texts, e = data.email;
+      document.getElementById('lx-eventTitle').value = t.eventTitle || '';
+      document.getElementById('lx-eventSubtitle').value = t.eventSubtitle || '';
+      document.getElementById('lx-how1Title').value = t.how1Title || '';
+      document.getElementById('lx-how1Text').value = t.how1Text || '';
+      document.getElementById('lx-how2Title').value = t.how2Title || '';
+      document.getElementById('lx-how2Text').value = t.how2Text || '';
+      document.getElementById('lx-how3Title').value = t.how3Title || '';
+      document.getElementById('lx-how3Text').value = t.how3Text || '';
+      document.getElementById('lx-footerText').value = t.footerText || '';
+      document.getElementById('lx-eToEmail').value = e.toEmail || '';
+      document.getElementById('lx-eServiceId').value = e.serviceId || '';
+      document.getElementById('lx-eTemplateId').value = e.templateId || '';
+      document.getElementById('lx-ePublicKey').value = e.publicKey || '';
+
+      const bannerBox = document.getElementById('leilao-banner-box');
+      bannerBox.innerHTML = '';
+      addImageRow(bannerBox, data.banner || 'assets/img/leilao/banner.jpg', '', false);
+    }
+
+    function gerarIdLote() {
+      let id;
+      do {
+        id = 'lote-' + Math.random().toString(36).slice(2, 8);
+      } while (currentLeilao && currentLeilao.lots.some((l) => l.id === id));
+      return id;
+    }
+
+    function renderLeilaoLotes(lots) {
+      const container = document.getElementById('leilao-lotes-container');
+      container.innerHTML = '';
+      lots.forEach((lot) => addLoteCard(lot));
+    }
+
+    function addLoteCard(lot) {
+      const container = document.getElementById('leilao-lotes-container');
+      const card = document.createElement('div');
+      card.className = 'product-card lote-card';
+      card.dataset.id = lot.id;
+      const endTimeLocal = lot.endTime ? new Date(lot.endTime).toISOString().slice(0, 16) : '';
+      card.innerHTML = `
+        <div class="card-top-row">
+          <h2>${escapeHtml(lot.title) || 'Novo lote'}</h2>
+          <div class="card-actions">
+            <button type="button" class="remove-product remove-lote">remover lote</button>
+          </div>
+        </div>
+        <div class="field field-mini">
+          <label>Título da obra</label>
+          <input type="text" class="lo-title" value="${escapeAttr(lot.title)}">
+        </div>
+        <div class="field field-mini" style="margin-top:12px;">
+          <label>Descrição</label>
+          <textarea class="lo-desc" rows="3">${escapeHtml(lot.description)}</textarea>
+        </div>
+        <div class="admin-row" style="margin-top:12px;">
+          <div class="field field-mini">
+            <label>Lance inicial (R$)</label>
+            <input type="number" step="0.01" min="0" class="lo-start" value="${escapeAttr(lot.startingPrice != null ? lot.startingPrice : '')}">
+          </div>
+          <div class="field field-mini">
+            <label>Incremento mínimo (R$)</label>
+            <input type="number" step="0.01" min="0" class="lo-incr" value="${escapeAttr(lot.minIncrement != null ? lot.minIncrement : '')}">
+          </div>
+        </div>
+        <div class="field field-mini" style="margin-top:12px;">
+          <label>Encerra em</label>
+          <input type="datetime-local" class="lo-end" value="${endTimeLocal}">
+        </div>
+        <div class="field field-mini" style="margin-top:16px;">
+          <label>Foto da obra</label>
+          <div class="lo-img-box"></div>
+        </div>
+      `;
+      container.appendChild(card);
+
+      const imgBox = card.querySelector('.lo-img-box');
+      addImageRow(imgBox, lot.image || `assets/img/leilao/${lot.id}.jpg`, '', false);
+
+      card.querySelector('.lo-title').addEventListener('input', (e) => {
+        card.querySelector('h2').textContent = e.target.value || 'Novo lote';
+      });
+
+      card.querySelector('.remove-lote').addEventListener('click', () => {
+        if (!confirm(`Remover o lote "${lot.title || lot.id}"? Isso some do site quando você salvar.`)) return;
+        card.remove();
+      });
+    }
+
+    document.getElementById('btn-novo-lote').addEventListener('click', () => {
+      if (!currentLeilao) currentLeilao = JSON.parse(JSON.stringify(LEILAO_DEFAULTS));
+      const novo = { id: gerarIdLote(), title: '', description: '', image: '', startingPrice: 0, minIncrement: 10, endTime: '' };
+      addLoteCard(novo);
+      document.getElementById('leilao-lotes-container').lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    document.getElementById('btn-salvar-leilao').addEventListener('click', async () => {
+      const status = document.getElementById('leilao-save-status');
+      if (!currentLeilao) currentLeilao = JSON.parse(JSON.stringify(LEILAO_DEFAULTS));
+
+      const bannerRow = document.querySelector('#leilao-banner-box .img-row');
+      const lotCards = document.querySelectorAll('.lote-card');
+      const lots = [...lotCards].map((card) => {
+        const endLocal = card.querySelector('.lo-end').value;
+        return {
+          id: card.dataset.id,
+          title: card.querySelector('.lo-title').value.trim(),
+          description: card.querySelector('.lo-desc').value.trim(),
+          startingPrice: parseFloat(card.querySelector('.lo-start').value) || 0,
+          minIncrement: parseFloat(card.querySelector('.lo-incr').value) || 0,
+          endTime: endLocal ? new Date(endLocal).toISOString() : '',
+          image: card.querySelector('.lo-img-box .img-row')?.dataset.path || '',
+        };
+      });
+
+      currentLeilao = {
+        texts: {
+          eventTitle: document.getElementById('lx-eventTitle').value.trim(),
+          eventSubtitle: document.getElementById('lx-eventSubtitle').value.trim(),
+          how1Title: document.getElementById('lx-how1Title').value.trim(),
+          how1Text: document.getElementById('lx-how1Text').value.trim(),
+          how2Title: document.getElementById('lx-how2Title').value.trim(),
+          how2Text: document.getElementById('lx-how2Text').value.trim(),
+          how3Title: document.getElementById('lx-how3Title').value.trim(),
+          how3Text: document.getElementById('lx-how3Text').value.trim(),
+          footerText: document.getElementById('lx-footerText').value.trim(),
+        },
+        banner: bannerRow ? bannerRow.dataset.path : '',
+        lots,
+        email: {
+          toEmail: document.getElementById('lx-eToEmail').value.trim(),
+          serviceId: document.getElementById('lx-eServiceId').value.trim(),
+          templateId: document.getElementById('lx-eTemplateId').value.trim(),
+          publicKey: document.getElementById('lx-ePublicKey').value.trim(),
+        },
+      };
+
+      showStatus(status, 'Salvando...', true);
+      try {
+        const body = {
+          message: 'Atualiza leilão pelo painel admin',
+          content: b64EncodeUnicode(JSON.stringify(currentLeilao, null, 2)),
+          branch: 'main',
+        };
+        if (currentLeilaoSha) body.sha = currentLeilaoSha;
+        const res = await fetch(`${apiBase()}/contents/${DATA_PATH_LEILAO}`, {
+          method: 'PUT',
+          headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          showStatus(status, 'Erro ao salvar: ' + (err.message || res.status), false);
+          return;
+        }
+        const result = await res.json();
+        currentLeilaoSha = result.content.sha;
+        showStatus(status, 'Salvo! O site atualiza em 1-2 minutos.', true);
+        renderLeilaoBids(currentLeilao.lots);
+      } catch (err) {
+        showStatus(status, 'Erro de conexão: ' + err.message, false);
+      }
+    });
+
+    // ---- lances ao vivo (Firebase) ----
+    async function renderLeilaoBids(lots) {
+      const msg = document.getElementById('leilao-bids-msg');
+      const container = document.getElementById('leilao-bids-container');
+      leilaoBidsUnsubs.forEach((unsub) => { try { unsub(); } catch (e) {} });
+      leilaoBidsUnsubs = [];
+      container.innerHTML = '';
+
+      if (!lots || !lots.length) {
+        msg.textContent = 'Nenhum lote cadastrado ainda.';
+        return;
+      }
+      const fb = await window.__fbReady;
+      if (!fb) {
+        msg.textContent = 'Firebase não está configurado — veja o passo a passo que veio junto com esses arquivos.';
+        return;
+      }
+      msg.textContent = '';
+      const { db, ref, onValue } = fb;
+
+      lots.forEach((lot) => {
+        const box = document.createElement('div');
+        box.className = 'admin-panel';
+        box.style.margin = '0 0 14px';
+        box.innerHTML = `
+          <div class="card-top-row">
+            <h3 style="font-family:var(--f-display); font-size:15px; margin:0;">${escapeHtml(lot.title) || lot.id}</h3>
+            <div class="card-actions">
+              <button type="button" class="move-btn btn-encerrar-lote">encerrar agora</button>
+              <button type="button" class="move-btn btn-zerar-lote">zerar lances</button>
+            </div>
+          </div>
+          <p class="lote-bid-atual" style="font-family:var(--f-mono); font-size:13px; margin:10px 0;">carregando...</p>
+          <div class="lote-leads-lista" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim);"></div>
+        `;
+        container.appendChild(box);
+
+        const atualEl = box.querySelector('.lote-bid-atual');
+        const listaEl = box.querySelector('.lote-leads-lista');
+
+        const unsub1 = onValue(ref(db, `leilao/lotes/${lot.id}`), (snap) => {
+          const v = snap.val();
+          if (!v) { atualEl.textContent = `Lance inicial: R$ ${(lot.startingPrice || 0).toFixed(2)} — ainda sem lances.`; return; }
+          atualEl.textContent = `Lance atual: R$ ${Number(v.value || 0).toFixed(2)}` + (v.bidder ? ` — ${v.bidder}` : '') + (v.manualEnd ? ' · ENCERRADO MANUALMENTE' : '');
+        });
+        const unsub2 = onValue(ref(db, `leilao/leads/${lot.id}`), (snap) => {
+          const itens = [];
+          snap.forEach((child) => itens.push(child.val()));
+          itens.sort((a, b) => (b.time || 0) - (a.time || 0));
+          if (!itens.length) { listaEl.innerHTML = 'Nenhum lance ainda.'; return; }
+          listaEl.innerHTML = itens.map((it) => {
+            const hora = it.time ? new Date(it.time).toLocaleString('pt-BR') : '';
+            return `<div style="border-top:1px solid var(--line); padding:6px 0;">R$ ${Number(it.value || 0).toFixed(2)} — ${escapeHtml(it.name || '')} ${it.contact ? '(' + escapeHtml(it.contact) + ')' : ''} <span style="opacity:.6;">${hora}</span></div>`;
+          }).join('');
+        });
+        leilaoBidsUnsubs.push(unsub1, unsub2);
+
+        box.querySelector('.btn-encerrar-lote').addEventListener('click', async () => {
+          if (!confirm(`Encerrar o lote "${lot.title || lot.id}" agora? Ninguém mais poderá dar lance nele.`)) return;
+          const { db, ref, set, get } = fb;
+          const snap = await get(ref(db, `leilao/lotes/${lot.id}`));
+          const atual = snap.val() || { value: lot.startingPrice || 0, bidder: null };
+          await set(ref(db, `leilao/lotes/${lot.id}`), { ...atual, manualEnd: true });
+        });
+        box.querySelector('.btn-zerar-lote').addEventListener('click', async () => {
+          if (!confirm(`Zerar todos os lances do lote "${lot.title || lot.id}"? Isso não pode ser desfeito.`)) return;
+          const { db, ref, set, remove } = fb;
+          await set(ref(db, `leilao/lotes/${lot.id}`), { value: lot.startingPrice || 0, bidder: null, manualEnd: false });
+          await remove(ref(db, `leilao/leads/${lot.id}`));
+        });
+      });
+    }
   </script>
 </body>
 </html>
