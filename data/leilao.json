@@ -18,13 +18,13 @@
       "description": "print tamanho A2",
       "startingPrice": 40,
       "minIncrement": 10,
-      "endTime": "2026-08-23T18:00:00.000Z",
+      "endTime": "2026-08-23T21:00:00.000Z",
       "image": "assets/img/leilao/lote-nkpub4.jpg"
     }
   ],
   "email": {
     "toEmail": "lifeogeid@gmail.com",
-    "serviceId": "service_598xnau",
+    "serviceId": "service_4gzc14q",
     "templateId": "template_wej71el",
     "publicKey": "JPG5hvzM1zE-KgwRn"
   }
