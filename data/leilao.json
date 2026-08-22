@@ -1,0 +1,21 @@
+{
+  "texts": {
+    "eventTitle": "Leilão",
+    "eventSubtitle": "",
+    "how1Title": "",
+    "how1Text": "",
+    "how2Title": "",
+    "how2Text": "",
+    "how3Title": "",
+    "how3Text": "",
+    "footerText": ""
+  },
+  "banner": "assets/img/leilao/banner.jpg",
+  "lots": [],
+  "email": {
+    "toEmail": "lifeogeid@gmail.com",
+    "serviceId": "service_598xnau",
+    "templateId": "",
+    "publicKey": ""
+  }
+}
