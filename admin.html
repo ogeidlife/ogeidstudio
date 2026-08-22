@@ -85,6 +85,24 @@
   .tab-btn.active{ color:var(--ink); border-bottom-color:var(--accent-2); }
   .tab-panel.hidden{ display:none; }
 
+  /* ---- aba Visitantes ---- */
+  .stat-mini-row{ display:flex; gap:40px; flex-wrap:wrap; }
+  .stat-mini-label{ font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em; }
+  .stat-mini-value{ font-family:var(--f-display); font-size:34px; margin-top:4px; }
+  .stat-block{ margin-top:28px; border-top:1px solid var(--line); padding-top:18px; }
+  .stat-block-title{ font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em; margin-bottom:12px; }
+  .clique-row{ display:flex; align-items:center; gap:12px; padding:7px 0; border-bottom:1px dashed var(--line); font-size:14px; }
+  .clique-row:last-child{ border-bottom:none; }
+  .clique-nome{ flex:1; }
+  .clique-barra-wrap{ flex:1; max-width:160px; height:6px; background:var(--line); border-radius:3px; overflow:hidden; }
+  .clique-barra{ height:100%; background:var(--accent-2); border-radius:3px; }
+  .clique-num{ font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); min-width:26px; text-align:right; }
+  .mes-chart{ display:flex; align-items:flex-end; gap:10px; height:140px; margin-top:6px; }
+  .mes-col{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; }
+  .mes-bar{ width:100%; max-width:34px; background:var(--accent-2); border-radius:3px 3px 0 0; min-height:2px; }
+  .mes-label{ font-family:var(--f-mono); font-size:10px; color:var(--ink-dim); margin-top:6px; text-transform:uppercase; }
+  .mes-valor{ font-family:var(--f-mono); font-size:11px; color:var(--ink); margin-bottom:4px; }
+
   /* ---- pedidos ---- */
   .pedido-card{ border:1px solid var(--line); padding:24px; margin-bottom:20px; }
   .pedido-card h2{ font-family:var(--f-display); font-size:18px; margin:0 0 4px; color:var(--accent-2); }
@@ -162,32 +180,11 @@
     </div>
 
     <div id="produtos-wrap" class="hidden">
-      <div class="admin-panel" id="stats-panel">
-        <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Estatísticas</p>
-        <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 14px;">Visitantes do site</h2>
-        <div style="display:flex; gap:40px; flex-wrap:wrap;">
-          <div>
-            <div style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em;">Total de visitas</div>
-            <div style="font-family:var(--f-display); font-size:34px; margin-top:4px;" id="total-visitas">—</div>
-          </div>
-          <div>
-            <div style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em;">Online agora</div>
-            <div style="font-family:var(--f-display); font-size:34px; margin-top:4px; color:var(--accent-2);" id="online-agora">—</div>
-          </div>
-        </div>
-        <p id="stats-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:14px; max-width:60ch;"></p>
-
-        <div style="margin-top:24px; border-top:1px solid var(--line); padding-top:18px;">
-          <div style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px;">Horários de entrada (últimas visitas)</div>
-          <div id="horarios-lista" style="font-family:var(--f-mono); font-size:13px; color:var(--ink); display:flex; flex-wrap:wrap; gap:8px;"></div>
-          <p id="horarios-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:10px; max-width:60ch;"></p>
-        </div>
-      </div>
-
       <div class="tab-nav">
         <button type="button" class="tab-btn active" id="tab-btn-produtos">Produtos</button>
         <button type="button" class="tab-btn" id="tab-btn-pedidos">Pedidos</button>
         <button type="button" class="tab-btn" id="tab-btn-leilao">Leilão</button>
+        <button type="button" class="tab-btn" id="tab-btn-visitantes">Visitantes</button>
       </div>
 
       <div id="produtos-area" class="tab-panel">
@@ -274,6 +271,42 @@
           <p style="color:var(--ink-dim); font-size:13px; margin:0 0 16px;">Nome, contato e valor de cada lance, por lote. Atualiza sozinho.</p>
           <div id="leilao-bids-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-bottom:12px;"></div>
           <div id="leilao-bids-container"></div>
+        </div>
+      </div>
+
+      <div id="visitantes-area" class="tab-panel hidden">
+        <div class="admin-panel">
+          <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Estatísticas</p>
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 14px;">Visitantes do site</h2>
+          <div class="stat-mini-row">
+            <div>
+              <div class="stat-mini-label">Total de visitas</div>
+              <div class="stat-mini-value" id="total-visitas">—</div>
+            </div>
+            <div>
+              <div class="stat-mini-label">Online agora</div>
+              <div class="stat-mini-value" style="color:var(--accent-2);" id="online-agora">—</div>
+            </div>
+          </div>
+          <p id="stats-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:14px; max-width:60ch;"></p>
+
+          <div class="stat-block">
+            <div class="stat-block-title">Horários de entrada (últimas visitas)</div>
+            <div id="horarios-lista" style="font-family:var(--f-mono); font-size:13px; color:var(--ink); display:flex; flex-wrap:wrap; gap:8px;"></div>
+            <p id="horarios-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:10px; max-width:60ch;"></p>
+          </div>
+
+          <div class="stat-block">
+            <div class="stat-block-title">Peça mais clicada</div>
+            <div id="cliques-lista"></div>
+            <p id="cliques-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:6px; max-width:60ch;"></p>
+          </div>
+
+          <div class="stat-block">
+            <div class="stat-block-title">Visitantes por mês</div>
+            <div id="meses-chart" class="mes-chart"></div>
+            <p id="meses-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:10px; max-width:60ch;"></p>
+          </div>
         </div>
       </div>
     </div>
@@ -378,6 +411,75 @@
           }).join('');
           horariosMsg.textContent = '';
         }, () => { horariosMsg.textContent = 'Não consegui carregar os horários agora.'; });
+
+        // Peça mais clicada — lê 'estatisticas/cliques/{key}' (um contador por
+        // peça, gravado pelo js/visitas.js sempre que alguém abre a página
+        // dela) e cruza com data/produtos.json só pra mostrar o título certo
+        // em vez da chave interna.
+        const cliquesBox = document.getElementById('cliques-lista');
+        const cliquesMsg = document.getElementById('cliques-msg');
+        let titulosProdutos = {};
+        fetch('data/produtos.json', { cache: 'no-store' })
+          .then((r) => r.json())
+          .then((todos) => {
+            titulosProdutos = Object.fromEntries(
+              Object.entries(todos).map(([key, p]) => [key, p.titulo || key])
+            );
+          })
+          .catch(() => {});
+
+        onValue(ref(db, 'estatisticas/cliques'), (snap) => {
+          const val = snap.val();
+          if (!val) {
+            cliquesMsg.textContent = 'Ainda não há cliques registrados.';
+            cliquesBox.innerHTML = '';
+            return;
+          }
+          const lista = Object.entries(val)
+            .map(([key, count]) => ({ key, count: Number(count) || 0 }))
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 8);
+          const max = lista[0].count || 1;
+          cliquesBox.innerHTML = lista.map((item) => {
+            const nome = titulosProdutos[item.key] || item.key;
+            const pct = Math.max(6, Math.round((item.count / max) * 100));
+            return `
+              <div class="clique-row">
+                <span class="clique-nome">${nome}</span>
+                <div class="clique-barra-wrap"><div class="clique-barra" style="width:${pct}%;"></div></div>
+                <span class="clique-num">${item.count}</span>
+              </div>`;
+          }).join('');
+          cliquesMsg.textContent = '';
+        }, () => { cliquesMsg.textContent = 'Não consegui carregar os cliques agora.'; });
+
+        // Visitantes por mês — lê 'estatisticas/porMes/{AAAA-MM}' (um
+        // contador por mês, gravado pelo js/visitas.js uma vez por sessão)
+        // e desenha um gráfico de barras simples com os últimos 6 meses.
+        const mesesChart = document.getElementById('meses-chart');
+        const mesesMsg = document.getElementById('meses-msg');
+        const nomesMes = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+        onValue(ref(db, 'estatisticas/porMes'), (snap) => {
+          const val = snap.val();
+          if (!val) {
+            mesesMsg.textContent = 'Ainda não há dados mensais — esse recurso precisa do js/visitas.js atualizado no site.';
+            mesesChart.innerHTML = '';
+            return;
+          }
+          const chaves = Object.keys(val).sort().slice(-6);
+          const max = Math.max(...chaves.map((k) => val[k] || 0), 1);
+          mesesChart.innerHTML = chaves.map((k) => {
+            const [ano, mes] = k.split('-');
+            const altura = Math.max(4, Math.round((val[k] / max) * 100));
+            return `
+              <div class="mes-col">
+                <div class="mes-valor">${val[k]}</div>
+                <div class="mes-bar" style="height:${altura}%;"></div>
+                <div class="mes-label">${nomesMes[Number(mes) - 1] || mes}/${ano.slice(2)}</div>
+              </div>`;
+          }).join('');
+          mesesMsg.textContent = '';
+        }, () => { mesesMsg.textContent = 'Não consegui carregar os dados mensais agora.'; });
       } catch (err) {
         msg.textContent = 'Não consegui carregar as estatísticas agora.';
       }
@@ -491,13 +593,16 @@
       trocarAba('leilao');
       if (!currentLeilao) carregarLeilao();
     });
+    document.getElementById('tab-btn-visitantes').addEventListener('click', () => trocarAba('visitantes'));
     function trocarAba(nome) {
       document.getElementById('produtos-area').classList.toggle('hidden', nome !== 'produtos');
       document.getElementById('pedidos-area').classList.toggle('hidden', nome !== 'pedidos');
       document.getElementById('leilao-area').classList.toggle('hidden', nome !== 'leilao');
+      document.getElementById('visitantes-area').classList.toggle('hidden', nome !== 'visitantes');
       document.getElementById('tab-btn-produtos').classList.toggle('active', nome === 'produtos');
       document.getElementById('tab-btn-pedidos').classList.toggle('active', nome === 'pedidos');
       document.getElementById('tab-btn-leilao').classList.toggle('active', nome === 'leilao');
+      document.getElementById('tab-btn-visitantes').classList.toggle('active', nome === 'visitantes');
     }
 
     function renderCards(data) {
