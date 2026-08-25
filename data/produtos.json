@@ -46,11 +46,11 @@
     "titulo": "Ta escrito ",
     "preco": "R$ 80,00",
     "porte": "P",
-    "descricao": "Ilustração original do universo do personagem impresso em papel Hahnemühle\n308 g/m²",
+    "descricao": "Ilustração original do universo do personagem impresso em papel A3 ou A4",
     "specs": [
       {
         "label": "Material",
-        "valor": "Impressão em papel Hahnemühle 308 g/m²"
+        "valor": "Impressão em papel couchê"
       },
       {
         "label": "Tamanhos",
@@ -143,11 +143,11 @@
     "titulo": "Minha cidade ",
     "preco": "R$ 90,00",
     "porte": "P",
-    "descricao": "Ilustração original do universo do personagem impresso em papel Hahnemühle\n308 g/m²",
+    "descricao": "Ilustração original do universo do personagem impresso em papel A3 ou A4",
     "specs": [
       {
         "label": "Material",
-        "valor": "papel Hahnemühle 308 g/m²"
+        "valor": "papel couchê"
       },
       {
         "label": "Tamanhos",
@@ -192,7 +192,7 @@
     "titulo": "Sem problemas",
     "preco": "80,00R$",
     "porte": "P",
-    "descricao": "Ilustração original do universo do personagem impresso em papel Hahnemühle\n308 g/m²",
+    "descricao": "Ilustração original do universo do personagem impresso em papel A4 ou A3",
     "specs": [
       {
         "label": "Tamanho",
@@ -200,7 +200,7 @@
       },
       {
         "label": "Papel",
-        "valor": "papel Hahnemühle 308 g/m²"
+        "valor": "papel couchê"
       }
     ],
     "imagens": [
