@@ -15,7 +15,7 @@
     {
       "id": "lote-ijm28x",
       "title": "SINUCA DE BICO -  LOTE 01",
-      "description": "tinta látex, spray, tinta acrílica, giz seco, caneta esferográfica, marca texto e marcador s/tela\ntamanho 75cm x 100cm",
+      "description": "tinta látex, spray, tinta acrílica, giz seco, caneta esferográfica, marca texto e marcador s/tela\ntamanho 75cm x 100cm\n2023",
       "startingPrice": 300,
       "minIncrement": 30,
       "endTime": "",
@@ -33,7 +33,7 @@
     {
       "id": "lote-bytbx9",
       "title": "A CORRIDA",
-      "description": "tinta látex, spray,giz seco, lápis grafite, marca texto,cola e marcador s/tela\ntamanho60cm x 80cm",
+      "description": "tinta látex, spray,giz seco, lápis grafite, marca texto,cola e marcador s/tela\ntamanho60cm x 80cm\n2024",
       "startingPrice": 100,
       "minIncrement": 20,
       "endTime": "",
@@ -51,7 +51,7 @@
     {
       "id": "lote-2s8t5e",
       "title": "DIA DE NATAL - LOTE 01",
-      "description": "tinta óleo, tinta acrílica, e giz oleoso sobre tela 60x50 cm",
+      "description": "tinta óleo, tinta acrílica, e giz oleoso sobre tela 60x50 cm \n2022",
       "startingPrice": 300,
       "minIncrement": 30,
       "endTime": "",
@@ -60,7 +60,7 @@
     {
       "id": "lote-oav1oq",
       "title": "PRINT OGEID COLLECTION 2025 - LOTE 01",
-      "description": "impressão tamanho A2 - emoldurado",
+      "description": "impressão tamanho A2 - emoldurado \n2025",
       "startingPrice": 100,
       "minIncrement": 20,
       "endTime": "",
@@ -68,10 +68,10 @@
     },
     {
       "id": "lote-uktuna",
-      "title": "",
-      "description": "",
-      "startingPrice": 0,
-      "minIncrement": 10,
+      "title": "MEMÓRIA DE INFÂCIA - LOTE 01",
+      "description": "técnica mista sobre tela 70x50cm\n2025",
+      "startingPrice": 100,
+      "minIncrement": 20,
       "endTime": "",
       "image": "assets/img/leilao/lote-uktuna.jpg"
     }
