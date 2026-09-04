@@ -144,10 +144,10 @@
     {
       "id": "lote-5q1lh1",
       "lotNumber": "001",
-      "title": "",
-      "description": "",
-      "startingPrice": 0,
-      "minIncrement": 10,
+      "title": "SAXOFONISTA",
+      "description": "tinta látex, spray, tinta acrílica, giz seco, caneta esferográfica, marca texto e marcador, lápis grafite s/tela\ntamanho 123cm x 84cm",
+      "startingPrice": 200,
+      "minIncrement": 20,
       "endTime": "",
       "images": [
         "assets/img/leilao/lote-5q1lh1-1.jpg",
@@ -157,11 +157,11 @@
     },
     {
       "id": "lote-cxvtw9",
-      "lotNumber": "",
-      "title": "",
-      "description": "",
-      "startingPrice": 0,
-      "minIncrement": 10,
+      "lotNumber": "001",
+      "title": "Stronger Than Pride",
+      "description": "tinta óleo, tinta acrílica, giz seco, marcador preto s/tela\ntamanho 90cm x 60cm\n2024",
+      "startingPrice": 300,
+      "minIncrement": 30,
       "endTime": "",
       "images": [
         "assets/img/leilao/lote-cxvtw9-1.jpg",
