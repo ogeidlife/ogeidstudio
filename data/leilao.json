@@ -113,6 +113,62 @@
         "assets/img/leilao/lote-uktuna-3.jpg"
       ],
       "image": "assets/img/leilao/lote-uktuna.jpg"
+    },
+    {
+      "id": "lote-ocwc5w",
+      "lotNumber": "001",
+      "title": "SONIC UNDERGROUND",
+      "description": "técnica mista /tamanho A3\n2025",
+      "startingPrice": 100,
+      "minIncrement": 20,
+      "endTime": "",
+      "images": [
+        "assets/img/leilao/lote-ocwc5w-1.jpg"
+      ],
+      "image": "assets/img/leilao/lote-ocwc5w-1.jpg"
+    },
+    {
+      "id": "lote-xcok80",
+      "lotNumber": "001",
+      "title": "livro DiegoOgeid 2013-2023",
+      "description": "DiegoOgeid é um portfólio artístico que reúne 10 anos de trabalho resumidos em 84 paginas,tamanho A4 diagramado e editado com o @ultimo_vagão, decidimos ser minimalista colocando apenas algumas informações e a numeração para facilitar a identificação, aproveitando ao máximo esse espaço que vai ficar gravado no tempo.\ntotalizando 200 obras disponíveis para conhecer em ordem cronológíca de cada área que já passei.",
+      "startingPrice": 60,
+      "minIncrement": 20,
+      "endTime": "",
+      "images": [
+        "assets/img/leilao/lote-xcok80-1.jpg",
+        "assets/img/leilao/lote-xcok80-2.jpg"
+      ],
+      "image": "assets/img/leilao/lote-xcok80-1.jpg"
+    },
+    {
+      "id": "lote-5q1lh1",
+      "lotNumber": "001",
+      "title": "",
+      "description": "",
+      "startingPrice": 0,
+      "minIncrement": 10,
+      "endTime": "",
+      "images": [
+        "assets/img/leilao/lote-5q1lh1-1.jpg",
+        "assets/img/leilao/lote-5q1lh1-2.jpg"
+      ],
+      "image": "assets/img/leilao/lote-5q1lh1-1.jpg"
+    },
+    {
+      "id": "lote-cxvtw9",
+      "lotNumber": "",
+      "title": "",
+      "description": "",
+      "startingPrice": 0,
+      "minIncrement": 10,
+      "endTime": "",
+      "images": [
+        "assets/img/leilao/lote-cxvtw9-1.jpg",
+        "assets/img/leilao/lote-cxvtw9-2.jpg",
+        "assets/img/leilao/lote-cxvtw9-3.jpg"
+      ],
+      "image": "assets/img/leilao/lote-cxvtw9-1.jpg"
     }
   ],
   "email": {
