@@ -1341,7 +1341,13 @@
             <button type="button" class="remove-product remove-lote">remover lote</button>
           </div>
         </div>
-        <div class="field field-mini">
+        <div class="admin-row">
+          <div class="field field-mini">
+            <label>Número do lote (aparece sobre a foto)</label>
+            <input type="text" class="lo-number" placeholder="ex: 001" value="${escapeAttr(lot.lotNumber)}">
+          </div>
+        </div>
+        <div class="field field-mini" style="margin-top:12px;">
           <label>Título da obra</label>
           <input type="text" class="lo-title" value="${escapeAttr(lot.title)}">
         </div>
@@ -1364,14 +1370,27 @@
           <input type="datetime-local" class="lo-end" value="${endTimeLocal}">
         </div>
         <div class="field field-mini" style="margin-top:16px;">
-          <label>Foto da obra</label>
-          <div class="lo-img-box"></div>
+          <label>Fotos da obra (a pessoa desliza o dedo pra ver as demais — use fotos quadradas)</label>
+          <div class="lo-imgs-box"></div>
+          <button class="btn ghost add-lo-img" type="button" style="margin-top:8px;">+ adicionar foto</button>
         </div>
       `;
       container.appendChild(card);
 
-      const imgBox = card.querySelector('.lo-img-box');
-      addImageRow(imgBox, lot.image || `assets/img/leilao/${lot.id}.jpg`, '', false);
+      const imgsBox = card.querySelector('.lo-imgs-box');
+      const imagensIniciais = (Array.isArray(lot.images) && lot.images.length)
+        ? lot.images
+        : (lot.image ? [lot.image] : [`assets/img/leilao/${lot.id}-1.jpg`]);
+      imagensIniciais.forEach((path) => addImageRow(imgsBox, path, null, true));
+
+      card.querySelector('.add-lo-img').addEventListener('click', () => {
+        let n = imgsBox.querySelectorAll('.img-row').length + 1;
+        let novoPath = `assets/img/leilao/${lot.id}-${n}.jpg`;
+        const existentes = new Set([...imgsBox.querySelectorAll('.img-row')].map((r) => r.dataset.path));
+        while (existentes.has(novoPath)) { n++; novoPath = `assets/img/leilao/${lot.id}-${n}.jpg`; }
+        addImageRow(imgsBox, novoPath, null, true);
+        imgsBox.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
 
       card.querySelector('.lo-title').addEventListener('input', (e) => {
         card.querySelector('h2').textContent = e.target.value || 'Novo lote';
@@ -1385,7 +1404,7 @@
 
     document.getElementById('btn-novo-lote').addEventListener('click', () => {
       if (!currentLeilao) currentLeilao = JSON.parse(JSON.stringify(LEILAO_DEFAULTS));
-      const novo = { id: gerarIdLote(), title: '', description: '', image: '', startingPrice: 0, minIncrement: 10, endTime: '' };
+      const novo = { id: gerarIdLote(), lotNumber: '', title: '', description: '', images: [], startingPrice: 0, minIncrement: 10, endTime: '' };
       addLoteCard(novo);
       document.getElementById('leilao-lotes-container').lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
@@ -1398,14 +1417,17 @@
       const lotCards = document.querySelectorAll('.lote-card');
       const lots = [...lotCards].map((card) => {
         const endLocal = card.querySelector('.lo-end').value;
+        const images = [...card.querySelectorAll('.lo-imgs-box .img-row')].map((row) => row.dataset.path).filter(Boolean);
         return {
           id: card.dataset.id,
+          lotNumber: card.querySelector('.lo-number').value.trim(),
           title: card.querySelector('.lo-title').value.trim(),
           description: card.querySelector('.lo-desc').value.trim(),
           startingPrice: parseFloat(card.querySelector('.lo-start').value) || 0,
           minIncrement: parseFloat(card.querySelector('.lo-incr').value) || 0,
           endTime: endLocal ? new Date(endLocal).toISOString() : '',
-          image: card.querySelector('.lo-img-box .img-row')?.dataset.path || '',
+          images,
+          image: images[0] || '',
         };
       });
 

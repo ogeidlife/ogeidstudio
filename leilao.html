@@ -140,14 +140,39 @@
     padding:14px;
     background:linear-gradient(180deg, #efe7d8, #e7dcc7);
   }
-  .lot-frame-inner{
+  .lot-carousel{
+    position:relative;
     border:3px solid var(--brass);
     box-shadow: 0 0 0 1px rgba(28,27,25,0.15), inset 0 0 0 1px rgba(255,255,255,0.4);
     overflow:hidden;
-    aspect-ratio: 4/3;
+    background:#000;
+  }
+  .lot-carousel-track{
+    display:flex;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .lot-carousel-track::-webkit-scrollbar{ display:none; }
+  .lot-frame-inner{
+    flex:0 0 100%;
+    aspect-ratio: 1/1;
+    scroll-snap-align:start;
     background:#000;
   }
   .lot-frame-inner img{width:100%;height:100%;object-fit:cover;display:block;}
+  .lot-carousel-dots{
+    position:absolute; left:0; right:0; bottom:8px;
+    display:flex; justify-content:center; gap:5px; pointer-events:none;
+  }
+  .lot-carousel-dots span{
+    width:6px; height:6px; border-radius:50%;
+    background:rgba(255,255,255,0.45);
+    box-shadow:0 0 0 1px rgba(0,0,0,0.25);
+    transition:background 0.15s;
+  }
+  .lot-carousel-dots span.active{ background:#fff; }
   .lot-body{ padding:18px 20px 22px; display:flex; flex-direction:column; gap:10px; flex:1;}
   .lot-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
   .lot-number{
@@ -367,27 +392,30 @@ const CONFIG = {
   lots: [
     {
       id: "lote01",
+      lotNumber: "001",
       title: "Paisagem ao entardecer",
       description: "Óleo sobre tela, 40x50cm.",
-      image: "https://picsum.photos/id/1015/700/525",
+      images: ["https://picsum.photos/id/1015/700/700"],
       startingPrice: 150,
       minIncrement: 20,
       endTime: "2026-08-30T20:00:00"
     },
     {
       id: "lote02",
+      lotNumber: "002",
       title: "Retrato em nanquim",
       description: "Desenho original, papel A4.",
-      image: "https://picsum.photos/id/1025/700/525",
+      images: ["https://picsum.photos/id/1025/700/700"],
       startingPrice: 80,
       minIncrement: 10,
       endTime: "2026-08-28T20:00:00"
     },
     {
       id: "lote03",
+      lotNumber: "003",
       title: "Estudo urbano nº3",
       description: "Print numerado, edição limitada.",
-      image: "https://picsum.photos/id/1039/700/525",
+      images: ["https://picsum.photos/id/1039/700/700"],
       startingPrice: 60,
       minIncrement: 10,
       endTime: "2026-09-02T20:00:00"
@@ -540,21 +568,38 @@ function timeLeftLabel(item){
   return {text, urgent, ended:false};
 }
 
+function lotImages(item){
+  if(Array.isArray(item.images) && item.images.filter(Boolean).length) return item.images.filter(Boolean);
+  if(item.image) return [item.image];
+  return [];
+}
+
+function lotNumberLabel(item){
+  if(item.lotNumber) return item.lotNumber;
+  return item.id.replace(/\D/g,'').padStart(3,'0');
+}
+
 function lotCardHTML(item, state){
   const ended = isEnded(item, state);
   const clock = timeLeftLabel(item);
   const nextMin = state.value + item.minIncrement;
   const bidderName = state.bidder ? state.bidder.split(' ')[0] + (state.bidder.split(' ')[1] ? ' ' + state.bidder.split(' ')[1][0]+'.' : '') : null;
+  const imgs = lotImages(item);
 
   return `
   <div class="lot" id="card-${item.id}">
     <div class="lot-frame">
-      <div class="lot-frame-inner"><img src="${item.image}" alt="${item.title}"></div>
+      <div class="lot-carousel">
+        <div class="lot-carousel-track">
+          ${imgs.map(src => `<div class="lot-frame-inner"><img src="${src}" alt="${item.title}" loading="lazy"></div>`).join('')}
+        </div>
+        ${imgs.length > 1 ? `<div class="lot-carousel-dots">${imgs.map((_,i) => `<span class="${i===0?'active':''}"></span>`).join('')}</div>` : ''}
+      </div>
     </div>
     <div class="lot-body">
       <div class="lot-top">
         <div>
-          <span class="lot-number">LOTE Nº ${item.id.replace(/\D/g,'').padStart(3,'0')}</span>
+          <span class="lot-number">LOTE Nº ${lotNumberLabel(item)}</span>
           <h3 class="lot-title">${item.title}</h3>
         </div>
       </div>
@@ -714,8 +759,20 @@ async function doBid(itemId, value){
   if(msg){ msg.className = 'lot-msg ok'; msg.textContent = 'Lance registrado! Você está à frente.'; }
 }
 
+/* atualiza a bolinha ativa do carrossel de fotos conforme a pessoa desliza o dedo.
+   'scroll' não borbulha, mas ainda passa pela fase de captura, então um único
+   listener aqui já cobre o carrossel de todos os lotes, mesmo os redesenhados depois */
+function handleCarouselScroll(e){
+  const track = e.target;
+  if(!track.classList || !track.classList.contains('lot-carousel-track')) return;
+  const idx = Math.round(track.scrollLeft / (track.clientWidth || 1));
+  const dots = track.parentElement.querySelectorAll('.lot-carousel-dots span');
+  dots.forEach((d,i) => d.classList.toggle('active', i === idx));
+}
+
 /* ---------- inicialização ---------- */
 (async function init(){
+  document.getElementById('gallery').addEventListener('scroll', handleCarouselScroll, true);
   await loadSiteConfig();
   loadRegistration();
   FB = await initFirebase();
