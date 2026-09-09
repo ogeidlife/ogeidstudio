@@ -14,12 +14,12 @@
   "lots": [
     {
       "id": "lote-6lrl86",
-      "lotNumber": "002",
-      "title": "CARA AMARRADA",
-      "description": "Biscuit, tinta acrílica e marcador preto \n5x4 cm\n2023",
-      "startingPrice": 80,
-      "minIncrement": 20,
-      "endTime": "2026-09-08T19:00:00.000Z",
+      "lotNumber": "003",
+      "title": "SEM TÍTULO",
+      "description": "nanquim sobre papel\ntamanho A5\n2015",
+      "startingPrice": 200,
+      "minIncrement": 30,
+      "endTime": "2026-09-10T19:00:00.000Z",
       "images": [
         "assets/img/leilao/lote-6lrl86-1.jpg"
       ],
@@ -28,11 +28,11 @@
     {
       "id": "lote-ld2wnb",
       "lotNumber": "002",
-      "title": "ESCRITOR",
-      "description": "Marcador preto e cola s/ biscuit com fio de aço inox\nTamanho 3x13cm\n2023",
-      "startingPrice": 80,
-      "minIncrement": 20,
-      "endTime": "2026-09-08T19:00:00.000Z",
+      "title": "OGEID",
+      "description": "biscuit e tinta acrílica\n2023",
+      "startingPrice": 200,
+      "minIncrement": 30,
+      "endTime": "2026-09-10T19:00:00.000Z",
       "images": [
         "assets/img/leilao/lote-ld2wnb-1.jpg"
       ],
@@ -40,12 +40,12 @@
     },
     {
       "id": "lote-8w9i8s",
-      "lotNumber": "002",
-      "title": "POMBO NO TELHADO",
-      "description": "Tinta látex, tinta óleo, giz seco, tinta acrílica, cola, lápis grafite, marcador e etiqueta s/tela\nTamanho 150x100cm",
-      "startingPrice": 300,
+      "lotNumber": "003",
+      "title": "MIRO X OGEID",
+      "description": "técnica mista sobre papel impresso importado \n60x80 cm emoldurado",
+      "startingPrice": 200,
       "minIncrement": 30,
-      "endTime": "2026-09-08T19:00:00.000Z",
+      "endTime": "2026-09-10T19:00:00.000Z",
       "images": [
         "assets/img/leilao/lote-8w9i8s-1.jpg"
       ],
@@ -53,12 +53,12 @@
     },
     {
       "id": "lote-gvob2c",
-      "lotNumber": "002",
-      "title": "SEM TÍTULO",
-      "description": "Giz seco, lápis graffiti e marca texto sobre papel\nTamanho A3",
+      "lotNumber": "003",
+      "title": "GUERRA DE PINTURA",
+      "description": "Tinta acrílica e giz oleoso\n40x 40cm\n2024",
       "startingPrice": 100,
       "minIncrement": 20,
-      "endTime": "2026-09-08T19:00:00.000Z",
+      "endTime": "2026-09-10T19:00:00.000Z",
       "images": [
         "assets/img/leilao/lote-gvob2c-1.jpg"
       ],
@@ -66,12 +66,12 @@
     },
     {
       "id": "lote-zm1zyo",
-      "lotNumber": "",
-      "title": "NEURÔNIOS OGEID",
-      "description": "Tinta acrílica sobre tela \n140 x 50 cm",
-      "startingPrice": 100,
+      "lotNumber": "003",
+      "title": "MELÂNCOLIA",
+      "description": "Spray, aerógrafo e pincel sobre tela \n140cm x 80cm\n 2026",
+      "startingPrice": 200,
       "minIncrement": 20,
-      "endTime": "2026-09-08T19:00:00.000Z",
+      "endTime": "2026-09-10T19:00:00.000Z",
       "images": [
         "assets/img/leilao/lote-zm1zyo-1.jpg"
       ],
@@ -79,12 +79,12 @@
     },
     {
       "id": "lote-kvkqjt",
-      "lotNumber": "002",
-      "title": "NEURÔNIOS OGEID 2",
-      "description": "Tinta acrílica sobre tela \n140 x 50 cm",
-      "startingPrice": 100,
+      "lotNumber": "003",
+      "title": "PRINT OGEID - PEACE",
+      "description": "Impresso ogeid \nA2 \n2026",
+      "startingPrice": 80,
       "minIncrement": 20,
-      "endTime": "2026-09-08T19:00:00.000Z",
+      "endTime": "2026-09-10T19:00:00.000Z",
       "images": [
         "assets/img/leilao/lote-kvkqjt-1.jpg"
       ],
@@ -92,12 +92,12 @@
     },
     {
       "id": "lote-0tov8t",
-      "lotNumber": "002",
-      "title": "SAINDO FORA",
-      "description": "Óleo sobre tela\n80 x 120\n2019",
+      "lotNumber": "003",
+      "title": "SALA DE ESTAR",
+      "description": "Técnica mista sobre tela\n100 x 100 cm \n2024",
       "startingPrice": 300,
       "minIncrement": 30,
-      "endTime": "2026-09-08T19:00:00.000Z",
+      "endTime": "2026-09-10T19:00:00.000Z",
       "images": [
         "assets/img/leilao/lote-0tov8t-1.jpg"
       ],
@@ -105,12 +105,12 @@
     },
     {
       "id": "lote-h7iitp",
-      "lotNumber": "002",
-      "title": "PARE",
-      "description": "Óleo sobre tela\n80 x 120\n2019",
-      "startingPrice": 300,
-      "minIncrement": 30,
-      "endTime": "2026-09-08T19:00:00.000Z",
+      "lotNumber": "003",
+      "title": "NATURAL",
+      "description": "Óleo sobre tela\n2016",
+      "startingPrice": 500,
+      "minIncrement": 40,
+      "endTime": "2026-09-10T19:00:00.000Z",
       "images": [
         "assets/img/leilao/lote-h7iitp-1.jpg"
       ],
@@ -118,42 +118,16 @@
     },
     {
       "id": "lote-wknw20",
-      "lotNumber": "002",
-      "title": "Univerdo Ogeid",
-      "description": "técnica mista\nsobre papel couche 140 g/m\ntamanho A3\n2026",
+      "lotNumber": "003",
+      "title": "SEM TÍTULO",
+      "description": "Giz seco,marca texto e lápis grafite s/ papel\nTamanho A3\n2024",
       "startingPrice": 100,
       "minIncrement": 20,
-      "endTime": "2026-09-08T19:00:00.000Z",
+      "endTime": "2026-09-10T22:00:00.000Z",
       "images": [
         "assets/img/leilao/lote-wknw20-1.jpg"
       ],
       "image": "assets/img/leilao/lote-wknw20-1.jpg"
-    },
-    {
-      "id": "lote-sx8sfb",
-      "lotNumber": "002",
-      "title": "Univerdo Ogeid",
-      "description": "técnica mista\nsobre papel couche 140 g/m\ntamanho A3\n2026",
-      "startingPrice": 100,
-      "minIncrement": 20,
-      "endTime": "2026-09-08T19:00:00.000Z",
-      "images": [
-        "assets/img/leilao/lote-sx8sfb-1.jpg"
-      ],
-      "image": "assets/img/leilao/lote-sx8sfb-1.jpg"
-    },
-    {
-      "id": "lote-tvdurq",
-      "lotNumber": "002",
-      "title": "Univerdo Ogeid",
-      "description": "técnica mista\nsobre papel couche 140 g/m\ntamanho A3\n2026",
-      "startingPrice": 100,
-      "minIncrement": 20,
-      "endTime": "2026-09-08T19:00:00.000Z",
-      "images": [
-        "assets/img/leilao/lote-tvdurq-1.jpg"
-      ],
-      "image": "assets/img/leilao/lote-tvdurq-1.jpg"
     }
   ],
   "email": {
