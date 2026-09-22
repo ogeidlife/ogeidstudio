@@ -1,0 +1,11 @@
+{
+  "ativo": true,
+  "autoplay": true,
+  "velocidade": 4200,
+  "itensVisiveis": 5,
+  "itens": [
+    "quadro-ogeid",
+    "ajude-seus-amigos",
+    "quadro-ogeid-3"
+  ]
+}

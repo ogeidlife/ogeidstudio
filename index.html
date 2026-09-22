@@ -8,41 +8,40 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v=3">
+<link rel="stylesheet" href="css/colecao.css?v=1">
 </head>
 <body>
 
-  <!-- Na home fica só a cabeça 3D e as duas abas, sem mais nada no topo -->
+  <!-- Na home fica a vitrine da coleção (carrossel de pinturas) e as duas abas, sem mais nada no topo -->
   <div class="topbar">
-    <span class="brand-mark">DROP Nº 002 · universo ogeid</span>
+    <span class="brand-mark">COLEÇÃO · universo ogeid</span>
     <nav class="nav-pill">
       <a href="catalogo.html">Catálogo</a>
       <a href="cadastro.html">Cadastro</a>
     </nav>
   </div>
 
-  <section class="hero">
-    <div class="hero-stage" id="hero-stage">
-      <canvas id="viewer-canvas"></canvas>
-      <div class="spec-tag t1"><b>IMPRESSÃO 3D PLA</b>pintura manual</div>
-      <div class="spec-tag t2"><b>10 cm</b>escala 1:1 cabeça</div>
-      <div class="spec-tag t3"><b>Edição</b>universo ogeid</div>
+  <!-- A vitrine em si é montada pelo js/colecao-carrossel.js, a partir de
+       data/produtos.json + data/carrossel.json (o que aparece aqui e a
+       ordem/velocidade são configurados no painel admin, aba "Coleção"). -->
+  <section class="hero colecao-hero" id="colecao-hero" aria-roledescription="carrossel" aria-label="Vitrine da coleção de pinturas">
+    <p class="eyebrow colecao-eyebrow">Coleção</p>
+
+    <div class="colecao-stage" id="colecao-stage" tabindex="0"
+         role="listbox" aria-label="Pinturas da coleção — use as setas do teclado ou deslize para navegar">
+      <p class="colecao-loading" id="colecao-loading">carregando coleção…</p>
     </div>
+
+    <button type="button" class="colecao-seta colecao-prev" id="colecao-prev" aria-label="Pintura anterior">‹</button>
+    <button type="button" class="colecao-seta colecao-next" id="colecao-next" aria-label="Próxima pintura">›</button>
+
     <div class="hero-caption">
-      <h1>Cabeça Ogeid</h1>
-      <p>Peça central da coleção — clique e arraste para girar</p>
+      <h1 id="colecao-titulo-atual">Ogeid</h1>
+      <p id="colecao-cta">clique na pintura para conhecer a obra</p>
     </div>
-    <div class="hero-hint">clique e arraste a peça ↑</div>
   </section>
 
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-    }
-  }
-  </script>
-  <script type="module" src="js/viewer.js?v=3"></script>
+  <script src="js/colecao-carrossel.js?v=1" defer></script>
 
   <script src="js/firebase-config.js"></script>
   <script src="js/visitas.js" defer></script>

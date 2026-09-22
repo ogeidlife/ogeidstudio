@@ -184,6 +184,7 @@
         <button type="button" class="tab-btn active" id="tab-btn-produtos">Produtos</button>
         <button type="button" class="tab-btn" id="tab-btn-pedidos">Pedidos</button>
         <button type="button" class="tab-btn" id="tab-btn-leilao">Leilão</button>
+        <button type="button" class="tab-btn" id="tab-btn-colecao">Coleção (carrossel)</button>
         <button type="button" class="tab-btn" id="tab-btn-visitantes">Visitantes</button>
       </div>
 
@@ -272,6 +273,41 @@
           <div id="leilao-bids-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-bottom:12px;"></div>
           <div id="leilao-bids-container"></div>
         </div>
+      </div>
+
+      <div id="colecao-area" class="tab-panel hidden">
+        <p class="reorder-hint">
+          Escolha aqui quais peças aparecem no carrossel giratório da página inicial (a vitrine da coleção), em que ordem, e como ele se comporta. É uma seleção à parte da lista de produtos — nada aqui remove ou altera as peças em si, só decide quais delas aparecem na home. Se nenhuma peça for marcada, o carrossel usa automaticamente as peças em destaque do catálogo (ou, na falta delas, as primeiras cadastradas).
+        </p>
+
+        <div class="admin-panel">
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 14px;">Comportamento do carrossel</h2>
+          <div class="admin-row">
+            <div class="field field-mini">
+              <label for="cx-velocidade">Velocidade (segundos entre trocas automáticas)</label>
+              <input type="number" id="cx-velocidade" min="2" step="0.5" value="4.2">
+            </div>
+            <div class="field field-mini">
+              <label for="cx-visiveis">Peças visíveis ao redor da central</label>
+              <input type="number" id="cx-visiveis" min="1" max="9" step="2" value="5">
+            </div>
+          </div>
+          <div class="destaque-row" style="margin-top:14px;">
+            <input type="checkbox" id="cx-autoplay" checked>
+            <label style="margin:0;">Girar sozinho quando ninguém estiver interagindo (a rotação sempre pausa ao passar o mouse ou tocar)</label>
+          </div>
+        </div>
+
+        <div class="admin-panel">
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 6px;">Peças na vitrine</h2>
+          <p style="color:var(--ink-dim); font-size:13px; margin:0 0 14px;">Marque as peças que devem aparecer no carrossel da home. As setas ▲ ▼ definem a ordem em que giram. Carregue a aba "Produtos" primeiro se essa lista aparecer vazia.</p>
+          <div id="colecao-itens-container"></div>
+        </div>
+
+        <div class="save-bar">
+          <button class="btn" id="btn-salvar-colecao">Salvar carrossel da home</button>
+        </div>
+        <div class="status-msg" id="colecao-save-status"></div>
       </div>
 
       <div id="visitantes-area" class="tab-panel hidden">
@@ -593,15 +629,21 @@
       trocarAba('leilao');
       if (!currentLeilao) carregarLeilao();
     });
+    document.getElementById('tab-btn-colecao').addEventListener('click', () => {
+      trocarAba('colecao');
+      if (!currentColecao) carregarColecao();
+    });
     document.getElementById('tab-btn-visitantes').addEventListener('click', () => trocarAba('visitantes'));
     function trocarAba(nome) {
       document.getElementById('produtos-area').classList.toggle('hidden', nome !== 'produtos');
       document.getElementById('pedidos-area').classList.toggle('hidden', nome !== 'pedidos');
       document.getElementById('leilao-area').classList.toggle('hidden', nome !== 'leilao');
+      document.getElementById('colecao-area').classList.toggle('hidden', nome !== 'colecao');
       document.getElementById('visitantes-area').classList.toggle('hidden', nome !== 'visitantes');
       document.getElementById('tab-btn-produtos').classList.toggle('active', nome === 'produtos');
       document.getElementById('tab-btn-pedidos').classList.toggle('active', nome === 'pedidos');
       document.getElementById('tab-btn-leilao').classList.toggle('active', nome === 'leilao');
+      document.getElementById('tab-btn-colecao').classList.toggle('active', nome === 'colecao');
       document.getElementById('tab-btn-visitantes').classList.toggle('active', nome === 'visitantes');
     }
 
@@ -1552,6 +1594,141 @@
         });
       });
     }
+    /* =========================================================
+       COLEÇÃO — quais peças aparecem no carrossel giratório da
+       home, em que ordem, e como ele se comporta. Fica num arquivo
+       à parte (data/carrossel.json) pra não mexer na lista de
+       produtos em si; usa os mesmos helpers do GitHub já definidos
+       acima (ghHeaders, apiBase, b64EncodeUnicode, escapeHtml etc.)
+       ========================================================= */
+    const DATA_PATH_COLECAO = 'data/carrossel.json';
+    const COLECAO_DEFAULTS = { ativo: true, autoplay: true, velocidade: 4200, itensVisiveis: 5, itens: [] };
+    let currentColecao = null;
+    let currentColecaoSha = null;
+
+    async function carregarColecao() {
+      try {
+        const res = await fetch(`${apiBase()}/contents/${DATA_PATH_COLECAO}`, { headers: ghHeaders() });
+        if (res.ok) {
+          const json = await res.json();
+          currentColecaoSha = json.sha;
+          currentColecao = JSON.parse(b64DecodeUnicode(json.content));
+        } else {
+          // arquivo ainda não existe no repositório — começa com os padrões,
+          // é criado sozinho quando salvar pela primeira vez
+          currentColecaoSha = null;
+          currentColecao = JSON.parse(JSON.stringify(COLECAO_DEFAULTS));
+        }
+      } catch (err) {
+        currentColecaoSha = null;
+        currentColecao = JSON.parse(JSON.stringify(COLECAO_DEFAULTS));
+      }
+      currentColecao = { ...COLECAO_DEFAULTS, ...currentColecao };
+      renderColecaoConfig(currentColecao);
+      renderColecaoItens(currentColecao.itens || []);
+    }
+
+    function renderColecaoConfig(c) {
+      document.getElementById('cx-velocidade').value = ((c.velocidade || 4200) / 1000).toFixed(1);
+      document.getElementById('cx-visiveis').value = c.itensVisiveis || 5;
+      document.getElementById('cx-autoplay').checked = c.autoplay !== false;
+    }
+
+    function renderColecaoItens(itensSelecionados) {
+      const container = document.getElementById('colecao-itens-container');
+      container.innerHTML = '';
+      if (!currentData || !Object.keys(currentData).length) {
+        container.innerHTML = '<p style="color:var(--ink-dim); font-size:13px;">Nenhum produto carregado ainda — abra a aba "Produtos" primeiro.</p>';
+        return;
+      }
+      // mostra primeiro as peças já selecionadas (na ordem salva), depois o resto
+      // do catálogo (pra ficar fácil de encontrar e marcar peças novas)
+      const todasKeys = Object.keys(currentData);
+      const selecionadas = itensSelecionados.filter((k) => currentData[k]);
+      const resto = todasKeys
+        .filter((k) => !selecionadas.includes(k))
+        .sort((a, b) => (currentData[a].ordem || 0) - (currentData[b].ordem || 0));
+      [...selecionadas, ...resto].forEach((key) => addColecaoItemRow(key, selecionadas.includes(key)));
+      atualizarBotoesColecao();
+    }
+
+    function addColecaoItemRow(key, marcado) {
+      const container = document.getElementById('colecao-itens-container');
+      const p = currentData[key];
+      if (!p) return;
+      const owner = sessionStorage.getItem('gh_owner');
+      const repo = sessionStorage.getItem('gh_repo');
+      const capa = p.capaEstatica || (p.imagens && p.imagens[0]) || '';
+
+      const row = document.createElement('div');
+      row.className = 'img-row';
+      row.dataset.key = key;
+      row.innerHTML = `
+        <img src="https://raw.githubusercontent.com/${owner}/${repo}/main/${capa}" onerror="this.style.opacity=0.15">
+        <span style="font-family:var(--f-mono); font-size:12px; display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" class="cx-marcado" ${marcado ? 'checked' : ''}> ${escapeHtml(p.titulo || key)}
+        </span>
+        <button type="button" class="move-btn move-up" title="Mover pra cima">▲</button>
+        <button type="button" class="move-btn move-down" title="Mover pra baixo">▼</button>
+      `;
+      container.appendChild(row);
+
+      row.querySelector('.move-up').addEventListener('click', () => {
+        const prev = row.previousElementSibling;
+        if (prev) { container.insertBefore(row, prev); atualizarBotoesColecao(); }
+      });
+      row.querySelector('.move-down').addEventListener('click', () => {
+        const next = row.nextElementSibling;
+        if (next) { container.insertBefore(next, row); atualizarBotoesColecao(); }
+      });
+    }
+
+    function atualizarBotoesColecao() {
+      const rows = [...document.querySelectorAll('#colecao-itens-container .img-row')];
+      rows.forEach((row, i) => {
+        row.querySelector('.move-up').disabled = (i === 0);
+        row.querySelector('.move-down').disabled = (i === rows.length - 1);
+      });
+    }
+
+    document.getElementById('btn-salvar-colecao').addEventListener('click', async () => {
+      const status = document.getElementById('colecao-save-status');
+      const rows = [...document.querySelectorAll('#colecao-itens-container .img-row')];
+      const itens = rows.filter((r) => r.querySelector('.cx-marcado').checked).map((r) => r.dataset.key);
+
+      currentColecao = {
+        ativo: true,
+        autoplay: document.getElementById('cx-autoplay').checked,
+        velocidade: Math.round(parseFloat(document.getElementById('cx-velocidade').value || '4.2') * 1000),
+        itensVisiveis: parseInt(document.getElementById('cx-visiveis').value || '5', 10),
+        itens,
+      };
+
+      showStatus(status, 'Salvando...', true);
+      try {
+        const body = {
+          message: 'Atualiza carrossel da coleção pelo painel admin',
+          content: b64EncodeUnicode(JSON.stringify(currentColecao, null, 2)),
+          branch: 'main',
+        };
+        if (currentColecaoSha) body.sha = currentColecaoSha;
+        const res = await fetch(`${apiBase()}/contents/${DATA_PATH_COLECAO}`, {
+          method: 'PUT',
+          headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          showStatus(status, 'Erro ao salvar: ' + (err.message || res.status), false);
+          return;
+        }
+        const result = await res.json();
+        currentColecaoSha = result.content.sha;
+        showStatus(status, 'Salvo! A home atualiza em 1-2 minutos.', true);
+      } catch (err) {
+        showStatus(status, 'Erro de conexão: ' + err.message, false);
+      }
+    });
   </script>
 </body>
 </html>

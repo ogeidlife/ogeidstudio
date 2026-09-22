@@ -1,0 +1,103 @@
+/* =========================================================
+   VITRINE DA COLEÇÃO (hero da home) — carrossel giratório de
+   pinturas, com sensação de galeria/objeto artístico em vez de
+   slider de e-commerce. Usa só transform/opacity para animar
+   (bom para performance) e respeita prefers-reduced-motion.
+
+   Depende das classes .hero / .hero-caption / .eyebrow já
+   definidas em style.css — aqui só ficam as regras novas,
+   específicas do carrossel, pra não mexer no arquivo principal.
+   ========================================================= */
+
+.colecao-hero{ gap:0; }
+.colecao-eyebrow{ margin-bottom:18px; }
+
+.colecao-stage{
+  position:relative;
+  width:min(92vw, 980px);
+  height:min(46vw, 420px);
+  max-height:54vh;
+  perspective:1500px;
+  perspective-origin:50% 50%;
+  outline:none;
+  touch-action:pan-y;
+  -webkit-user-select:none; user-select:none;
+}
+
+.colecao-loading{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-family:var(--f-mono); font-size:11px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-dim); white-space:nowrap;
+}
+
+.colecao-item{
+  all:unset;
+  box-sizing:border-box;
+  position:absolute; top:50%; left:50%;
+  width:min(30vw, 300px);
+  aspect-ratio:3/4;
+  cursor:pointer;
+  border:1px solid var(--line);
+  background:var(--bg-alt);
+  overflow:hidden;
+  box-shadow:0 30px 60px -24px rgba(20,15,10,.4);
+  transition:transform .75s cubic-bezier(.22,.85,.28,1),
+             opacity .5s ease,
+             box-shadow .3s ease,
+             border-color .3s ease;
+  will-change:transform, opacity;
+}
+.colecao-item img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  pointer-events:none; -webkit-user-drag:none;
+}
+.colecao-item.is-active{
+  border-color:var(--accent);
+  box-shadow:0 40px 90px -20px rgba(20,15,10,.55);
+}
+.colecao-item:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:5px;
+}
+.colecao-item .colecao-item-label{
+  position:absolute; left:0; right:0; bottom:0;
+  padding:10px 12px;
+  font-family:var(--f-mono); font-size:10px; letter-spacing:.08em;
+  text-transform:uppercase; color:#fff;
+  background:linear-gradient(to top, rgba(10,9,8,.72), transparent);
+  opacity:0; transition:opacity .3s ease;
+}
+.colecao-item.is-active .colecao-item-label{ opacity:1; }
+
+.colecao-seta{
+  all:unset;
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:44px; height:44px;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--line); border-radius:50%;
+  cursor:pointer;
+  font-family:var(--f-display); font-size:20px; line-height:1;
+  color:var(--ink-dim);
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(6px);
+  transition:border-color .2s ease, color .2s ease, transform .2s ease;
+  z-index:50;
+}
+.colecao-seta:hover{ border-color:var(--accent); color:var(--accent); }
+.colecao-prev{ left:calc(4% + 2px); }
+.colecao-next{ right:calc(4% + 2px); }
+
+.colecao-hero .hero-caption{ margin-top:34px; }
+#colecao-cta{ opacity:.75; }
+
+/* reduz movimento: sem transições suaves e (o JS também desliga o autoplay) */
+@media (prefers-reduced-motion: reduce){
+  .colecao-item{ transition:none; }
+}
+
+/* celular: pinturas maiores em relação à tela, setas somem (usa-se o dedo) */
+@media (max-width: 820px){
+  .colecao-stage{ width:94vw; height:58vw; max-height:56vh; }
+  .colecao-item{ width:54vw; }
+  .colecao-seta{ display:none; }
+}
