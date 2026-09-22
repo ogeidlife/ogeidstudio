@@ -1,0 +1,13 @@
+{
+  "ativo": true,
+  "autoplay": true,
+  "velocidade": 4200,
+  "itensVisiveis": 5,
+  "itens": [
+    "cabeca",
+    "abajures",
+    "adesivos",
+    "print",
+    "print-museografico"
+  ]
+}
