@@ -1,6 +1,6 @@
 {
   "cabeca": {
-    "ordem": 3,
+    "ordem": 4,
     "numero": "Nº 001",
     "titulo": "Cabeça Ogeid ",
     "preco": "150,00 R$",
@@ -41,7 +41,7 @@
     "variacoes": []
   },
   "abajures": {
-    "ordem": 4,
+    "ordem": 5,
     "numero": "Nº 003",
     "titulo": "Abajur Ogeid melancolia",
     "preco": "R$ 220,00",
@@ -77,7 +77,7 @@
     "variacoes": []
   },
   "ajude-seus-amigos": {
-    "ordem": 5,
+    "ordem": 6,
     "destaque": false,
     "numero": "Nº 008",
     "titulo": "Ajude seus amigos ",
@@ -139,11 +139,11 @@
     ]
   },
   "sem-titulo-3": {
-    "ordem": 6,
+    "ordem": 3,
     "destaque": false,
-    "numero": "Nº 006",
+    "numero": "Nº 03",
     "titulo": "Sem título #3",
-    "preco": "R$ 0,00",
+    "preco": "150,00",
     "descricao": "Nesta obra, a pintura surge de uma mistura espontânea de materiais e gestos. Sobre o papel A3, spray, giz seco, caneta esferográfica e tinta acrílica se encontram e se sobrepõem, criando diferentes texturas, marcas e camadas de cor.\n\nA composição traz uma figura central que parece atravessar um cenário urbano, cercada por estruturas, linhas e elementos que lembram prédios e formas arquitetônicas. As cores fortes e os traços mais soltos contrastam com algumas formas mais definidas, criando uma sensação de movimento e tensão.\n\nO trabalho nasce justamente desse encontro entre controle e improviso. Algumas marcas parecem planejadas, enquanto outras permanecem como registros do próprio processo de pintura. A sobreposição dos materiais deixa visível o gesto e transforma o papel em um espaço de experimentação, onde desenho e pintura se misturam de maneira natural.\n\nSem título\nTécnica mista sobre papel\nA3\nSpray, giz seco, caneta esferográfica e tinta acrílica.",
     "specs": [],
     "variacoes": [],
