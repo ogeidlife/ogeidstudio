@@ -124,16 +124,11 @@
   "sem-titulo-2": {
     "ordem": 5,
     "destaque": false,
-    "numero": "Nº 011",
+    "numero": "Nº 02",
     "titulo": "Sem título #2",
-    "preco": "R$ 0,00",
-    "descricao": "Descrição da peça.",
-    "specs": [
-      {
-        "label": "Material",
-        "valor": "Sob consulta"
-      }
-    ],
+    "preco": "150,00 ",
+    "descricao": "Obra sem título, feita em técnica mista sobre papel A3.\nA pintura foi construída com spray, giz seco, caneta esferográfica e tinta acrílica, misturando linhas, manchas e desenhos feitos diretamente sobre o papel.\nA composição traz uma figura central cercada por formas e elementos que vão se sobrepondo, criando uma sensação de movimento. Trabalhei as cores e os traços de maneira livre, deixando algumas marcas e interferências do próprio processo aparentes.\nÉ uma pintura que mistura desenho e pintura, com uma linguagem mais espontânea e gráfica, explorando a relação entre as formas, as cores e os diferentes materiais usados na obra.",
+    "specs": [],
     "variacoes": [],
     "capaEstatica": "assets/img/sem-titulo-2-capa.jpg",
     "capaAnimada": "assets/img/sem-titulo-2.gif",
