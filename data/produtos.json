@@ -154,5 +154,28 @@
       "assets/img/sem-titulo-3-2.jpg",
       "assets/img/sem-titulo-3-3.jpg"
     ]
+  },
+  "poltrona-nina": {
+    "ordem": 7,
+    "destaque": false,
+    "numero": "Nº 007",
+    "titulo": "POLTRONA NINA ",
+    "preco": "R$ 0,00",
+    "descricao": "Poltrona nina decorativa pintada a mão modelo único ",
+    "specs": [
+      {
+        "label": "Material",
+        "valor": " Tecido e Madeira"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/poltrona-nina-capa.jpg",
+    "capaAnimada": "assets/img/poltrona-nina.gif",
+    "imagens": [
+      "assets/img/poltrona-nina-1.jpg",
+      "assets/img/poltrona-nina-2.jpg",
+      "assets/img/poltrona-nina-3.jpg",
+      "assets/img/poltrona-nina-4.jpg"
+    ]
   }
 }
