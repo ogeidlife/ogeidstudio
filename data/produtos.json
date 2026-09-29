@@ -1,6 +1,6 @@
 {
   "cabeca": {
-    "ordem": 4,
+    "ordem": 5,
     "numero": "Nº 001",
     "titulo": "Cabeça Ogeid ",
     "preco": "150,00 R$",
@@ -41,7 +41,7 @@
     "variacoes": []
   },
   "abajures": {
-    "ordem": 5,
+    "ordem": 6,
     "numero": "Nº 003",
     "titulo": "Abajur Ogeid melancolia",
     "preco": "R$ 220,00",
@@ -77,7 +77,7 @@
     "variacoes": []
   },
   "ajude-seus-amigos": {
-    "ordem": 6,
+    "ordem": 7,
     "destaque": false,
     "numero": "Nº 008",
     "titulo": "Ajude seus amigos ",
@@ -156,7 +156,7 @@
     ]
   },
   "poltrona-nina": {
-    "ordem": 7,
+    "ordem": 4,
     "destaque": false,
     "numero": "Nº 007",
     "titulo": "POLTRONA NINA ",
