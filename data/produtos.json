@@ -1,6 +1,6 @@
 {
   "cabeca": {
-    "ordem": 4,
+    "ordem": 5,
     "numero": "Nº 001",
     "titulo": "Cabeça Ogeid ",
     "preco": "150,00 R$",
@@ -41,7 +41,7 @@
     "variacoes": []
   },
   "abajures": {
-    "ordem": 5,
+    "ordem": 6,
     "numero": "Nº 003",
     "titulo": "Abajur Ogeid melancolia",
     "preco": "R$ 220,00",
@@ -77,7 +77,7 @@
     "variacoes": []
   },
   "ajude-seus-amigos": {
-    "ordem": 6,
+    "ordem": 7,
     "destaque": false,
     "numero": "Nº 008",
     "titulo": "Ajude seus amigos ",
@@ -153,6 +153,29 @@
       "assets/img/sem-titulo-3-1.jpg",
       "assets/img/sem-titulo-3-2.jpg",
       "assets/img/sem-titulo-3-3.jpg"
+    ]
+  },
+  "poltrona-nina": {
+    "ordem": 4,
+    "destaque": false,
+    "numero": "Nº 007",
+    "titulo": "POLTRONA NINA ",
+    "preco": "150,00",
+    "descricao": "Poltrona nina decorativa pintada a mão modelo único ",
+    "specs": [
+      {
+        "label": "Material",
+        "valor": " Tecido e Madeira"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/poltrona-nina-capa.jpg",
+    "capaAnimada": "assets/img/poltrona-nina.gif",
+    "imagens": [
+      "assets/img/poltrona-nina-1.jpg",
+      "assets/img/poltrona-nina-2.jpg",
+      "assets/img/poltrona-nina-3.jpg",
+      "assets/img/poltrona-nina-4.jpg"
     ]
   }
 }
