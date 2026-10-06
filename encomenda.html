@@ -295,12 +295,41 @@
 
     const form = document.getElementById('form-encomenda');
     const success = document.getElementById('success-msg');
+
+    // Guarda uma cópia do pedido no Firebase pra aparecer na aba "Encomendas" do admin.
+    // É um extra: o pedido de verdade vai pro seu email via Formspree. Se isso falhar
+    // por qualquer motivo, o cliente nem percebe e o email chega do mesmo jeito.
+    async function registrarNoPainel(reg) {
+      try {
+        const cfg = window.FIREBASE_CONFIG;
+        if (!cfg || cfg.apiKey === 'COLE_AQUI') return;
+        const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js');
+        const { getDatabase, ref, push } = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js');
+        const app = getApps().length ? getApp() : initializeApp(cfg);
+        await push(ref(getDatabase(app), 'encomendas'), reg);
+      } catch (err) {
+        console.warn('Não consegui registrar a encomenda no painel', err);
+      }
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = new FormData(form);
+      const v = (id) => (document.getElementById(id).value || '').trim();
+      const registro = {
+        criadoEm: Date.now(),
+        status: 'novo',
+        produto, preco, variacao, porte,
+        imagem: imagemAbsoluta,
+        frete: freteHidden.value, total: totalHidden.value,
+        nome: v('nome'), email: v('email'), celular: v('celular'),
+        cep: v('cep'), endereco: v('rua'), numero: v('numero'), complemento: v('complemento'),
+        bairro: v('bairro'), cidade: v('cidade'), uf: v('uf').toUpperCase(),
+      };
       try {
         const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
         if (res.ok) {
+          await Promise.race([registrarNoPainel(registro), new Promise((r) => setTimeout(r, 4000))]);
           success.classList.add('show');
           form.reset();
           document.getElementById('produto-label').value = produto;

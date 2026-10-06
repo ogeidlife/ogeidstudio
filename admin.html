@@ -127,6 +127,27 @@
   .pedido-save-status{ font-family:var(--f-mono); font-size:11px; margin-top:10px; }
   .pedido-save-status.ok{ color:var(--accent-2); }
   .pedido-save-status.err{ color:#e07a52; }
+
+  /* ---- aba Encomendas (pedidos recebidos) ---- */
+  .enc-badge{
+    display:inline-block; min-width:18px; padding:1px 6px; margin-left:6px; border-radius:9px;
+    background:var(--accent-2); color:var(--bg); font-size:10px; text-align:center; letter-spacing:0;
+  }
+  .enc-badge.hidden{ display:none; }
+  .enc-card{ border:1px solid var(--line); padding:22px; margin-bottom:16px; }
+  .enc-card.atendida{ opacity:.55; }
+  .enc-card.nova{ border-color:var(--accent-2); }
+  .enc-head{ display:flex; justify-content:space-between; gap:16px; align-items:flex-start; flex-wrap:wrap; }
+  .enc-head h3{ font-family:var(--f-display); font-size:17px; margin:0 0 4px; }
+  .enc-data{ font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); }
+  .enc-tag{ font-family:var(--f-mono); font-size:10px; text-transform:uppercase; letter-spacing:.08em; border:1px solid var(--line); padding:4px 8px; }
+  .enc-tag.nova{ border-color:var(--accent-2); color:var(--accent-2); }
+  .enc-body{ display:grid; grid-template-columns:70px 1fr; gap:16px; margin-top:16px; }
+  .enc-body img{ width:70px; height:70px; object-fit:cover; border:1px solid var(--line); background:var(--bg); }
+  .enc-linha{ font-size:14px; line-height:1.7; }
+  .enc-linha .rot{ font-family:var(--f-mono); font-size:10px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.06em; margin-right:6px; }
+  .enc-linha a{ color:var(--accent-2); }
+  .enc-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
 </style>
 </head>
 <body>
@@ -182,6 +203,7 @@
     <div id="produtos-wrap" class="hidden">
       <div class="tab-nav">
         <button type="button" class="tab-btn active" id="tab-btn-produtos">Produtos</button>
+        <button type="button" class="tab-btn" id="tab-btn-encomendas">Encomendas <span class="enc-badge hidden" id="enc-badge">0</span></button>
         <button type="button" class="tab-btn" id="tab-btn-pedidos">Pedidos</button>
         <button type="button" class="tab-btn" id="tab-btn-leilao">Leilão</button>
         <button type="button" class="tab-btn" id="tab-btn-visitantes">Visitantes</button>
@@ -272,6 +294,27 @@
           <div id="leilao-bids-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-bottom:12px;"></div>
           <div id="leilao-bids-container"></div>
         </div>
+      </div>
+
+      <div id="encomendas-area" class="tab-panel hidden">
+        <p class="reorder-hint">
+          Aqui aparecem as encomendas que os clientes enviam pelo site, em tempo real — as mesmas que chegam no seu email. Quando você já respondeu, clique em "marcar como atendida". O botão "criar página de pagamento" leva os dados do cliente já preenchidos pra aba Pedidos.
+        </p>
+
+        <div class="admin-panel hidden" id="enc-login">
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 10px;">Entrar para ver as encomendas</h2>
+          <p style="color:var(--ink-dim); font-size:13px; margin:0 0 14px; max-width:60ch;">Os dados dos clientes (endereço, telefone) são protegidos. Entre com o email e a senha do usuário que você criou no Firebase (Authentication).</p>
+          <div class="admin-row">
+            <div class="field field-mini"><label>Email</label><input type="email" id="enc-login-email" autocomplete="username"></div>
+            <div class="field field-mini"><label>Senha</label><input type="password" id="enc-login-senha" autocomplete="current-password"></div>
+          </div>
+          <button class="btn" id="enc-login-btn" type="button" style="margin-top:14px;">Entrar</button>
+          <div class="status-msg" id="enc-login-status"></div>
+        </div>
+
+        <p id="enc-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-bottom:14px;">Carregando encomendas...</p>
+        <div id="enc-container"></div>
+        <button class="btn ghost hidden" id="enc-logout" type="button" style="margin-top:8px;">Sair do Firebase</button>
       </div>
 
       <div id="visitantes-area" class="tab-panel hidden">
@@ -486,6 +529,152 @@
     })();
   </script>
 
+  <script type="module">
+    /* =========================================================
+       ENCOMENDAS RECEBIDAS — lê 'encomendas' no Firebase, onde o
+       encomenda.html grava uma cópia de cada pedido enviado.
+       Se as regras do Firebase exigirem login (recomendado, pois há
+       endereço e telefone), mostra um pequeno formulário de entrada.
+       ========================================================= */
+    (async function () {
+      const $ = (id) => document.getElementById(id);
+      const msg = $('enc-msg'), box = $('enc-container'), badge = $('enc-badge');
+      const loginBox = $('enc-login'), logoutBtn = $('enc-logout');
+      const fb = await window.__fbReady;
+      if (!fb) { msg.textContent = 'Firebase não está configurado — não dá pra listar as encomendas.'; return; }
+      const { db, ref, onValue, update, remove } = fb;
+
+      let authMod = null, auth = null;
+      try {
+        authMod = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js');
+        auth = authMod.getAuth();
+      } catch (e) { console.warn('Firebase Auth indisponível', e); }
+
+      let dados = {};
+      let unsub = null;
+
+      function fmtData(ts) { return ts ? new Date(ts).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : ''; }
+      function zap(cel) {
+        let d = String(cel || '').replace(/\D/g, '');
+        if (d.length < 10) return '';
+        if (d.length <= 11) d = '55' + d;
+        return 'https://wa.me/' + d;
+      }
+      const linha = (rot, val) => val ? `<div class="enc-linha"><span class="rot">${rot}</span>${val}</div>` : '';
+
+      function render() {
+        const ids = Object.keys(dados).sort((a, b) => (dados[b].criadoEm || 0) - (dados[a].criadoEm || 0));
+        const novas = ids.filter((id) => dados[id].status !== 'atendido').length;
+        badge.textContent = novas;
+        badge.classList.toggle('hidden', novas === 0);
+        msg.textContent = ids.length ? `${novas} nova(s) · ${ids.length} no total` : 'Nenhuma encomenda recebida ainda.';
+        box.innerHTML = '';
+        ids.forEach((id) => {
+          const o = dados[id];
+          const atendida = o.status === 'atendido';
+          const card = document.createElement('div');
+          card.className = 'enc-card ' + (atendida ? 'atendida' : 'nova');
+          const endereco = [o.endereco, o.numero].filter(Boolean).join(', ') + (o.complemento ? ' — ' + o.complemento : '');
+          const cidade = [o.bairro, [o.cidade, o.uf].filter(Boolean).join('/')].filter(Boolean).join(' · ');
+          const wa = zap(o.celular);
+          card.innerHTML = `
+            <div class="enc-head">
+              <div>
+                <h3>${escapeHtml(o.nome) || 'Sem nome'}</h3>
+                <div class="enc-data">${fmtData(o.criadoEm)}</div>
+              </div>
+              <span class="enc-tag ${atendida ? '' : 'nova'}">${atendida ? 'atendida' : 'nova'}</span>
+            </div>
+            <div class="enc-body">
+              ${o.imagem ? `<img src="${escapeAttr(o.imagem)}" alt="" onerror="this.style.opacity=0.15">` : '<div></div>'}
+              <div>
+                ${linha('Peça', escapeHtml(o.produto))}
+                ${linha('Variação', escapeHtml(o.variacao))}
+                ${linha('Valor', escapeHtml(o.preco))}
+                ${linha('Frete', escapeHtml(o.frete))}
+                ${linha('Total', o.total ? '<strong>' + escapeHtml(o.total) + '</strong>' : '')}
+                <div style="height:8px"></div>
+                ${linha('Email', o.email ? `<a href="mailto:${escapeAttr(o.email)}">${escapeHtml(o.email)}</a>` : '')}
+                ${linha('Celular', o.celular ? (wa ? `<a href="${wa}" target="_blank" rel="noopener">${escapeHtml(o.celular)} (WhatsApp)</a>` : escapeHtml(o.celular)) : '')}
+                <div style="height:8px"></div>
+                ${linha('Endereço', escapeHtml(endereco))}
+                ${linha('', escapeHtml(cidade))}
+                ${linha('CEP', escapeHtml(o.cep))}
+              </div>
+            </div>
+            <div class="enc-actions">
+              <button type="button" class="btn ghost enc-pagto">criar página de pagamento</button>
+              <button type="button" class="btn ghost enc-status">${atendida ? 'reabrir' : 'marcar como atendida'}</button>
+              <button type="button" class="btn ghost enc-del" style="color:#e07a52;">remover</button>
+            </div>`;
+          box.appendChild(card);
+
+          card.querySelector('.enc-status').addEventListener('click', () => {
+            update(ref(db, 'encomendas/' + id), { status: atendida ? 'novo' : 'atendido' })
+              .catch((err) => alert('Não consegui atualizar: ' + err.message));
+          });
+          card.querySelector('.enc-del').addEventListener('click', () => {
+            if (!confirm(`Remover a encomenda de "${o.nome || id}" desta lista? (O email original continua com você.)`)) return;
+            remove(ref(db, 'encomendas/' + id)).catch((err) => alert('Não consegui remover: ' + err.message));
+          });
+          card.querySelector('.enc-pagto').addEventListener('click', () => {
+            if (typeof currentPedidos === 'undefined' || currentPedidos === null) currentPedidos = {};
+            const resumo = [
+              o.produto && 'Peça: ' + o.produto,
+              o.variacao && 'Variação: ' + o.variacao,
+              o.preco && 'Valor da peça: ' + o.preco,
+              o.frete && 'Frete: ' + o.frete,
+            ].filter(Boolean).join('\n');
+            addPedidoCard(gerarIdPedido(), {
+              comprador: o.nome || '', resumo, valor: o.total || o.preco || '',
+              linkPagamento: '', imagem: '', qrcode: '', pago: false,
+              criadoEm: new Date().toISOString().slice(0, 10),
+            });
+            trocarAba('pedidos');
+            document.getElementById('pedidos-container').lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          });
+        });
+      }
+
+      function assinar() {
+        if (unsub) { try { unsub(); } catch (e) {} }
+        unsub = onValue(ref(db, 'encomendas'), (snap) => {
+          loginBox.classList.add('hidden');
+          dados = snap.val() || {};
+          render();
+        }, (err) => {
+          dados = {}; box.innerHTML = ''; badge.classList.add('hidden');
+          if (auth) {
+            msg.textContent = '';
+            loginBox.classList.remove('hidden');
+          } else {
+            msg.textContent = 'Sem permissão pra ler as encomendas (' + err.code + '). Confira as regras do Firebase.';
+          }
+        });
+      }
+
+      if (auth) {
+        authMod.onAuthStateChanged(auth, (user) => {
+          logoutBtn.classList.toggle('hidden', !user);
+          assinar();
+        });
+        $('enc-login-btn').addEventListener('click', async () => {
+          const st = $('enc-login-status');
+          try {
+            await authMod.signInWithEmailAndPassword(auth, $('enc-login-email').value.trim(), $('enc-login-senha').value);
+            st.className = 'status-msg';
+          } catch (err) {
+            st.textContent = 'Não consegui entrar: ' + (err.code || err.message);
+            st.className = 'status-msg err';
+          }
+        });
+        logoutBtn.addEventListener('click', () => authMod.signOut(auth));
+      } else {
+        assinar();
+      }
+    })();
+  </script>
+
   <script>
     // Liga os botões "marcar/desmarcar este navegador como meu" (independe do
     // login do GitHub). Usa a mesma chave no localStorage que js/visitas.js lê
@@ -594,15 +783,12 @@
       if (!currentLeilao) carregarLeilao();
     });
     document.getElementById('tab-btn-visitantes').addEventListener('click', () => trocarAba('visitantes'));
+    document.getElementById('tab-btn-encomendas').addEventListener('click', () => trocarAba('encomendas'));
     function trocarAba(nome) {
-      document.getElementById('produtos-area').classList.toggle('hidden', nome !== 'produtos');
-      document.getElementById('pedidos-area').classList.toggle('hidden', nome !== 'pedidos');
-      document.getElementById('leilao-area').classList.toggle('hidden', nome !== 'leilao');
-      document.getElementById('visitantes-area').classList.toggle('hidden', nome !== 'visitantes');
-      document.getElementById('tab-btn-produtos').classList.toggle('active', nome === 'produtos');
-      document.getElementById('tab-btn-pedidos').classList.toggle('active', nome === 'pedidos');
-      document.getElementById('tab-btn-leilao').classList.toggle('active', nome === 'leilao');
-      document.getElementById('tab-btn-visitantes').classList.toggle('active', nome === 'visitantes');
+      ['produtos', 'encomendas', 'pedidos', 'leilao', 'visitantes'].forEach((n) => {
+        document.getElementById(n + '-area').classList.toggle('hidden', nome !== n);
+        document.getElementById('tab-btn-' + n).classList.toggle('active', nome === n);
+      });
     }
 
     function renderCards(data) {
