@@ -892,45 +892,8 @@
       "assets/img/ocio-2.jpg"
     ]
   },
-  "sem-titulo-kraft-3": {
-    "ordem": 27,
-    "destaque": false,
-    "numero": "Papel kraft · 2026",
-    "titulo": "Sem título (kraft) #3",
-    "preco": "100,00",
-    "porte": "P",
-    "descricao": "Papel kraft, bloco de concreto e outros suportes já usados entram no trabalho com suas marcas, texturas e cor própria. O suporte participa da imagem: o tom do kraft e a aspereza do concreto definem como a tinta, o spray e o giz se depositam.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel kraft"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "21 × 14,8 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2026"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Suportes encontrados"
-      },
-      {
-        "label": "Artista",
-        "valor": "OGEID (Diego Vulcanis da Cunha)"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/sem-titulo-kraft-3-capa.jpg",
-    "capaAnimada": "assets/img/sem-titulo-kraft-3-capa.jpg",
-    "imagens": [
-      "assets/img/sem-titulo-kraft-3-1.jpg"
-    ]
-  },
   "ritmo-de-copa-do-mundo": {
-    "ordem": 28,
+    "ordem": 27,
     "destaque": false,
     "numero": "COPA · 2026",
     "titulo": "Ritmo de copa do mundo",
@@ -967,7 +930,7 @@
     ]
   },
   "ritmo-de-copa-do-mundo-2": {
-    "ordem": 29,
+    "ordem": 28,
     "destaque": false,
     "numero": "COPA 2 · 2026",
     "titulo": "Ritmo de copa do mundo #2",
