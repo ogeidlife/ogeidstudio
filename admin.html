@@ -838,6 +838,12 @@
           <input type="text" class="f-titulo" value="${escapeAttr(p.titulo)}">
         </div>
         <div class="field field-mini" style="margin-top:12px;">
+          <label>Porte pro cálculo do frete (P = pequena/leve · M = média · G = grande/frágil)</label>
+          <select class="f-porte" style="width:100%; padding:10px 12px; background:var(--bg); color:var(--ink); border:1px solid var(--line); font:inherit;">
+            ${['P','M','G'].map((o) => `<option value="${o}" ${(String(p.porte || 'M').toUpperCase() === o) ? 'selected' : ''}>${o}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field field-mini" style="margin-top:12px;">
           <label>Descrição</label>
           <textarea class="f-descricao" rows="3">${escapeHtml(p.descricao)}</textarea>
         </div>
@@ -947,6 +953,7 @@
         numero: 'Nº ' + String(maiorOrdem + 1).padStart(3, '0'),
         titulo: nome,
         preco: 'R$ 0,00',
+        porte: 'M',
         descricao: 'Descrição da peça.',
         specs: [{ label: 'Material', valor: 'Sob consulta' }],
         variacoes: [],
@@ -1145,6 +1152,7 @@
           numero: card.querySelector('.f-numero').value,
           titulo: card.querySelector('.f-titulo').value,
           preco: card.querySelector('.f-preco').value,
+          porte: card.querySelector('.f-porte').value,
           descricao: card.querySelector('.f-descricao').value,
           destaque: card.querySelector('.f-destaque').checked,
           specs,
