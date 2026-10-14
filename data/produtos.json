@@ -177,5 +177,936 @@
       "assets/img/poltrona-nina-3.jpg",
       "assets/img/poltrona-nina-4.jpg"
     ]
+  },
+  "o-tempo-e-real": {
+    "ordem": 8,
+    "destaque": false,
+    "numero": "Pintura",
+    "titulo": "O tempo é real",
+    "preco": "Sob consulta",
+    "porte": "G",
+    "descricao": "Pinturas de maior escala sobre tela e painel, em que o graffiti, o desenho de linha e a cor em camadas se encontram. Figuras, carros, semáforos e símbolos urbanos aparecem sobre superfícies construídas por acúmulo, em trabalhos de 2023 a 2026.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Spray, aerógrafo e pincel sobre tela"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "140 × 80 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Pintura"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/o-tempo-e-real-capa.jpg",
+    "capaAnimada": "assets/img/o-tempo-e-real-capa.jpg",
+    "imagens": [
+      "assets/img/o-tempo-e-real-1.jpg"
+    ]
+  },
+  "bilhar": {
+    "ordem": 9,
+    "destaque": false,
+    "numero": "Pintura",
+    "titulo": "Bilhar",
+    "preco": "Sob consulta",
+    "porte": "G",
+    "descricao": "Pinturas de maior escala sobre tela e painel, em que o graffiti, o desenho de linha e a cor em camadas se encontram. Figuras, carros, semáforos e símbolos urbanos aparecem sobre superfícies construídas por acúmulo, em trabalhos de 2023 a 2026.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre tela"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "75 × 100 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2024"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Pintura"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/bilhar-capa.jpg",
+    "capaAnimada": "assets/img/bilhar-capa.jpg",
+    "imagens": [
+      "assets/img/bilhar-1.jpg"
+    ]
+  },
+  "12-12": {
+    "ordem": 10,
+    "destaque": false,
+    "numero": "Pintura",
+    "titulo": "12/12",
+    "preco": "Sob consulta",
+    "porte": "G",
+    "descricao": "Pinturas de maior escala sobre tela e painel, em que o graffiti, o desenho de linha e a cor em camadas se encontram. Figuras, carros, semáforos e símbolos urbanos aparecem sobre superfícies construídas por acúmulo, em trabalhos de 2023 a 2026.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre painel de madeira impresso"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "100 × 75 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2024"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Pintura"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/12-12-capa.jpg",
+    "capaAnimada": "assets/img/12-12-capa.jpg",
+    "imagens": [
+      "assets/img/12-12-1.jpg"
+    ]
+  },
+  "irmaos": {
+    "ordem": 11,
+    "destaque": false,
+    "numero": "Pintura",
+    "titulo": "Irmãos",
+    "preco": "Sob consulta",
+    "porte": "G",
+    "descricao": "Pinturas de maior escala sobre tela e painel, em que o graffiti, o desenho de linha e a cor em camadas se encontram. Figuras, carros, semáforos e símbolos urbanos aparecem sobre superfícies construídas por acúmulo, em trabalhos de 2023 a 2026.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "85 × 65 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2024"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Pintura"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/irmaos-capa.jpg",
+    "capaAnimada": "assets/img/irmaos-capa.jpg",
+    "imagens": [
+      "assets/img/irmaos-1.jpg"
+    ]
+  },
+  "saxofonista": {
+    "ordem": 12,
+    "destaque": false,
+    "numero": "Pintura",
+    "titulo": "Saxofonista",
+    "preco": "Sob consulta",
+    "porte": "G",
+    "descricao": "Pinturas de maior escala sobre tela e painel, em que o graffiti, o desenho de linha e a cor em camadas se encontram. Figuras, carros, semáforos e símbolos urbanos aparecem sobre superfícies construídas por acúmulo, em trabalhos de 2023 a 2026.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre tela"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "84 × 123 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2023"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Pintura"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/saxofonista-capa.jpg",
+    "capaAnimada": "assets/img/saxofonista-capa.jpg",
+    "imagens": [
+      "assets/img/saxofonista-1.jpg"
+    ]
+  },
+  "sonhos-em-andamento": {
+    "ordem": 13,
+    "destaque": false,
+    "numero": "Papel · 2026",
+    "titulo": "Sonhos em andamento",
+    "preco": "Sob consulta",
+    "porte": "M",
+    "descricao": "Trabalhos em A3 que reúnem spray, giz seco, caneta e tinta acrílica. Cenas densas, com figuras recorrentes, objetos e fragmentos da cidade sobrepostos, registram sonhos, observações do cotidiano e acontecimentos. O gesto largo do spray convive com o traço fino da caneta, e o controle cede espaço ao acidente.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "42 × 29,7 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Papel, 2026"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/sonhos-em-andamento-capa.jpg",
+    "capaAnimada": "assets/img/sonhos-em-andamento-2.jpg",
+    "imagens": [
+      "assets/img/sonhos-em-andamento-1.jpg",
+      "assets/img/sonhos-em-andamento-2.jpg"
+    ]
+  },
+  "observando-o-cotidiano": {
+    "ordem": 14,
+    "destaque": false,
+    "numero": "Papel · 2026",
+    "titulo": "Observando o cotidiano",
+    "preco": "Sob consulta",
+    "porte": "M",
+    "descricao": "Trabalhos em A3 que reúnem spray, giz seco, caneta e tinta acrílica. Cenas densas, com figuras recorrentes, objetos e fragmentos da cidade sobrepostos, registram sonhos, observações do cotidiano e acontecimentos. O gesto largo do spray convive com o traço fino da caneta, e o controle cede espaço ao acidente.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "42 × 29,7 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Papel, 2026"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/observando-o-cotidiano-capa.jpg",
+    "capaAnimada": "assets/img/observando-o-cotidiano-capa.jpg",
+    "imagens": [
+      "assets/img/observando-o-cotidiano-1.jpg"
+    ]
+  },
+  "o-inevitavel-ou-tinha-que-acontecer": {
+    "ordem": 15,
+    "destaque": false,
+    "numero": "Papel · 2026",
+    "titulo": "O inevitável ou tinha que acontecer",
+    "preco": "Sob consulta",
+    "porte": "M",
+    "descricao": "Trabalhos em A3 que reúnem spray, giz seco, caneta e tinta acrílica. Cenas densas, com figuras recorrentes, objetos e fragmentos da cidade sobrepostos, registram sonhos, observações do cotidiano e acontecimentos. O gesto largo do spray convive com o traço fino da caneta, e o controle cede espaço ao acidente.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "42 × 29,7 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Papel, 2026"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/o-inevitavel-ou-tinha-que-acontecer-capa.jpg",
+    "capaAnimada": "assets/img/o-inevitavel-ou-tinha-que-acontecer-capa.jpg",
+    "imagens": [
+      "assets/img/o-inevitavel-ou-tinha-que-acontecer-1.jpg"
+    ]
+  },
+  "sem-titulo-serie-1": {
+    "ordem": 16,
+    "destaque": false,
+    "numero": "Papel · 2026",
+    "titulo": "Sem título (série) #1",
+    "preco": "Sob consulta",
+    "porte": "M",
+    "descricao": "Trabalhos em A3 que reúnem spray, giz seco, caneta e tinta acrílica. Cenas densas, com figuras recorrentes, objetos e fragmentos da cidade sobrepostos, registram sonhos, observações do cotidiano e acontecimentos. O gesto largo do spray convive com o traço fino da caneta, e o controle cede espaço ao acidente.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "29,7 × 42 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Papel, 2026"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/sem-titulo-serie-1-capa.jpg",
+    "capaAnimada": "assets/img/sem-titulo-serie-1-capa.jpg",
+    "imagens": [
+      "assets/img/sem-titulo-serie-1-1.jpg"
+    ]
+  },
+  "sem-titulo-serie-2": {
+    "ordem": 17,
+    "destaque": false,
+    "numero": "Papel · 2026",
+    "titulo": "Sem título (série) #2",
+    "preco": "Sob consulta",
+    "porte": "M",
+    "descricao": "Trabalhos em A3 que reúnem spray, giz seco, caneta e tinta acrílica. Cenas densas, com figuras recorrentes, objetos e fragmentos da cidade sobrepostos, registram sonhos, observações do cotidiano e acontecimentos. O gesto largo do spray convive com o traço fino da caneta, e o controle cede espaço ao acidente.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "29,7 × 42 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Papel, 2026"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/sem-titulo-serie-2-capa.jpg",
+    "capaAnimada": "assets/img/sem-titulo-serie-2-capa.jpg",
+    "imagens": [
+      "assets/img/sem-titulo-serie-2-1.jpg"
+    ]
+  },
+  "sem-titulo-serie-3": {
+    "ordem": 18,
+    "destaque": false,
+    "numero": "Papel · 2026",
+    "titulo": "Sem título (série) #3",
+    "preco": "Sob consulta",
+    "porte": "M",
+    "descricao": "Trabalhos em A3 que reúnem spray, giz seco, caneta e tinta acrílica. Cenas densas, com figuras recorrentes, objetos e fragmentos da cidade sobrepostos, registram sonhos, observações do cotidiano e acontecimentos. O gesto largo do spray convive com o traço fino da caneta, e o controle cede espaço ao acidente.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "29,7 × 42 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Papel, 2026"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/sem-titulo-serie-3-capa.jpg",
+    "capaAnimada": "assets/img/sem-titulo-serie-3-capa.jpg",
+    "imagens": [
+      "assets/img/sem-titulo-serie-3-1.jpg"
+    ]
+  },
+  "sem-titulo-serie-4": {
+    "ordem": 19,
+    "destaque": false,
+    "numero": "Papel · 2026",
+    "titulo": "Sem título (série) #4",
+    "preco": "Sob consulta",
+    "porte": "M",
+    "descricao": "Trabalhos em A3 que reúnem spray, giz seco, caneta e tinta acrílica. Cenas densas, com figuras recorrentes, objetos e fragmentos da cidade sobrepostos, registram sonhos, observações do cotidiano e acontecimentos. O gesto largo do spray convive com o traço fino da caneta, e o controle cede espaço ao acidente.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "29,7 × 42 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Papel, 2026"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/sem-titulo-serie-4-capa.jpg",
+    "capaAnimada": "assets/img/sem-titulo-serie-4-capa.jpg",
+    "imagens": [
+      "assets/img/sem-titulo-serie-4-1.jpg"
+    ]
+  },
+  "serie-1000-vista-parcial": {
+    "ordem": 20,
+    "destaque": false,
+    "numero": "Série 1000",
+    "titulo": "Série 1000 — vista parcial",
+    "preco": "Sob consulta",
+    "porte": "M",
+    "descricao": "Projeto de mil pinturas em formato A5, com unidade estética, iniciado em 2025. A série investiga a repetição: até onde o personagem central consegue ir, onde consegue viver e onde se sai melhor. É também um ambiente de experimentação com materiais e intensidades, em que o volume de produção faz parte da pesquisa. Trinta pinturas integram a proposta até agora.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel · vista parcial da série"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "21 × 14,8 cm (cada)"
+      },
+      {
+        "label": "Ano",
+        "valor": "2025"
+      },
+      {
+        "label": "Obras na série",
+        "valor": "30 pinturas até agora, de um total de 1000"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Série 1000"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/serie-1000-vista-parcial-capa.jpg",
+    "capaAnimada": "assets/img/serie-1000-vista-parcial-capa.jpg",
+    "imagens": [
+      "assets/img/serie-1000-vista-parcial-1.jpg"
+    ]
+  },
+  "serie-1000": {
+    "ordem": 21,
+    "destaque": false,
+    "numero": "Série 1000",
+    "titulo": "Série 1000",
+    "preco": "Sob consulta",
+    "porte": "P",
+    "descricao": "Projeto de mil pinturas em formato A5, com unidade estética, iniciado em 2025. A série investiga a repetição: até onde o personagem central consegue ir, onde consegue viver e onde se sai melhor. É também um ambiente de experimentação com materiais e intensidades, em que o volume de produção faz parte da pesquisa. Trinta pinturas integram a proposta até agora.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "21 × 14,8 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2025"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Série 1000"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/serie-1000-capa.jpg",
+    "capaAnimada": "assets/img/serie-1000-capa.jpg",
+    "imagens": [
+      "assets/img/serie-1000-1.jpg"
+    ]
+  },
+  "rosas-vermelhas": {
+    "ordem": 22,
+    "destaque": false,
+    "numero": "Papel · 2025",
+    "titulo": "Rosas vermelhas",
+    "preco": "Sob consulta",
+    "porte": "P",
+    "descricao": "Trabalhos em A3 e A4 em que o desenho de linha, o giz seco e a cor se acumulam em composições densas, com cenas urbanas, flores, carros e figuras recorrentes. O personagem se desloca entre paisagens que misturam observação e invenção.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "29,7 × 21 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2025"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Desenho e cor"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/rosas-vermelhas-capa.jpg",
+    "capaAnimada": "assets/img/rosas-vermelhas-capa.jpg",
+    "imagens": [
+      "assets/img/rosas-vermelhas-1.jpg"
+    ]
+  },
+  "universo-ogeid-29": {
+    "ordem": 23,
+    "destaque": false,
+    "numero": "Papel · 2025",
+    "titulo": "Universo OGEID #29",
+    "preco": "Sob consulta",
+    "porte": "P",
+    "descricao": "Trabalhos em A3 e A4 em que o desenho de linha, o giz seco e a cor se acumulam em composições densas, com cenas urbanas, flores, carros e figuras recorrentes. O personagem se desloca entre paisagens que misturam observação e invenção.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "29,7 × 21 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2025"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Desenho e cor"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/universo-ogeid-29-capa.jpg",
+    "capaAnimada": "assets/img/universo-ogeid-29-capa.jpg",
+    "imagens": [
+      "assets/img/universo-ogeid-29-1.jpg"
+    ]
+  },
+  "sem-titulo-2023-1": {
+    "ordem": 24,
+    "destaque": false,
+    "numero": "Papel · 2023",
+    "titulo": "Sem título #1 (2023)",
+    "preco": "Sob consulta",
+    "porte": "M",
+    "descricao": "Trabalhos em A3 e A4 em que o desenho de linha, o giz seco e a cor se acumulam em composições densas, com cenas urbanas, flores, carros e figuras recorrentes. O personagem se desloca entre paisagens que misturam observação e invenção.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "42 × 29,7 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2023"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Desenho e cor"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/sem-titulo-2023-1-capa.jpg",
+    "capaAnimada": "assets/img/sem-titulo-2023-1-capa.jpg",
+    "imagens": [
+      "assets/img/sem-titulo-2023-1-1.jpg"
+    ]
+  },
+  "sem-titulo-2023-2": {
+    "ordem": 25,
+    "destaque": false,
+    "numero": "Papel · 2023",
+    "titulo": "Sem título #2 (2023)",
+    "preco": "Sob consulta",
+    "porte": "M",
+    "descricao": "Trabalhos em A3 e A4 em que o desenho de linha, o giz seco e a cor se acumulam em composições densas, com cenas urbanas, flores, carros e figuras recorrentes. O personagem se desloca entre paisagens que misturam observação e invenção.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "42 × 29,7 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2023"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Desenho e cor"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/sem-titulo-2023-2-capa.jpg",
+    "capaAnimada": "assets/img/sem-titulo-2023-2-capa.jpg",
+    "imagens": [
+      "assets/img/sem-titulo-2023-2-1.jpg"
+    ]
+  },
+  "sem-titulo-kraft-1": {
+    "ordem": 26,
+    "destaque": false,
+    "numero": "Papel kraft · 2026",
+    "titulo": "Sem título (kraft) #1",
+    "preco": "Sob consulta",
+    "porte": "P",
+    "descricao": "Papel kraft, bloco de concreto e outros suportes já usados entram no trabalho com suas marcas, texturas e cor própria. O suporte participa da imagem: o tom do kraft e a aspereza do concreto definem como a tinta, o spray e o giz se depositam.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel kraft"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "29,7 × 21 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Suportes encontrados"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/sem-titulo-kraft-1-capa.jpg",
+    "capaAnimada": "assets/img/sem-titulo-kraft-1-capa.jpg",
+    "imagens": [
+      "assets/img/sem-titulo-kraft-1-1.jpg"
+    ]
+  },
+  "ocio": {
+    "ordem": 27,
+    "destaque": false,
+    "numero": "Concreto · 2026",
+    "titulo": "Ócio",
+    "preco": "Sob consulta",
+    "porte": "M",
+    "descricao": "Papel kraft, bloco de concreto e outros suportes já usados entram no trabalho com suas marcas, texturas e cor própria. O suporte participa da imagem: o tom do kraft e a aspereza do concreto definem como a tinta, o spray e o giz se depositam.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre bloco de concreto"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "19 × 25 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Suportes encontrados"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/ocio-capa.jpg",
+    "capaAnimada": "assets/img/ocio-2.jpg",
+    "imagens": [
+      "assets/img/ocio-1.jpg",
+      "assets/img/ocio-2.jpg"
+    ]
+  },
+  "sem-titulo-kraft-2": {
+    "ordem": 28,
+    "destaque": false,
+    "numero": "Papel kraft · 2026",
+    "titulo": "Sem título (kraft) #2",
+    "preco": "Sob consulta",
+    "porte": "P",
+    "descricao": "Papel kraft, bloco de concreto e outros suportes já usados entram no trabalho com suas marcas, texturas e cor própria. O suporte participa da imagem: o tom do kraft e a aspereza do concreto definem como a tinta, o spray e o giz se depositam.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel kraft"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "21 × 14,8 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Suportes encontrados"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/sem-titulo-kraft-2-capa.jpg",
+    "capaAnimada": "assets/img/sem-titulo-kraft-2-capa.jpg",
+    "imagens": [
+      "assets/img/sem-titulo-kraft-2-1.jpg"
+    ]
+  },
+  "sem-titulo-kraft-3": {
+    "ordem": 29,
+    "destaque": false,
+    "numero": "Papel kraft · 2026",
+    "titulo": "Sem título (kraft) #3",
+    "preco": "Sob consulta",
+    "porte": "P",
+    "descricao": "Papel kraft, bloco de concreto e outros suportes já usados entram no trabalho com suas marcas, texturas e cor própria. O suporte participa da imagem: o tom do kraft e a aspereza do concreto definem como a tinta, o spray e o giz se depositam.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel kraft"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "21 × 14,8 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Suportes encontrados"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/sem-titulo-kraft-3-capa.jpg",
+    "capaAnimada": "assets/img/sem-titulo-kraft-3-capa.jpg",
+    "imagens": [
+      "assets/img/sem-titulo-kraft-3-1.jpg"
+    ]
+  },
+  "sem-titulo-serie-biscuit": {
+    "ordem": 30,
+    "destaque": false,
+    "numero": "Objeto · 2026",
+    "titulo": "Sem título (série) — escultura em biscuit",
+    "preco": "Sob consulta",
+    "porte": "P",
+    "descricao": "O desenho se estende ao objeto. A poltrona pintada à mão e as pequenas esculturas em biscuit, com caixas de fósforo e prendedores de roupa, levam o personagem do papel para o espaço e para o uso cotidiano.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Biscuit, caixa de fósforo, fio de aço e papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "6 × 5 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Objetos e mobiliário"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/sem-titulo-serie-biscuit-capa.jpg",
+    "capaAnimada": "assets/img/sem-titulo-serie-biscuit-capa.jpg",
+    "imagens": [
+      "assets/img/sem-titulo-serie-biscuit-1.jpg"
+    ]
+  },
+  "ritmo-de-copa-do-mundo": {
+    "ordem": 31,
+    "destaque": false,
+    "numero": "Futebol · 2026",
+    "titulo": "Ritmo de copa do mundo",
+    "preco": "Sob consulta",
+    "porte": "P",
+    "descricao": "Pequenos trabalhos em A5 que levam o futebol e a cultura de torcida ao universo do artista: jogadores, bola, estádio e arquibancada tratados com spray, tinta e giz, com a energia do jogo.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "21 × 14,8 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Futebol"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/ritmo-de-copa-do-mundo-capa.jpg",
+    "capaAnimada": "assets/img/ritmo-de-copa-do-mundo-capa.jpg",
+    "imagens": [
+      "assets/img/ritmo-de-copa-do-mundo-1.jpg"
+    ]
+  },
+  "ritmo-de-copa-do-mundo-2": {
+    "ordem": 32,
+    "destaque": false,
+    "numero": "Futebol · 2026",
+    "titulo": "Ritmo de copa do mundo #2",
+    "preco": "Sob consulta",
+    "porte": "P",
+    "descricao": "Pequenos trabalhos em A5 que levam o futebol e a cultura de torcida ao universo do artista: jogadores, bola, estádio e arquibancada tratados com spray, tinta e giz, com a energia do jogo.",
+    "specs": [
+      {
+        "label": "Técnica",
+        "valor": "Técnica mista sobre papel"
+      },
+      {
+        "label": "Dimensões",
+        "valor": "21 × 14,8 cm"
+      },
+      {
+        "label": "Ano",
+        "valor": "2026"
+      },
+      {
+        "label": "Coleção",
+        "valor": "Futebol"
+      },
+      {
+        "label": "Artista",
+        "valor": "OGEID (Diego Vulcanis da Cunha)"
+      }
+    ],
+    "variacoes": [],
+    "capaEstatica": "assets/img/ritmo-de-copa-do-mundo-2-capa.jpg",
+    "capaAnimada": "assets/img/ritmo-de-copa-do-mundo-2-capa.jpg",
+    "imagens": [
+      "assets/img/ritmo-de-copa-do-mundo-2-1.jpg"
+    ]
   }
 }
