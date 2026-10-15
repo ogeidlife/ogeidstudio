@@ -253,7 +253,7 @@
     "destaque": false,
     "numero": "Pintura",
     "titulo": "12/12",
-    "preco": "Sob consulta",
+    "preco": "700,00R$",
     "porte": "G",
     "descricao": "Pinturas de maior escala sobre tela e painel, em que o graffiti, o desenho de linha e a cor em camadas se encontram. Figuras, carros, semáforos e símbolos urbanos aparecem sobre superfícies construídas por acúmulo, em trabalhos de 2023 a 2026.",
     "specs": [
@@ -746,7 +746,9 @@
     "capaEstatica": "assets/img/sem-titulo-2023-2-capa.jpg",
     "capaAnimada": "assets/img/sem-titulo-2023-2-capa.jpg",
     "imagens": [
-      "assets/img/sem-titulo-2023-2-1.jpg"
+      "assets/img/sem-titulo-2023-2-1.jpg",
+      "assets/img/sem-titulo-2023-2-2.jpg",
+      "assets/img/sem-titulo-2023-2-3.jpg"
     ]
   },
   "sem-titulo-kraft-1": {
