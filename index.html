@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ateliê — Colecionáveis Autorais</title>
+<title>Galeria Ogeid — Ateliê · Colecionáveis Autorais</title>
 <meta name="description" content="Colecionáveis autorais impresso em 3D e pintados à mão: cabeças de personagem, quadros, abajures, prints e livros.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v=3">
+<link rel="stylesheet" href="css/galeria.css?v=1">
 </head>
 <body>
 
@@ -15,6 +16,7 @@
   <div class="topbar">
     <span class="brand-mark">DROP Nº 002 · universo ogeid</span>
     <nav class="nav-pill">
+      <a href="galeria.html">Galeria</a>
       <a href="catalogo.html">Catálogo</a>
       <a href="cadastro.html">Cadastro</a>
     </nav>
@@ -32,6 +34,18 @@
       <p>Peça central da coleção — clique e arraste para girar</p>
     </div>
     <div class="hero-hint">clique e arraste a peça ↑</div>
+
+    <!-- Entrada da Galeria Ogeid -->
+    <div class="gx-home-cta" role="region" aria-label="Galeria Ogeid">
+      <p class="gx-eyebrow">Galeria Ogeid</p>
+      <p class="gx-lead">Entre numa galeria de arte digital, caminhe entre as obras e peças do ateliê, veja tudo em 3D — e em realidade aumentada, no seu espaço.</p>
+      <div class="gx-home-botoes">
+        <a class="gx-btn gx-btn-primario" href="galeria.html">Entrar na galeria</a>
+        <a class="gx-btn" href="configurador.html">Configurar personagem</a>
+        <a class="gx-btn" href="catalogo.html">Ver catálogo</a>
+        <a class="gx-btn gx-btn-acento" href="encomenda.html">Encomendar</a>
+      </div>
+    </div>
   </section>
 
   <script type="importmap">
@@ -44,6 +58,7 @@
   </script>
   <script type="module" src="js/viewer.js?v=3"></script>
 
+  <script src="js/carrinho.js" defer></script>
   <script src="js/firebase-config.js"></script>
   <script src="js/visitas.js" defer></script>
 </body>
