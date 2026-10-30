@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Ateliê</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=3">
+<style>
+  .admin-wrap{ max-width:880px; margin:0 auto; padding:60px 24px 100px; }
+  .admin-head h1{ font-family:var(--f-display); font-size:28px; margin:0 0 8px; }
+  .admin-head p{ color:var(--ink-dim); font-size:14px; max-width:60ch; }
+  .admin-panel{
+    border:1px solid var(--line); background:var(--bg-alt);
+    padding:24px; margin:28px 0; border-radius:2px;
+  }
+  .admin-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .admin-row.single{ grid-template-columns:1fr; }
+  .product-card{
+    border:1px solid var(--line); padding:24px; margin-bottom:20px;
+  }
+  .product-card h2{ font-family:var(--f-display); font-size:18px; margin:0 0 18px; color:var(--accent-2); }
+  .spec-row{ display:grid; grid-template-columns:1fr 1fr auto; gap:10px; margin-bottom:8px; align-items:center; }
+  .spec-row button, .img-row button{
+    all:unset; cursor:pointer; font-family:var(--f-mono); font-size:11px;
+    color:var(--ink-dim); border:1px solid var(--line); padding:8px 10px; text-align:center;
+  }
+  .spec-row button:hover, .img-row button:hover{ border-color:var(--accent); color:var(--ink); }
+  .variacao-grupo-row{
+    border:1px solid var(--line); padding:14px; margin-bottom:14px; background:var(--bg);
+  }
+  .variacao-grupo-head{ display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+  .variacao-grupo-head input{ flex:1; }
+  .opcao-row{ display:grid; grid-template-columns:1fr 1fr 1.4fr auto; gap:10px; margin-bottom:8px; align-items:center; }
+  .opcao-row button, .variacao-grupo-row > .remove-grupo{
+    all:unset; cursor:pointer; font-family:var(--f-mono); font-size:11px;
+    color:var(--ink-dim); border:1px solid var(--line); padding:8px 10px; text-align:center; white-space:nowrap;
+  }
+  .opcao-row button:hover, .variacao-grupo-row > .remove-grupo:hover{ border-color:#e07a52; color:#e07a52; }
+  .add-opcao{ margin-top:2px; }
+  .img-row{ display:grid; grid-template-columns:70px 1fr auto auto auto; gap:10px; align-items:center; margin-bottom:10px; }
+  .img-row img{ width:70px; height:70px; object-fit:cover; border:1px solid var(--line); background:var(--bg); }
+  .img-row input[type=file]{ font-size:11px; color:var(--ink-dim); }
+  .add-spec{ margin-top:4px; }
+  .status-msg{
+    font-family:var(--f-mono); font-size:12px; padding:12px 14px; margin-top:16px;
+    border:1px solid var(--line); display:none;
+  }
+  .status-msg.ok{ display:block; border-color:var(--accent-2); color:var(--accent-2); }
+  .status-msg.err{ display:block; border-color:#b5502a; color:#e07a52; }
+  .save-bar{
+    position:sticky; bottom:0; background:var(--bg); border-top:1px solid var(--line);
+    padding:16px 0; margin-top:24px; display:flex; gap:12px; align-items:center;
+  }
+  .hidden{ display:none; }
+  .field-mini label{ font-family:var(--f-mono); font-size:10px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:6px; }
+  .card-top-row{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
+  .remove-product{
+    all:unset; cursor:pointer; font-family:var(--f-mono); font-size:11px;
+    color:#e07a52; border:1px solid var(--line); padding:8px 12px; white-space:nowrap;
+  }
+  .remove-product:hover{ border-color:#e07a52; }
+  .card-actions{ display:flex; gap:8px; flex-shrink:0; }
+  .move-btn{
+    all:unset; cursor:pointer; font-family:var(--f-mono); font-size:13px;
+    color:var(--ink-dim); border:1px solid var(--line); padding:8px 12px; text-align:center;
+  }
+  .move-btn:hover{ border-color:var(--accent-2); color:var(--accent-2); }
+  .move-btn:disabled{ opacity:.3; cursor:default; }
+  .move-btn:disabled:hover{ border-color:var(--line); color:var(--ink-dim); }
+  .reorder-hint{
+    font-family:var(--f-mono); font-size:12px; color:var(--ink-dim);
+    margin:0 0 16px; max-width:60ch;
+  }
+  .destaque-row{ display:flex; align-items:center; gap:8px; margin-top:12px; font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); }
+
+  /* ---- abas (Produtos / Pedidos) ---- */
+  .tab-nav{ display:flex; gap:8px; margin-bottom:20px; border-bottom:1px solid var(--line); }
+  .tab-btn{
+    all:unset; cursor:pointer; font-family:var(--f-mono); font-size:12px; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--ink-dim); padding:12px 4px; margin-right:20px;
+    border-bottom:2px solid transparent;
+  }
+  .tab-btn.active{ color:var(--ink); border-bottom-color:var(--accent-2); }
+  .tab-panel.hidden{ display:none; }
+
+  /* ---- aba Visitantes ---- */
+  .stat-mini-row{ display:flex; gap:40px; flex-wrap:wrap; }
+  .stat-mini-label{ font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em; }
+  .stat-mini-value{ font-family:var(--f-display); font-size:34px; margin-top:4px; }
+  .stat-block{ margin-top:28px; border-top:1px solid var(--line); padding-top:18px; }
+  .stat-block-title{ font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em; margin-bottom:12px; }
+  .clique-row{ display:flex; align-items:center; gap:12px; padding:7px 0; border-bottom:1px dashed var(--line); font-size:14px; }
+  .clique-row:last-child{ border-bottom:none; }
+  .clique-nome{ flex:1; }
+  .clique-barra-wrap{ flex:1; max-width:160px; height:6px; background:var(--line); border-radius:3px; overflow:hidden; }
+  .clique-barra{ height:100%; background:var(--accent-2); border-radius:3px; }
+  .clique-num{ font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); min-width:26px; text-align:right; }
+  .mes-chart{ display:flex; align-items:flex-end; gap:10px; height:140px; margin-top:6px; }
+  .mes-col{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; }
+  .mes-bar{ width:100%; max-width:34px; background:var(--accent-2); border-radius:3px 3px 0 0; min-height:2px; }
+  .mes-label{ font-family:var(--f-mono); font-size:10px; color:var(--ink-dim); margin-top:6px; text-transform:uppercase; }
+  .mes-valor{ font-family:var(--f-mono); font-size:11px; color:var(--ink); margin-bottom:4px; }
+
+  /* ---- pedidos ---- */
+  .pedido-card{ border:1px solid var(--line); padding:24px; margin-bottom:20px; }
+  .pedido-card h2{ font-family:var(--f-display); font-size:18px; margin:0 0 4px; color:var(--accent-2); }
+  .pedido-id-tag{ font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); margin:0 0 18px; }
+  .pedido-link-box{
+    display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+    border:1px solid var(--line); background:var(--bg); padding:12px 14px; margin-top:14px;
+  }
+  .pedido-link-box input{ flex:1; min-width:180px; font-family:var(--f-mono); font-size:12px; }
+  .pedido-link-box button{
+    all:unset; cursor:pointer; font-family:var(--f-mono); font-size:11px;
+    color:var(--ink-dim); border:1px solid var(--line); padding:8px 12px; white-space:nowrap;
+  }
+  .pedido-link-box button:hover{ border-color:var(--accent); color:var(--ink); }
+  .pedido-qr-row{ display:grid; grid-template-columns:70px 1fr auto; gap:10px; align-items:center; margin-top:6px; }
+  .pedido-qr-row img{ width:70px; height:70px; object-fit:cover; border:1px solid var(--line); background:var(--bg); }
+  .pedido-qr-row input[type=file]{ font-size:11px; color:var(--ink-dim); }
+  .pedido-pago-row{ display:flex; align-items:center; gap:8px; margin-top:14px; font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); }
+  .pedido-actions{ display:flex; gap:8px; margin-top:18px; flex-wrap:wrap; }
+  .pedido-actions .btn.ghost.danger{ color:#e07a52; }
+  .pedido-actions .btn.ghost.danger:hover{ border-color:#e07a52; }
+  .pedido-save-status{ font-family:var(--f-mono); font-size:11px; margin-top:10px; }
+  .pedido-save-status.ok{ color:var(--accent-2); }
+  .pedido-save-status.err{ color:#e07a52; }
+
+  /* ---- aba Encomendas (pedidos recebidos) ---- */
+  .enc-badge{
+    display:inline-block; min-width:18px; padding:1px 6px; margin-left:6px; border-radius:9px;
+    background:var(--accent-2); color:var(--bg); font-size:10px; text-align:center; letter-spacing:0;
+  }
+  .enc-badge.hidden{ display:none; }
+  .enc-card{ border:1px solid var(--line); padding:22px; margin-bottom:16px; }
+  .enc-card.atendida{ opacity:.55; }
+  .enc-card.nova{ border-color:var(--accent-2); }
+  .enc-head{ display:flex; justify-content:space-between; gap:16px; align-items:flex-start; flex-wrap:wrap; }
+  .enc-head h3{ font-family:var(--f-display); font-size:17px; margin:0 0 4px; }
+  .enc-data{ font-family:var(--f-mono); font-size:11px; color:var(--ink-dim); }
+  .enc-tag{ font-family:var(--f-mono); font-size:10px; text-transform:uppercase; letter-spacing:.08em; border:1px solid var(--line); padding:4px 8px; }
+  .enc-tag.nova{ border-color:var(--accent-2); color:var(--accent-2); }
+  .enc-body{ display:grid; grid-template-columns:70px 1fr; gap:16px; margin-top:16px; }
+  .enc-body img{ width:70px; height:70px; object-fit:cover; border:1px solid var(--line); background:var(--bg); }
+  .enc-linha{ font-size:14px; line-height:1.7; }
+  .enc-linha .rot{ font-family:var(--f-mono); font-size:10px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.06em; margin-right:6px; }
+  .enc-linha a{ color:var(--accent-2); }
+  .enc-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+</style>
+</head>
+<body>
+
+  <a href="catalogo.html" class="home-btn" aria-label="Voltar ao início" title="Voltar ao site">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 11.5 12 4l9 7.5"/>
+      <path d="M5.5 10v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1v-9"/>
+    </svg>
+  </a>
+
+  <div class="admin-wrap">
+    <div class="admin-head">
+      <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Painel restrito</p>
+      <h1>Administração do site</h1>
+      <p>Edite títulos, preços, descrições, especificações, fotos e a capa animada de cada peça — ou adicione peças novas do zero. As mudanças são salvas direto no seu repositório do GitHub — o site atualiza sozinho em 1-2 minutos depois de salvar.</p>
+    </div>
+
+    <div class="admin-panel" id="dono-panel">
+      <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Não contar minhas visitas</p>
+      <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 10px;">Este navegador é seu?</h2>
+      <p style="color:var(--ink-dim); font-size:14px; max-width:60ch; margin:0 0 16px;">Marque este navegador/dispositivo como seu — a partir daí, suas próprias visitas de teste não entram mais no total nem no "online agora". Repita em cada navegador ou aparelho que você usar pra mexer no site (ex: celular e computador contam separado).</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn ghost" id="btn-marcar-dono" type="button">Marcar este navegador como meu</button>
+        <button class="btn ghost" id="btn-desmarcar-dono" type="button">Desmarcar</button>
+      </div>
+      <p id="dono-status" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:14px;"></p>
+    </div>
+
+    <div class="admin-panel" id="login-panel">
+      <div class="admin-row">
+        <div class="field field-mini">
+          <label for="gh-owner">Usuário do GitHub</label>
+          <input type="text" id="gh-owner" value="ogeidlife">
+        </div>
+        <div class="field field-mini">
+          <label for="gh-repo">Nome do repositório</label>
+          <input type="text" id="gh-repo" value="ogeidstudio">
+        </div>
+      </div>
+      <div class="field field-mini" style="margin-top:14px;">
+        <label for="gh-token">Chave de acesso pessoal (GitHub Token)</label>
+        <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+      </div>
+      <p class="form-note" style="margin-top:10px;">
+        Não sabe como gerar essa chave? Veja o passo a passo mais abaixo, na seção "Como gerar sua chave".
+        Ela fica só no seu navegador — nunca é salva no site nem enviada a nenhum lugar além do GitHub.
+      </p>
+      <button class="btn" id="btn-carregar" style="margin-top:16px;">Carregar produtos</button>
+      <div class="status-msg" id="login-status"></div>
+    </div>
+
+    <div id="produtos-wrap" class="hidden">
+      <div class="tab-nav">
+        <button type="button" class="tab-btn active" id="tab-btn-produtos">Produtos</button>
+        <button type="button" class="tab-btn" id="tab-btn-encomendas">Encomendas <span class="enc-badge hidden" id="enc-badge">0</span></button>
+        <button type="button" class="tab-btn" id="tab-btn-pedidos">Pedidos</button>
+        <button type="button" class="tab-btn" id="tab-btn-leilao">Leilão</button>
+        <button type="button" class="tab-btn" id="tab-btn-visitantes">Visitantes</button>
+      </div>
+
+      <div id="produtos-area" class="tab-panel">
+        <button class="btn ghost" id="btn-novo-produto" style="margin-bottom:20px;">+ Adicionar novo produto</button>
+        <p class="reorder-hint">Use as setas ▲ ▼ em cada peça pra mudar a ordem em que ela aparece no catálogo. A nova ordem só é gravada quando você clica em "Salvar todas as alterações".</p>
+        <div id="cards-container"></div>
+
+        <div class="save-bar">
+          <button class="btn" id="btn-salvar">Salvar todas as alterações</button>
+          <button class="btn ghost" id="btn-sair">Sair</button>
+        </div>
+        <div class="status-msg" id="save-status"></div>
+      </div>
+
+      <div id="pedidos-area" class="tab-panel hidden">
+        <p class="reorder-hint">
+          Aqui você gera a página individual de pagamento pra cada cliente. Como funciona: 1) o pedido chega no seu email pelo formulário de encomenda; 2) você cria um pedido aqui com os dados dele, sobe a foto do QR code (Pix ou o que você usar) e cola o link de pagamento; 3) clique em "Salvar este pedido" pra gerar o link da página; 4) copie o link (e baixe o QR se quiser anexar como imagem) e mande pro cliente por email ou WhatsApp junto com a confirmação do pedido. O link só passa a funcionar 1-2 minutos depois de salvar.
+        </p>
+        <button class="btn ghost" id="btn-novo-pedido" style="margin-bottom:20px;">+ Novo pedido</button>
+        <div id="pedidos-container"></div>
+        <button class="btn ghost" id="btn-sair-pedidos" style="margin-top:8px;">Sair</button>
+      </div>
+
+      <div id="leilao-area" class="tab-panel hidden">
+        <p class="reorder-hint">
+          Configure aqui os textos, o banner e as obras/lotes do leilão (isso salva no GitHub, igual aos produtos, e o site atualiza em 1-2 minutos). Os <strong>lances em tempo real</strong> dos visitantes ficam num painel à parte, mais abaixo, que lê direto do Firebase — esses não passam pelo "Salvar alterações do leilão".
+        </p>
+
+        <div class="admin-panel">
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 14px;">Textos do site do leilão</h2>
+          <div class="field field-mini"><label>Título do banner</label><input type="text" id="lx-eventTitle"></div>
+          <div class="field field-mini" style="margin-top:12px;"><label>Subtítulo do banner</label><textarea id="lx-eventSubtitle" rows="2"></textarea></div>
+          <div class="admin-row" style="margin-top:12px;">
+            <div class="field field-mini"><label>Passo 1 — título</label><input type="text" id="lx-how1Title"></div>
+            <div class="field field-mini"><label>Passo 1 — texto</label><input type="text" id="lx-how1Text"></div>
+          </div>
+          <div class="admin-row" style="margin-top:12px;">
+            <div class="field field-mini"><label>Passo 2 — título</label><input type="text" id="lx-how2Title"></div>
+            <div class="field field-mini"><label>Passo 2 — texto</label><input type="text" id="lx-how2Text"></div>
+          </div>
+          <div class="admin-row" style="margin-top:12px;">
+            <div class="field field-mini"><label>Passo 3 — título</label><input type="text" id="lx-how3Title"></div>
+            <div class="field field-mini"><label>Passo 3 — texto</label><input type="text" id="lx-how3Text"></div>
+          </div>
+          <div class="field field-mini" style="margin-top:12px;"><label>Texto do rodapé</label><input type="text" id="lx-footerText"></div>
+        </div>
+
+        <div class="admin-panel">
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 6px;">Imagem do banner</h2>
+          <p style="color:var(--ink-dim); font-size:13px; margin:0 0 14px;">Foto de fundo do topo da página do leilão (opcional).</p>
+          <div class="img-row-box" id="leilao-banner-box"></div>
+        </div>
+
+        <div class="admin-panel">
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 6px;">Obras / lotes</h2>
+          <p style="color:var(--ink-dim); font-size:13px; margin:0 0 14px;">Título, descrição, foto, lance inicial, incremento mínimo e prazo de cada lote.</p>
+          <div id="leilao-lotes-container"></div>
+          <button class="btn ghost" id="btn-novo-lote" type="button">+ adicionar novo lote</button>
+        </div>
+
+        <div class="admin-panel">
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 6px;">Aviso por e-mail a cada lance</h2>
+          <p style="color:var(--ink-dim); font-size:13px; margin:0 0 14px; max-width:70ch; line-height:1.6;">
+            Usa o EmailJS pra mandar um e-mail direto do navegador de quem der o lance. Crie uma conta em
+            <a href="https://www.emailjs.com" target="_blank" style="color:var(--accent-2);">emailjs.com</a>, configure um serviço e um template com as variáveis
+            <code>{{bidder_name}}</code>, <code>{{bidder_contact}}</code>, <code>{{bid_value}}</code>, <code>{{lot_title}}</code> e <code>{{bid_time}}</code>.
+          </p>
+          <div class="field field-mini"><label>Seu e-mail (quem recebe o aviso)</label><input type="email" id="lx-eToEmail" placeholder="voce@exemplo.com"></div>
+          <div class="admin-row" style="margin-top:12px;">
+            <div class="field field-mini"><label>Service ID</label><input type="text" id="lx-eServiceId"></div>
+            <div class="field field-mini"><label>Template ID</label><input type="text" id="lx-eTemplateId"></div>
+          </div>
+          <div class="field field-mini" style="margin-top:12px;"><label>Public Key</label><input type="text" id="lx-ePublicKey"></div>
+        </div>
+
+        <div class="save-bar">
+          <button class="btn" id="btn-salvar-leilao">Salvar alterações do leilão</button>
+        </div>
+        <div class="status-msg" id="leilao-save-status"></div>
+
+        <div class="admin-panel" style="margin-top:36px;">
+          <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Ao vivo, via Firebase</p>
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 6px;">Lances recebidos</h2>
+          <p style="color:var(--ink-dim); font-size:13px; margin:0 0 16px;">Nome, contato e valor de cada lance, por lote. Atualiza sozinho.</p>
+          <div id="leilao-bids-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-bottom:12px;"></div>
+          <div id="leilao-bids-container"></div>
+        </div>
+      </div>
+
+      <div id="encomendas-area" class="tab-panel hidden">
+        <p class="reorder-hint">
+          Aqui aparecem as encomendas que os clientes enviam pelo site, em tempo real — as mesmas que chegam no seu email. Quando você já respondeu, clique em "marcar como atendida". O botão "criar página de pagamento" leva os dados do cliente já preenchidos pra aba Pedidos.
+        </p>
+
+        <div class="admin-panel hidden" id="enc-login">
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 10px;">Entrar para ver as encomendas</h2>
+          <p style="color:var(--ink-dim); font-size:13px; margin:0 0 14px; max-width:60ch;">Os dados dos clientes (endereço, telefone) são protegidos. Entre com o email e a senha do usuário que você criou no Firebase (Authentication).</p>
+          <div class="admin-row">
+            <div class="field field-mini"><label>Email</label><input type="email" id="enc-login-email" autocomplete="username"></div>
+            <div class="field field-mini"><label>Senha</label><input type="password" id="enc-login-senha" autocomplete="current-password"></div>
+          </div>
+          <button class="btn" id="enc-login-btn" type="button" style="margin-top:14px;">Entrar</button>
+          <div class="status-msg" id="enc-login-status"></div>
+        </div>
+
+        <p id="enc-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-bottom:14px;">Carregando encomendas...</p>
+        <div id="enc-container"></div>
+        <button class="btn ghost hidden" id="enc-logout" type="button" style="margin-top:8px;">Sair do Firebase</button>
+      </div>
+
+      <div id="visitantes-area" class="tab-panel hidden">
+        <div class="admin-panel">
+          <p class="eyebrow" style="color:var(--accent-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase;">Estatísticas</p>
+          <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 14px;">Visitantes do site</h2>
+          <div class="stat-mini-row">
+            <div>
+              <div class="stat-mini-label">Total de visitas</div>
+              <div class="stat-mini-value" id="total-visitas">—</div>
+            </div>
+            <div>
+              <div class="stat-mini-label">Online agora</div>
+              <div class="stat-mini-value" style="color:var(--accent-2);" id="online-agora">—</div>
+            </div>
+          </div>
+          <p id="stats-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:14px; max-width:60ch;"></p>
+
+          <div class="stat-block">
+            <div class="stat-block-title">Horários de entrada (últimas visitas)</div>
+            <div id="horarios-lista" style="font-family:var(--f-mono); font-size:13px; color:var(--ink); display:flex; flex-wrap:wrap; gap:8px;"></div>
+            <p id="horarios-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:10px; max-width:60ch;"></p>
+          </div>
+
+          <div class="stat-block">
+            <div class="stat-block-title">Peça mais clicada</div>
+            <div id="cliques-lista"></div>
+            <p id="cliques-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:6px; max-width:60ch;"></p>
+          </div>
+
+          <div class="stat-block">
+            <div class="stat-block-title">Visitantes por mês</div>
+            <div id="meses-chart" class="mes-chart"></div>
+            <p id="meses-msg" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); margin-top:10px; max-width:60ch;"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-panel" style="margin-top:48px;">
+      <h2 style="font-family:var(--f-display); font-size:18px; margin:0 0 14px;">Como gerar sua chave (uma vez só)</h2>
+      <ol style="color:var(--ink-dim); font-size:14px; line-height:1.8; padding-left:20px;">
+        <li>Vá em <strong>github.com/settings/tokens?type=beta</strong> (token "fine-grained")</li>
+        <li>Clique em <strong>Generate new token</strong></li>
+        <li>Em "Repository access", escolha <strong>Only select repositories</strong> e selecione só o repositório do seu site</li>
+        <li>Em "Permissions", procure <strong>Contents</strong> e mude de "No access" para <strong>Read and write</strong></li>
+        <li>Clique em <strong>Generate token</strong> lá embaixo</li>
+        <li>Copie a chave gerada (começa com <code>github_pat_...</code>) e cole no campo acima — <strong>ela só aparece uma vez</strong>, se perder tem que gerar outra</li>
+      </ol>
+      <p class="form-note">Guarde essa chave como uma senha. Qualquer pessoa com ela consegue editar o site. Se desconfiar que ela vazou, volte nessa mesma página do GitHub e clique em "Delete" na chave — ela para de funcionar na hora.</p>
+    </div>
+  </div>
+
+  <script src="js/firebase-config.js"></script>
+  <script type="module">
+    /* =========================================================
+       Inicialização única do Firebase, compartilhada entre o painel
+       de estatísticas e a aba "Leilão" (lances ao vivo). Guarda tudo
+       em window.__fb e resolve window.__fbReady quando terminar —
+       assim qualquer outro <script type="module"> desta página pode
+       fazer `await window.__fbReady` e usar window.__fb sem duplicar
+       a inicialização do Firebase (o que daria erro).
+       ========================================================= */
+    window.__fbReady = (async function initFirebase() {
+      const cfg = window.FIREBASE_CONFIG;
+      if (!cfg || cfg.apiKey === 'COLE_AQUI') return null;
+      const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js');
+      const dbMod = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js');
+      const app = initializeApp(cfg);
+      const db = dbMod.getDatabase(app);
+      window.__fb = { db, ...dbMod };
+      return window.__fb;
+    })().catch((err) => { console.error('Firebase init falhou', err); return null; });
+  </script>
+  <script type="module">
+    /* =========================================================
+       Painel de estatísticas: total de visitas + quem está online.
+       Independe do login do GitHub — carrega sozinho ao abrir a página.
+       Se o Firebase não estiver configurado ou algo falhar, mostra um
+       aviso e não quebra o resto do admin.
+       ========================================================= */
+    (async function () {
+      const msg = document.getElementById('stats-msg');
+      const fb = await window.__fbReady;
+      if (!fb) {
+        msg.textContent = 'Estatísticas ainda não configuradas — veja o passo a passo do Firebase que veio junto com esses arquivos.';
+        return;
+      }
+      try {
+        const { db, ref, onValue, query, limitToLast } = fb;
+
+        onValue(ref(db, 'estatisticas/totalVisitas'), (snap) => {
+          document.getElementById('total-visitas').textContent = snap.val() || 0;
+        }, () => { msg.textContent = 'Não consegui carregar o total de visitas.'; });
+
+        let ultimoSnapshotOnline = null;
+        function recalcularOnline() {
+          if (!ultimoSnapshotOnline) return;
+          const agora = Date.now();
+          let contagem = 0;
+          ultimoSnapshotOnline.forEach((child) => {
+            const desde = child.val() && child.val().desde;
+            if (desde && agora - desde < 45000) contagem++;
+          });
+          document.getElementById('online-agora').textContent = contagem;
+        }
+        onValue(ref(db, 'online'), (snap) => { ultimoSnapshotOnline = snap; recalcularOnline(); },
+          () => { msg.textContent = 'Não consegui carregar quem está online.'; });
+        setInterval(recalcularOnline, 5000);
+
+        // Horários de entrada — lê a lista de visitas registradas em
+        // 'estatisticas/entradas' (só o horário, sem IP nem outro dado
+        // pessoal). Se esse caminho ainda não existir no seu Firebase,
+        // mostra um aviso em vez de dar erro.
+        const horariosBox = document.getElementById('horarios-lista');
+        const horariosMsg = document.getElementById('horarios-msg');
+        onValue(query(ref(db, 'estatisticas/entradas'), limitToLast(60)), (snap) => {
+          const timestamps = [];
+          snap.forEach((child) => {
+            const v = child.val();
+            const ts = typeof v === 'number' ? v : (v && v.horario);
+            if (ts) timestamps.push(ts);
+          });
+          if (!timestamps.length) {
+            horariosMsg.textContent = 'Ainda não há registros de horário — esse recurso precisa de um pequeno ajuste no js/visitas.js do site pra começar a gravar o horário de cada visita.';
+            horariosBox.innerHTML = '';
+            return;
+          }
+          timestamps.sort((a, b) => b - a);
+          const hoje = new Date().toDateString();
+          horariosBox.innerHTML = timestamps.map((ts) => {
+            const d = new Date(ts);
+            const mesmodia = d.toDateString() === hoje;
+            const hora = d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            const label = mesmodia ? hora : d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) + ' ' + hora;
+            return `<span style="border:1px solid var(--line); padding:5px 10px;">${label}</span>`;
+          }).join('');
+          horariosMsg.textContent = '';
+        }, () => { horariosMsg.textContent = 'Não consegui carregar os horários agora.'; });
+
+        // Peça mais clicada — lê 'estatisticas/cliques/{key}' (um contador por
+        // peça, gravado pelo js/visitas.js sempre que alguém abre a página
+        // dela) e cruza com data/produtos.json só pra mostrar o título certo
+        // em vez da chave interna.
+        const cliquesBox = document.getElementById('cliques-lista');
+        const cliquesMsg = document.getElementById('cliques-msg');
+        let titulosProdutos = {};
+        fetch('data/produtos.json', { cache: 'no-store' })
+          .then((r) => r.json())
+          .then((todos) => {
+            titulosProdutos = Object.fromEntries(
+              Object.entries(todos).map(([key, p]) => [key, p.titulo || key])
+            );
+          })
+          .catch(() => {});
+
+        onValue(ref(db, 'estatisticas/cliques'), (snap) => {
+          const val = snap.val();
+          if (!val) {
+            cliquesMsg.textContent = 'Ainda não há cliques registrados.';
+            cliquesBox.innerHTML = '';
+            return;
+          }
+          const lista = Object.entries(val)
+            .map(([key, count]) => ({ key, count: Number(count) || 0 }))
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 8);
+          const max = lista[0].count || 1;
+          cliquesBox.innerHTML = lista.map((item) => {
+            const nome = titulosProdutos[item.key] || item.key;
+            const pct = Math.max(6, Math.round((item.count / max) * 100));
+            return `
+              <div class="clique-row">
+                <span class="clique-nome">${nome}</span>
+                <div class="clique-barra-wrap"><div class="clique-barra" style="width:${pct}%;"></div></div>
+                <span class="clique-num">${item.count}</span>
+              </div>`;
+          }).join('');
+          cliquesMsg.textContent = '';
+        }, () => { cliquesMsg.textContent = 'Não consegui carregar os cliques agora.'; });
+
+        // Visitantes por mês — lê 'estatisticas/porMes/{AAAA-MM}' (um
+        // contador por mês, gravado pelo js/visitas.js uma vez por sessão)
+        // e desenha um gráfico de barras simples com os últimos 6 meses.
+        const mesesChart = document.getElementById('meses-chart');
+        const mesesMsg = document.getElementById('meses-msg');
+        const nomesMes = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+        onValue(ref(db, 'estatisticas/porMes'), (snap) => {
+          const val = snap.val();
+          if (!val) {
+            mesesMsg.textContent = 'Ainda não há dados mensais — esse recurso precisa do js/visitas.js atualizado no site.';
+            mesesChart.innerHTML = '';
+            return;
+          }
+          const chaves = Object.keys(val).sort().slice(-6);
+          const max = Math.max(...chaves.map((k) => val[k] || 0), 1);
+          mesesChart.innerHTML = chaves.map((k) => {
+            const [ano, mes] = k.split('-');
+            const altura = Math.max(4, Math.round((val[k] / max) * 100));
+            return `
+              <div class="mes-col">
+                <div class="mes-valor">${val[k]}</div>
+                <div class="mes-bar" style="height:${altura}%;"></div>
+                <div class="mes-label">${nomesMes[Number(mes) - 1] || mes}/${ano.slice(2)}</div>
+              </div>`;
+          }).join('');
+          mesesMsg.textContent = '';
+        }, () => { mesesMsg.textContent = 'Não consegui carregar os dados mensais agora.'; });
+      } catch (err) {
+        msg.textContent = 'Não consegui carregar as estatísticas agora.';
+      }
+    })();
+  </script>
+
+  <script type="module">
+    /* =========================================================
+       ENCOMENDAS RECEBIDAS — lê 'encomendas' no Firebase, onde o
+       encomenda.html grava uma cópia de cada pedido enviado.
+       Se as regras do Firebase exigirem login (recomendado, pois há
+       endereço e telefone), mostra um pequeno formulário de entrada.
+       ========================================================= */
+    (async function () {
+      const $ = (id) => document.getElementById(id);
+      const msg = $('enc-msg'), box = $('enc-container'), badge = $('enc-badge');
+      const loginBox = $('enc-login'), logoutBtn = $('enc-logout');
+      const fb = await window.__fbReady;
+      if (!fb) { msg.textContent = 'Firebase não está configurado — não dá pra listar as encomendas.'; return; }
+      const { db, ref, onValue, update, remove } = fb;
+
+      let authMod = null, auth = null;
+      try {
+        authMod = await import('https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js');
+        auth = authMod.getAuth();
+      } catch (e) { console.warn('Firebase Auth indisponível', e); }
+
+      let dados = {};
+      let unsub = null;
+
+      function fmtData(ts) { return ts ? new Date(ts).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : ''; }
+      function zap(cel) {
+        let d = String(cel || '').replace(/\D/g, '');
+        if (d.length < 10) return '';
+        if (d.length <= 11) d = '55' + d;
+        return 'https://wa.me/' + d;
+      }
+      const linha = (rot, val) => val ? `<div class="enc-linha"><span class="rot">${rot}</span>${val}</div>` : '';
+
+      function render() {
+        const ids = Object.keys(dados).sort((a, b) => (dados[b].criadoEm || 0) - (dados[a].criadoEm || 0));
+        const novas = ids.filter((id) => dados[id].status !== 'atendido').length;
+        badge.textContent = novas;
+        badge.classList.toggle('hidden', novas === 0);
+        msg.textContent = ids.length ? `${novas} nova(s) · ${ids.length} no total` : 'Nenhuma encomenda recebida ainda.';
+        box.innerHTML = '';
+        ids.forEach((id) => {
+          const o = dados[id];
+          const atendida = o.status === 'atendido';
+          const card = document.createElement('div');
+          card.className = 'enc-card ' + (atendida ? 'atendida' : 'nova');
+          const endereco = [o.endereco, o.numero].filter(Boolean).join(', ') + (o.complemento ? ' — ' + o.complemento : '');
+          const cidade = [o.bairro, [o.cidade, o.uf].filter(Boolean).join('/')].filter(Boolean).join(' · ');
+          const wa = zap(o.celular);
+          card.innerHTML = `
+            <div class="enc-head">
+              <div>
+                <h3>${escapeHtml(o.nome) || 'Sem nome'}</h3>
+                <div class="enc-data">${fmtData(o.criadoEm)}</div>
+              </div>
+              <span class="enc-tag ${atendida ? '' : 'nova'}">${atendida ? 'atendida' : 'nova'}</span>
+            </div>
+            <div class="enc-body">
+              ${o.imagem ? `<img src="${escapeAttr(o.imagem)}" alt="" onerror="this.style.opacity=0.15">` : '<div></div>'}
+              <div>
+                ${linha('Peça', escapeHtml(o.produto))}
+                ${linha('Variação', escapeHtml(o.variacao))}
+                ${linha('Valor', escapeHtml(o.preco))}
+                ${linha('Frete', escapeHtml(o.frete))}
+                ${linha('Total', o.total ? '<strong>' + escapeHtml(o.total) + '</strong>' : '')}
+                <div style="height:8px"></div>
+                ${linha('Email', o.email ? `<a href="mailto:${escapeAttr(o.email)}">${escapeHtml(o.email)}</a>` : '')}
+                ${linha('Celular', o.celular ? (wa ? `<a href="${wa}" target="_blank" rel="noopener">${escapeHtml(o.celular)} (WhatsApp)</a>` : escapeHtml(o.celular)) : '')}
+                <div style="height:8px"></div>
+                ${linha('Endereço', escapeHtml(endereco))}
+                ${linha('', escapeHtml(cidade))}
+                ${linha('CEP', escapeHtml(o.cep))}
+              </div>
+            </div>
+            <div class="enc-actions">
+              <button type="button" class="btn ghost enc-pagto">criar página de pagamento</button>
+              <button type="button" class="btn ghost enc-status">${atendida ? 'reabrir' : 'marcar como atendida'}</button>
+              <button type="button" class="btn ghost enc-del" style="color:#e07a52;">remover</button>
+            </div>`;
+          box.appendChild(card);
+
+          card.querySelector('.enc-status').addEventListener('click', () => {
+            update(ref(db, 'encomendas/' + id), { status: atendida ? 'novo' : 'atendido' })
+              .catch((err) => alert('Não consegui atualizar: ' + err.message));
+          });
+          card.querySelector('.enc-del').addEventListener('click', () => {
+            if (!confirm(`Remover a encomenda de "${o.nome || id}" desta lista? (O email original continua com você.)`)) return;
+            remove(ref(db, 'encomendas/' + id)).catch((err) => alert('Não consegui remover: ' + err.message));
+          });
+          card.querySelector('.enc-pagto').addEventListener('click', () => {
+            if (typeof currentPedidos === 'undefined' || currentPedidos === null) currentPedidos = {};
+            const resumo = [
+              o.produto && 'Peça: ' + o.produto,
+              o.variacao && 'Variação: ' + o.variacao,
+              o.preco && 'Valor da peça: ' + o.preco,
+              o.frete && 'Frete: ' + o.frete,
+            ].filter(Boolean).join('\n');
+            addPedidoCard(gerarIdPedido(), {
+              comprador: o.nome || '', resumo, valor: o.total || o.preco || '',
+              linkPagamento: '', imagem: '', qrcode: '', pago: false,
+              criadoEm: new Date().toISOString().slice(0, 10),
+            });
+            trocarAba('pedidos');
+            document.getElementById('pedidos-container').lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          });
+        });
+      }
+
+      function assinar() {
+        if (unsub) { try { unsub(); } catch (e) {} }
+        unsub = onValue(ref(db, 'encomendas'), (snap) => {
+          loginBox.classList.add('hidden');
+          dados = snap.val() || {};
+          render();
+        }, (err) => {
+          dados = {}; box.innerHTML = ''; badge.classList.add('hidden');
+          if (auth) {
+            msg.textContent = '';
+            loginBox.classList.remove('hidden');
+          } else {
+            msg.textContent = 'Sem permissão pra ler as encomendas (' + err.code + '). Confira as regras do Firebase.';
+          }
+        });
+      }
+
+      if (auth) {
+        authMod.onAuthStateChanged(auth, (user) => {
+          logoutBtn.classList.toggle('hidden', !user);
+          assinar();
+        });
+        $('enc-login-btn').addEventListener('click', async () => {
+          const st = $('enc-login-status');
+          try {
+            await authMod.signInWithEmailAndPassword(auth, $('enc-login-email').value.trim(), $('enc-login-senha').value);
+            st.className = 'status-msg';
+          } catch (err) {
+            st.textContent = 'Não consegui entrar: ' + (err.code || err.message);
+            st.className = 'status-msg err';
+          }
+        });
+        logoutBtn.addEventListener('click', () => authMod.signOut(auth));
+      } else {
+        assinar();
+      }
+    })();
+  </script>
+
+  <script>
+    // Liga os botões "marcar/desmarcar este navegador como meu" (independe do
+    // login do GitHub). Usa a mesma chave no localStorage que js/visitas.js lê
+    // pra decidir se conta essa visita ou não.
+    (function () {
+      const statusEl = document.getElementById('dono-status');
+      function atualizarStatusDono() {
+        if (localStorage.getItem('ogeid_sou_dono') === '1') {
+          statusEl.textContent = 'Este navegador está marcado como seu — suas visitas daqui não entram nas estatísticas.';
+        } else {
+          statusEl.textContent = 'Este navegador conta como visitante normal.';
+        }
+      }
+      document.getElementById('btn-marcar-dono').addEventListener('click', () => {
+        localStorage.setItem('ogeid_sou_dono', '1');
+        atualizarStatusDono();
+      });
+      document.getElementById('btn-desmarcar-dono').addEventListener('click', () => {
+        localStorage.removeItem('ogeid_sou_dono');
+        atualizarStatusDono();
+      });
+      atualizarStatusDono();
+    })();
+
+    const DATA_PATH = 'data/produtos.json';
+    let currentSha = null;
+    let currentData = null;
+    let removedKeys = new Set();
+
+    function b64DecodeUnicode(str) {
+      return decodeURIComponent(atob(str).split('').map(c =>
+        '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      ).join(''));
+    }
+    function b64EncodeUnicode(str) {
+      return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+        (m, p1) => String.fromCharCode('0x' + p1)
+      ));
+    }
+
+    function ghHeaders() {
+      const token = sessionStorage.getItem('gh_token');
+      return {
+        'Authorization': 'Bearer ' + token,
+        'Accept': 'application/vnd.github+json',
+      };
+    }
+    function apiBase() {
+      const owner = sessionStorage.getItem('gh_owner');
+      const repo = sessionStorage.getItem('gh_repo');
+      return `https://api.github.com/repos/${owner}/${repo}`;
+    }
+
+    function showStatus(el, msg, ok) {
+      el.textContent = msg;
+      el.className = 'status-msg ' + (ok ? 'ok' : 'err');
+    }
+
+    document.getElementById('btn-carregar').addEventListener('click', async () => {
+      const owner = document.getElementById('gh-owner').value.trim();
+      const repo = document.getElementById('gh-repo').value.trim();
+      const token = document.getElementById('gh-token').value.trim();
+      const status = document.getElementById('login-status');
+
+      if (!owner || !repo || !token) {
+        showStatus(status, 'Preencha usuário, repositório e a chave de acesso.', false);
+        return;
+      }
+      sessionStorage.setItem('gh_owner', owner);
+      sessionStorage.setItem('gh_repo', repo);
+      sessionStorage.setItem('gh_token', token);
+
+      try {
+        const res = await fetch(`${apiBase()}/contents/${DATA_PATH}`, { headers: ghHeaders() });
+        if (!res.ok) {
+          const body = await res.json().catch(() => ({}));
+          showStatus(status, 'Não consegui carregar: ' + (body.message || res.status) + '. Confira usuário, repositório e a chave.', false);
+          return;
+        }
+        const json = await res.json();
+        currentSha = json.sha;
+        currentData = JSON.parse(b64DecodeUnicode(json.content));
+        renderCards(currentData);
+        document.getElementById('login-panel').classList.add('hidden');
+        document.getElementById('produtos-wrap').classList.remove('hidden');
+        carregarPedidos();
+      } catch (err) {
+        showStatus(status, 'Erro de conexão: ' + err.message, false);
+      }
+    });
+
+    document.getElementById('btn-sair').addEventListener('click', () => {
+      sessionStorage.clear();
+      location.reload();
+    });
+    document.getElementById('btn-sair-pedidos').addEventListener('click', () => {
+      sessionStorage.clear();
+      location.reload();
+    });
+
+    // ---- abas ----
+    document.getElementById('tab-btn-produtos').addEventListener('click', () => trocarAba('produtos'));
+    document.getElementById('tab-btn-pedidos').addEventListener('click', () => trocarAba('pedidos'));
+    document.getElementById('tab-btn-leilao').addEventListener('click', () => {
+      trocarAba('leilao');
+      if (!currentLeilao) carregarLeilao();
+    });
+    document.getElementById('tab-btn-visitantes').addEventListener('click', () => trocarAba('visitantes'));
+    document.getElementById('tab-btn-encomendas').addEventListener('click', () => trocarAba('encomendas'));
+    function trocarAba(nome) {
+      ['produtos', 'encomendas', 'pedidos', 'leilao', 'visitantes'].forEach((n) => {
+        document.getElementById(n + '-area').classList.toggle('hidden', nome !== n);
+        document.getElementById('tab-btn-' + n).classList.toggle('active', nome === n);
+      });
+    }
+
+    function renderCards(data) {
+      const container = document.getElementById('cards-container');
+      container.innerHTML = '';
+      const ordenados = Object.keys(data).sort((a, b) => (data[a].ordem || 0) - (data[b].ordem || 0));
+      ordenados.forEach((key) => addProductCard(key, data[key]));
+      atualizarBotoesDeOrdem();
+    }
+
+    // Desativa a seta ▲ no primeiro card e a ▼ no último, pra ficar claro
+    // quando não dá mais pra mover naquela direção.
+    function atualizarBotoesDeOrdem() {
+      const cards = [...document.querySelectorAll('.product-card')];
+      cards.forEach((card, i) => {
+        card.querySelector('.move-up').disabled = (i === 0);
+        card.querySelector('.move-down').disabled = (i === cards.length - 1);
+      });
+    }
+
+    function addProductCard(key, p) {
+      const container = document.getElementById('cards-container');
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.dataset.key = key;
+      card.innerHTML = `
+        <div class="card-top-row">
+          <h2>${escapeHtml(p.titulo || key)} <span style="color:var(--ink-dim); font-size:11px; font-family:var(--f-mono);">(${key})</span></h2>
+          <div class="card-actions">
+            <button type="button" class="move-btn move-up" title="Mover pra cima">▲</button>
+            <button type="button" class="move-btn move-down" title="Mover pra baixo">▼</button>
+            <button type="button" class="remove-product">remover produto</button>
+          </div>
+        </div>
+        <div class="admin-row">
+          <div class="field field-mini">
+            <label>Número / categoria</label>
+            <input type="text" class="f-numero" value="${escapeAttr(p.numero)}">
+          </div>
+          <div class="field field-mini">
+            <label>Preço</label>
+            <input type="text" class="f-preco" value="${escapeAttr(p.preco)}">
+          </div>
+        </div>
+        <div class="field field-mini" style="margin-top:12px;">
+          <label>Título</label>
+          <input type="text" class="f-titulo" value="${escapeAttr(p.titulo)}">
+        </div>
+        <div class="field field-mini" style="margin-top:12px;">
+          <label>Porte pro cálculo do frete (P = pequena/leve · M = média · G = grande/frágil)</label>
+          <select class="f-porte" style="width:100%; padding:10px 12px; background:var(--bg); color:var(--ink); border:1px solid var(--line); font:inherit;">
+            ${['P','M','G'].map((o) => `<option value="${o}" ${(String(p.porte || 'M').toUpperCase() === o) ? 'selected' : ''}>${o}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field field-mini" style="margin-top:12px;">
+          <label>Descrição</label>
+          <textarea class="f-descricao" rows="3">${escapeHtml(p.descricao)}</textarea>
+        </div>
+
+        <div class="destaque-row">
+          <input type="checkbox" class="f-destaque" ${p.destaque ? 'checked' : ''}>
+          <label style="margin:0;">Mostrar como peça em destaque (card grande no topo do catálogo)</label>
+        </div>
+
+        <div class="field field-mini" style="margin-top:16px;">
+          <label>Especificações</label>
+          <div class="specs-box"></div>
+          <button class="btn ghost add-spec" type="button">+ adicionar linha</button>
+        </div>
+
+        <div class="field field-mini" style="margin-top:16px;">
+          <label>Capa no catálogo — foto parada e gif animado (aparece ao passar o mouse)</label>
+          <div class="capas-box"></div>
+        </div>
+
+        <div class="field field-mini" style="margin-top:16px;">
+          <label>Fotos da página individual (clique em "substituir" pra trocar o arquivo, mantendo o mesmo nome)</label>
+          <div class="imgs-box"></div>
+          <button class="btn ghost add-img" type="button" style="margin-top:8px;">+ adicionar foto</button>
+          <datalist id="datalist-imgs-${key}"></datalist>
+        </div>
+
+        <div class="field field-mini" style="margin-top:16px;">
+          <label>Variações (cor, tamanho, material etc. — deixe vazio se a peça não tiver opções)</label>
+          <p class="reorder-hint" style="margin:0 0 10px;">Cada bloco é um grupo (ex: "Tamanho"). Dentro dele, cada linha é uma opção do cliente poder escolher (ex: "M"). Preço e foto são opcionais: se preencher, ao escolher aquela opção no site o preço muda e/ou a foto principal pula pra ela; se deixar em branco, usa o preço base e a primeira foto da peça.</p>
+          <div class="variacoes-box"></div>
+          <button class="btn ghost add-variacao" type="button">+ adicionar grupo de variação</button>
+        </div>
+      `;
+      container.appendChild(card);
+
+      const specsBox = card.querySelector('.specs-box');
+      (p.specs || []).forEach((s) => addSpecRow(specsBox, s.label, s.valor));
+      card.querySelector('.add-spec').addEventListener('click', () => addSpecRow(specsBox, '', ''));
+
+      const capasBox = card.querySelector('.capas-box');
+      addImageRow(capasBox, p.capaEstatica || `assets/img/${key}-capa.jpg`, 'Foto parada');
+      addImageRow(capasBox, p.capaAnimada || `assets/img/${key}.gif`, 'Gif animado (hover)');
+
+      const imgsBox = card.querySelector('.imgs-box');
+      (p.imagens || []).forEach((path) => addImageRow(imgsBox, path));
+      refreshImgsDatalist(card);
+
+      card.querySelector('.add-img').addEventListener('click', () => {
+        // gera um novo caminho de arquivo que ainda não existe nessa peça
+        // (ex: se já tem foto-1, foto-2, foto-3, a próxima vira foto-4)
+        let n = imgsBox.querySelectorAll('.img-row').length + 1;
+        let novoPath = `assets/img/${key}-${n}.jpg`;
+        const existentes = new Set([...imgsBox.querySelectorAll('.img-row')].map((r) => r.dataset.path));
+        while (existentes.has(novoPath)) { n++; novoPath = `assets/img/${key}-${n}.jpg`; }
+        addImageRow(imgsBox, novoPath, null, true);
+        imgsBox.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        refreshImgsDatalist(card);
+      });
+
+      const variacoesBox = card.querySelector('.variacoes-box');
+      (p.variacoes || []).forEach((v) => addVariacaoGrupo(variacoesBox, key, v));
+      card.querySelector('.add-variacao').addEventListener('click', () => {
+        addVariacaoGrupo(variacoesBox, key, { nome: '', opcoes: [{ valor: '' }] });
+        variacoesBox.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      card.querySelector('.remove-product').addEventListener('click', () => {
+        if (confirm(`Remover "${p.titulo}" do site? Isso só some depois que você clicar em "Salvar todas as alterações".`)) {
+          removedKeys.add(key);
+          card.remove();
+          atualizarBotoesDeOrdem();
+        }
+      });
+
+      card.querySelector('.move-up').addEventListener('click', () => {
+        const prev = card.previousElementSibling;
+        if (prev) {
+          container.insertBefore(card, prev);
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          atualizarBotoesDeOrdem();
+        }
+      });
+      card.querySelector('.move-down').addEventListener('click', () => {
+        const next = card.nextElementSibling;
+        if (next) {
+          container.insertBefore(next, card);
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          atualizarBotoesDeOrdem();
+        }
+      });
+    }
+
+    document.getElementById('btn-novo-produto').addEventListener('click', () => {
+      const nome = prompt('Nome da peça nova (ex: Chaveiro):');
+      if (!nome) return;
+      const key = nome.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove acentos
+        .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      if (!key) { alert('Nome inválido.'); return; }
+      if (currentData[key]) { alert('Já existe um produto com essa identificação. Escolha outro nome.'); return; }
+
+      const maiorOrdem = Math.max(0, ...Object.values(currentData).map((p) => p.ordem || 0));
+      const novo = {
+        ordem: maiorOrdem + 1,
+        destaque: false,
+        numero: 'Nº ' + String(maiorOrdem + 1).padStart(3, '0'),
+        titulo: nome,
+        preco: 'R$ 0,00',
+        porte: 'M',
+        descricao: 'Descrição da peça.',
+        specs: [{ label: 'Material', valor: 'Sob consulta' }],
+        variacoes: [],
+        capaEstatica: `assets/img/${key}-capa.jpg`,
+        capaAnimada: `assets/img/${key}.gif`,
+        imagens: [`assets/img/${key}-1.jpg`, `assets/img/${key}-2.jpg`, `assets/img/${key}-3.jpg`],
+      };
+      currentData[key] = novo;
+      addProductCard(key, novo);
+      document.getElementById('cards-container').lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      atualizarBotoesDeOrdem();
+    });
+
+    function addSpecRow(box, label, valor) {
+      const row = document.createElement('div');
+      row.className = 'spec-row';
+      row.innerHTML = `
+        <input type="text" class="s-label" placeholder="Rótulo (ex: Material)" value="${escapeAttr(label)}">
+        <input type="text" class="s-valor" placeholder="Valor (ex: Resina)" value="${escapeAttr(valor)}">
+        <button type="button" class="remove-spec">remover</button>
+      `;
+      row.querySelector('.remove-spec').addEventListener('click', () => row.remove());
+      box.appendChild(row);
+    }
+
+    // Cada linha aqui vira um "grupo" de variação (ex: Cor, Tamanho).
+    // As opções ficam num só campo separadas por vírgula pra ser rápido de editar.
+    // recarrega a lista de sugestões de foto (datalist) a partir das fotos
+    // que estão nessa peça agora, pra usar no campo "foto" de cada opção de variação
+    function refreshImgsDatalist(card) {
+      const key = card.dataset.key;
+      const datalist = card.querySelector(`#datalist-imgs-${cssEscape(key)}`);
+      if (!datalist) return;
+      const paths = [...card.querySelectorAll('.imgs-box .img-row')].map((r) => r.dataset.path);
+      datalist.innerHTML = paths.map((p) => `<option value="${escapeAttr(p)}"></option>`).join('');
+    }
+
+    function cssEscape(str) {
+      return (window.CSS && CSS.escape) ? CSS.escape(str) : str.replace(/[^a-zA-Z0-9_-]/g, '\\$&');
+    }
+
+    // aceita opção como texto puro (compatibilidade com dados antigos) ou objeto { valor, preco, imagem }
+    function normalizarOpcao(opcao) {
+      return typeof opcao === 'string' ? { valor: opcao } : (opcao || { valor: '' });
+    }
+
+    function addVariacaoGrupo(box, key, grupo) {
+      const row = document.createElement('div');
+      row.className = 'variacao-grupo-row';
+      row.innerHTML = `
+        <div class="variacao-grupo-head">
+          <input type="text" class="v-nome" placeholder="Nome do grupo (ex: Tamanho, Cor)" value="${escapeAttr(grupo.nome)}">
+          <button type="button" class="remove-grupo">remover grupo</button>
+        </div>
+        <div class="opcoes-box"></div>
+        <button type="button" class="btn ghost add-opcao">+ adicionar opção</button>
+      `;
+      row.querySelector('.remove-grupo').addEventListener('click', () => row.remove());
+
+      const opcoesBox = row.querySelector('.opcoes-box');
+      const opcoes = (grupo.opcoes && grupo.opcoes.length) ? grupo.opcoes : [{ valor: '' }];
+      opcoes.forEach((o) => addOpcaoRow(opcoesBox, key, normalizarOpcao(o)));
+      row.querySelector('.add-opcao').addEventListener('click', () => addOpcaoRow(opcoesBox, key, { valor: '' }));
+
+      box.appendChild(row);
+    }
+
+    function addOpcaoRow(box, key, opcao) {
+      const row = document.createElement('div');
+      row.className = 'opcao-row';
+      row.innerHTML = `
+        <input type="text" class="o-valor" placeholder="Valor (ex: M)" value="${escapeAttr(opcao.valor)}">
+        <input type="text" class="o-preco" placeholder="Preço (opcional)" value="${escapeAttr(opcao.preco)}">
+        <input type="text" class="o-imagem" placeholder="Foto (opcional)" list="datalist-imgs-${escapeAttr(key)}" value="${escapeAttr(opcao.imagem)}">
+        <button type="button" class="remove-opcao">remover</button>
+      `;
+      row.querySelector('.remove-opcao').addEventListener('click', () => row.remove());
+      box.appendChild(row);
+    }
+
+    function addImageRow(box, path, label, removable) {
+      const owner = sessionStorage.getItem('gh_owner');
+      const repo = sessionStorage.getItem('gh_repo');
+      const row = document.createElement('div');
+      row.className = 'img-row';
+      row.dataset.path = path;
+      row.innerHTML = `
+        <img src="https://raw.githubusercontent.com/${owner}/${repo}/main/${path}" onerror="this.style.opacity=0.15">
+        <span style="font-family:var(--f-mono); font-size:11px; color:var(--ink-dim);">${label ? label + ' — ' : ''}${path}</span>
+        <input type="file" accept="image/*,.gif">
+        <button type="button" class="upload-img">substituir</button>
+        ${removable ? '<button type="button" class="remove-img">remover</button>' : ''}
+      `;
+      const fileInput = row.querySelector('input[type=file]');
+      const btn = row.querySelector('.upload-img');
+      btn.addEventListener('click', async () => {
+        const file = fileInput.files[0];
+        if (!file) { alert('Escolha um arquivo primeiro.'); return; }
+        btn.textContent = 'enviando...';
+        try {
+          await uploadImage(path, file);
+          btn.textContent = 'feito ✓';
+          row.querySelector('img').src = URL.createObjectURL(file);
+        } catch (err) {
+          btn.textContent = 'erro';
+          alert('Não consegui enviar a foto: ' + err.message);
+        }
+      });
+      if (removable) {
+        row.querySelector('.remove-img').addEventListener('click', () => {
+          const card = row.closest('.product-card');
+          row.remove();
+          if (card) refreshImgsDatalist(card);
+        });
+      }
+      box.appendChild(row);
+    }
+
+    function readFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function uploadImage(path, file) {
+      const content = await readFileAsBase64(file);
+      // verifica se já existe um arquivo nesse caminho, pra pegar o sha (necessário pra sobrescrever)
+      let sha;
+      const check = await fetch(`${apiBase()}/contents/${path}`, { headers: ghHeaders() });
+      if (check.ok) {
+        const info = await check.json();
+        sha = info.sha;
+      }
+      const body = {
+        message: `Atualiza foto ${path} pelo painel admin`,
+        content,
+        branch: 'main',
+      };
+      if (sha) body.sha = sha;
+
+      const res = await fetch(`${apiBase()}/contents/${path}`, {
+        method: 'PUT',
+        headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || res.status);
+      }
+    }
+
+    function escapeAttr(str) {
+      return String(str == null ? '' : str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+    }
+    function escapeHtml(str) {
+      return String(str == null ? '' : str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    document.getElementById('btn-salvar').addEventListener('click', async () => {
+      const status = document.getElementById('save-status');
+      const cards = document.querySelectorAll('.product-card');
+      const novoData = { ...currentData };
+
+      removedKeys.forEach((key) => delete novoData[key]);
+
+      cards.forEach((card) => {
+        const key = card.dataset.key;
+        const specs = [...card.querySelectorAll('.specs-box .spec-row')].map((row) => ({
+          label: row.querySelector('.s-label').value,
+          valor: row.querySelector('.s-valor').value,
+        }));
+        // Cada grupo de variação só entra se tiver nome e pelo menos uma opção com valor preenchido.
+        // Cada opção vira só um texto (compatível com o site) se não tiver preço nem foto próprios,
+        // ou um objeto { valor, preco, imagem } quando tiver.
+        const variacoes = [...card.querySelectorAll('.variacoes-box .variacao-grupo-row')].map((grupoRow) => {
+          const nome = grupoRow.querySelector('.v-nome').value.trim();
+          const opcoes = [...grupoRow.querySelectorAll('.opcoes-box .opcao-row')].map((opRow) => {
+            const valor = opRow.querySelector('.o-valor').value.trim();
+            const preco = opRow.querySelector('.o-preco').value.trim();
+            const imagem = opRow.querySelector('.o-imagem').value.trim();
+            if (!valor) return null;
+            return (preco || imagem) ? { valor, ...(preco ? { preco } : {}), ...(imagem ? { imagem } : {}) } : valor;
+          }).filter(Boolean);
+          return { nome, opcoes };
+        }).filter((v) => v.nome && v.opcoes.length > 0);
+        const capaRows = card.querySelectorAll('.capas-box .img-row');
+        const capaEstatica = capaRows[0] ? capaRows[0].dataset.path : novoData[key].capaEstatica;
+        const capaAnimada = capaRows[1] ? capaRows[1].dataset.path : novoData[key].capaAnimada;
+        const imagens = [...card.querySelectorAll('.imgs-box .img-row')].map((row) => row.dataset.path);
+
+        novoData[key] = {
+          ...novoData[key],
+          numero: card.querySelector('.f-numero').value,
+          titulo: card.querySelector('.f-titulo').value,
+          preco: card.querySelector('.f-preco').value,
+          porte: card.querySelector('.f-porte').value,
+          descricao: card.querySelector('.f-descricao').value,
+          destaque: card.querySelector('.f-destaque').checked,
+          specs,
+          variacoes,
+          capaEstatica,
+          capaAnimada,
+          imagens,
+        };
+      });
+
+      // A ordem gravada é a posição em que cada card está na tela agora
+      // (o que as setas ▲ ▼ mudaram), assim o catálogo reflete exatamente
+      // a sequência que você organizou aqui.
+      cards.forEach((card, i) => {
+        const key = card.dataset.key;
+        if (novoData[key]) novoData[key].ordem = i + 1;
+      });
+
+      try {
+        const res = await fetch(`${apiBase()}/contents/${DATA_PATH}`, {
+          method: 'PUT',
+          headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: 'Atualiza produtos pelo painel admin',
+            content: b64EncodeUnicode(JSON.stringify(novoData, null, 2)),
+            sha: currentSha,
+            branch: 'main',
+          }),
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          showStatus(status, 'Erro ao salvar: ' + (err.message || res.status), false);
+          return;
+        }
+        const result = await res.json();
+        currentSha = result.content.sha;
+        currentData = novoData;
+        removedKeys.clear();
+        showStatus(status, 'Salvo! O site atualiza em 1-2 minutos.', true);
+      } catch (err) {
+        showStatus(status, 'Erro de conexão: ' + err.message, false);
+      }
+    });
+
+    /* =========================================================
+       PEDIDOS — gera a página individual de pagamento de cada cliente
+       (pedido.html?id=...), com resumo, QR code e link de pagamento
+       personalizáveis. Usa o mesmo login e a mesma API do GitHub já
+       usados pra produtos; os dados ficam em data/pedidos.json e as
+       fotos de QR code em assets/img/pedidos/.
+       ========================================================= */
+    const DATA_PATH_PEDIDOS = 'data/pedidos.json';
+    let currentPedidos = null;
+    let currentPedidosSha = null;
+
+    async function carregarPedidos() {
+      try {
+        const res = await fetch(`${apiBase()}/contents/${DATA_PATH_PEDIDOS}`, { headers: ghHeaders() });
+        if (res.ok) {
+          const json = await res.json();
+          currentPedidosSha = json.sha;
+          currentPedidos = JSON.parse(b64DecodeUnicode(json.content));
+        } else {
+          // o arquivo ainda não existe no repositório — começa vazio,
+          // ele é criado sozinho quando o primeiro pedido é salvo
+          currentPedidosSha = null;
+          currentPedidos = {};
+        }
+      } catch (err) {
+        currentPedidosSha = null;
+        currentPedidos = {};
+      }
+      renderPedidoCards(currentPedidos);
+    }
+
+    function renderPedidoCards(data) {
+      const container = document.getElementById('pedidos-container');
+      container.innerHTML = '';
+      const ids = Object.keys(data).sort((a, b) => (data[b].criadoEm || '').localeCompare(data[a].criadoEm || ''));
+      ids.forEach((id) => addPedidoCard(id, data[id]));
+    }
+
+    function gerarIdPedido() {
+      let id;
+      do {
+        id = Math.random().toString(36).slice(2, 8);
+      } while (currentPedidos && currentPedidos[id]);
+      return id;
+    }
+
+    async function salvarPedidosNoGithub() {
+      const body = {
+        message: 'Atualiza pedidos pelo painel admin',
+        content: b64EncodeUnicode(JSON.stringify(currentPedidos, null, 2)),
+        branch: 'main',
+      };
+      if (currentPedidosSha) body.sha = currentPedidosSha;
+      const res = await fetch(`${apiBase()}/contents/${DATA_PATH_PEDIDOS}`, {
+        method: 'PUT',
+        headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || res.status);
+      }
+      const result = await res.json();
+      currentPedidosSha = result.content.sha;
+    }
+
+    function addPedidoImageRow(box, id, path, sufixo, rotuloBotao) {
+      const owner = sessionStorage.getItem('gh_owner');
+      const repo = sessionStorage.getItem('gh_repo');
+      const row = document.createElement('div');
+      row.className = 'pedido-qr-row';
+      row.dataset.path = path || '';
+      row.innerHTML = `
+        <img src="${path ? `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}` : ''}" onerror="this.style.opacity=0.15">
+        <input type="file" accept="image/*">
+        <button type="button" class="upload-pedido-img">${rotuloBotao}</button>
+      `;
+      const fileInput = row.querySelector('input[type=file]');
+      const btn = row.querySelector('.upload-pedido-img');
+      btn.addEventListener('click', async () => {
+        const file = fileInput.files[0];
+        if (!file) { alert('Escolha uma imagem primeiro.'); return; }
+        const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+        const novoPath = `assets/img/pedidos/${id}-${sufixo}.${ext}`;
+        btn.textContent = 'enviando...';
+        try {
+          await uploadImage(novoPath, file);
+          row.dataset.path = novoPath;
+          row.querySelector('img').src = URL.createObjectURL(file);
+          btn.textContent = 'feito ✓';
+          // salva o pedido na hora, pra não depender de lembrar de clicar em "Salvar" depois do upload
+          const card = box.closest('.pedido-card');
+          if (card) await salvarPedidoCard(card, id, { silencioso: true });
+        } catch (err) {
+          btn.textContent = 'erro';
+          alert('Não consegui enviar a imagem: ' + err.message);
+        }
+      });
+      box.appendChild(row);
+    }
+
+    async function salvarPedidoCard(card, id, opts) {
+      opts = opts || {};
+      const statusEl = card.querySelector('.pedido-save-status');
+      const imagemPath = card.querySelector('.pedido-imagem-box .pedido-qr-row')?.dataset.path || '';
+      const qrPath = card.querySelector('.pedido-qr-box .pedido-qr-row')?.dataset.path || '';
+      const anterior = currentPedidos[id] || {};
+      currentPedidos[id] = {
+        comprador: card.querySelector('.p-comprador').value.trim(),
+        resumo: card.querySelector('.p-resumo').value.trim(),
+        valor: card.querySelector('.p-valor').value.trim(),
+        linkPagamento: card.querySelector('.p-link-pagamento').value.trim(),
+        imagem: imagemPath,
+        qrcode: qrPath,
+        pago: card.querySelector('.p-pago').checked,
+        criadoEm: anterior.criadoEm || new Date().toISOString().slice(0, 10),
+      };
+      statusEl.style.display = 'block';
+      statusEl.className = 'pedido-save-status';
+      statusEl.textContent = 'Salvando...';
+      try {
+        await salvarPedidosNoGithub();
+        statusEl.textContent = 'Salvo! O link do cliente atualiza em 1-2 minutos.';
+        statusEl.className = 'pedido-save-status ok';
+        card.querySelector('h2').textContent = currentPedidos[id].comprador || 'Novo pedido';
+      } catch (err) {
+        statusEl.textContent = 'Erro ao salvar: ' + err.message;
+        statusEl.className = 'pedido-save-status err';
+        if (!opts.silencioso) throw err;
+      }
+    }
+
+    function addPedidoCard(id, pedido) {
+      const container = document.getElementById('pedidos-container');
+      const card = document.createElement('div');
+      card.className = 'pedido-card';
+      card.dataset.id = id;
+      const linkCompleto = `${window.location.origin}/pedido.html?id=${id}`;
+      card.innerHTML = `
+        <div class="card-top-row">
+          <h2>${escapeHtml(pedido.comprador) || 'Novo pedido'}</h2>
+          <div class="card-actions">
+            <button type="button" class="remove-product remove-pedido">remover pedido</button>
+          </div>
+        </div>
+        <p class="pedido-id-tag">id: ${id}${pedido.criadoEm ? ' · criado em ' + pedido.criadoEm : ''}${pedido.pago ? ' · pago ✓' : ''}</p>
+
+        <div class="field field-mini">
+          <label>Nome do comprador</label>
+          <input type="text" class="p-comprador" value="${escapeAttr(pedido.comprador)}">
+        </div>
+
+        <div class="field field-mini" style="margin-top:12px;">
+          <label>Resumo do pedido (uma informação por linha — cada linha vira uma linha da grade na página do cliente. Use "Rótulo: valor" pra virar duas colunas, ex: "Frete: R$ 22,00")</label>
+          <textarea class="p-resumo" rows="4" placeholder="Peça: Cabeça Ogeid&#10;Variação: Preta&#10;Frete: R$ 22,00">${escapeHtml(pedido.resumo)}</textarea>
+        </div>
+
+        <div class="admin-row" style="margin-top:12px;">
+          <div class="field field-mini">
+            <label>Valor total</label>
+            <input type="text" class="p-valor" placeholder="R$ 150,00" value="${escapeAttr(pedido.valor)}">
+          </div>
+          <div class="field field-mini">
+            <label>Link de pagamento</label>
+            <input type="text" class="p-link-pagamento" placeholder="https://..." value="${escapeAttr(pedido.linkPagamento)}">
+          </div>
+        </div>
+
+        <div class="field field-mini" style="margin-top:16px;">
+          <label>Imagem de topo da página (a capa da peça, ou um banner da coleção — o que enviar aqui aparece no topo da página do cliente)</label>
+          <div class="pedido-imagem-box"></div>
+        </div>
+
+        <div class="field field-mini" style="margin-top:16px;">
+          <label>QR code do pagamento (foto ou print do Pix, ou de outro método)</label>
+          <div class="pedido-qr-box"></div>
+        </div>
+
+        <div class="pedido-pago-row">
+          <input type="checkbox" class="p-pago" ${pedido.pago ? 'checked' : ''}>
+          <label style="margin:0;">Marcar como pago (a página do cliente passa a mostrar "pagamento confirmado" em vez do botão de pagar)</label>
+        </div>
+
+        <div class="pedido-link-box">
+          <input type="text" class="p-link-final" readonly value="${linkCompleto}">
+          <button type="button" class="copy-link">copiar link</button>
+        </div>
+        <p class="form-note" style="margin-top:8px;">Esse é o link que vai pro cliente. Ele só funciona 1-2 minutos depois de você salvar este pedido pela primeira vez.</p>
+
+        <div class="pedido-actions">
+          <button type="button" class="btn salvar-pedido">Salvar este pedido</button>
+        </div>
+        <div class="pedido-save-status" style="display:none;"></div>
+      `;
+      container.appendChild(card);
+
+      const imagemBox = card.querySelector('.pedido-imagem-box');
+      addPedidoImageRow(imagemBox, id, pedido.imagem || '', 'capa', 'enviar imagem');
+
+      const qrBox = card.querySelector('.pedido-qr-box');
+      addPedidoImageRow(qrBox, id, pedido.qrcode || '', 'qr', 'enviar qrcode');
+
+      card.querySelector('.copy-link').addEventListener('click', () => {
+        const input = card.querySelector('.p-link-final');
+        input.select();
+        const btn = card.querySelector('.copy-link');
+        const original = btn.textContent;
+        const marcarCopiado = () => { btn.textContent = 'copiado ✓'; setTimeout(() => btn.textContent = original, 1500); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(input.value).then(marcarCopiado).catch(() => document.execCommand('copy') && marcarCopiado());
+        } else {
+          document.execCommand('copy');
+          marcarCopiado();
+        }
+      });
+
+      card.querySelector('.salvar-pedido').addEventListener('click', () => {
+        salvarPedidoCard(card, id).catch(() => {});
+      });
+
+      card.querySelector('.remove-pedido').addEventListener('click', async () => {
+        if (!confirm(`Remover o pedido de "${pedido.comprador || id}"? Isso apaga a página desse cliente assim que você confirmar.`)) return;
+        const existiaSalvo = !!currentPedidos[id];
+        delete currentPedidos[id];
+        card.remove();
+        if (existiaSalvo) {
+          try {
+            await salvarPedidosNoGithub();
+          } catch (err) {
+            alert('Não consegui remover no GitHub: ' + err.message);
+          }
+        }
+      });
+    }
+
+    document.getElementById('btn-novo-pedido').addEventListener('click', () => {
+      if (!currentPedidos) currentPedidos = {};
+      const id = gerarIdPedido();
+      const novo = { comprador: '', resumo: '', valor: '', linkPagamento: '', imagem: '', qrcode: '', pago: false, criadoEm: new Date().toISOString().slice(0, 10) };
+      addPedidoCard(id, novo);
+      document.getElementById('pedidos-container').lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    /* =========================================================
+       LEILÃO — textos, banner e lotes ficam em data/leilao.json
+       (mesmo esquema GitHub de produtos/pedidos). Os LANCES ao vivo
+       (visitante sem login dando lance) não podem ser gravados pelo
+       token do GitHub, então ficam no Firebase Realtime Database —
+       o mesmo já configurado pras estatísticas (js/firebase-config.js).
+       ========================================================= */
+    const DATA_PATH_LEILAO = 'data/leilao.json';
+    const LEILAO_DEFAULTS = {
+      texts: {
+        eventTitle: 'Leilão', eventSubtitle: '',
+        how1Title: '', how1Text: '', how2Title: '', how2Text: '', how3Title: '', how3Text: '',
+        footerText: '',
+      },
+      banner: '',
+      lots: [],
+      email: { toEmail: '', serviceId: '', templateId: '', publicKey: '' },
+    };
+    let currentLeilao = null;
+    let currentLeilaoSha = null;
+    let leilaoBidsUnsubs = [];
+
+    async function carregarLeilao() {
+      try {
+        const res = await fetch(`${apiBase()}/contents/${DATA_PATH_LEILAO}`, { headers: ghHeaders() });
+        if (res.ok) {
+          const json = await res.json();
+          currentLeilaoSha = json.sha;
+          currentLeilao = JSON.parse(b64DecodeUnicode(json.content));
+        } else {
+          // arquivo ainda não existe no repositório — começa com os padrões,
+          // é criado sozinho quando salvar pela primeira vez
+          currentLeilaoSha = null;
+          currentLeilao = JSON.parse(JSON.stringify(LEILAO_DEFAULTS));
+        }
+      } catch (err) {
+        currentLeilaoSha = null;
+        currentLeilao = JSON.parse(JSON.stringify(LEILAO_DEFAULTS));
+      }
+      currentLeilao.texts = { ...LEILAO_DEFAULTS.texts, ...(currentLeilao.texts || {}) };
+      currentLeilao.email = { ...LEILAO_DEFAULTS.email, ...(currentLeilao.email || {}) };
+      currentLeilao.lots = currentLeilao.lots || [];
+      renderLeilaoTexts(currentLeilao);
+      renderLeilaoLotes(currentLeilao.lots);
+      renderLeilaoBids(currentLeilao.lots);
+    }
+
+    function renderLeilaoTexts(data) {
+      const t = data.texts, e = data.email;
+      document.getElementById('lx-eventTitle').value = t.eventTitle || '';
+      document.getElementById('lx-eventSubtitle').value = t.eventSubtitle || '';
+      document.getElementById('lx-how1Title').value = t.how1Title || '';
+      document.getElementById('lx-how1Text').value = t.how1Text || '';
+      document.getElementById('lx-how2Title').value = t.how2Title || '';
+      document.getElementById('lx-how2Text').value = t.how2Text || '';
+      document.getElementById('lx-how3Title').value = t.how3Title || '';
+      document.getElementById('lx-how3Text').value = t.how3Text || '';
+      document.getElementById('lx-footerText').value = t.footerText || '';
+      document.getElementById('lx-eToEmail').value = e.toEmail || '';
+      document.getElementById('lx-eServiceId').value = e.serviceId || '';
+      document.getElementById('lx-eTemplateId').value = e.templateId || '';
+      document.getElementById('lx-ePublicKey').value = e.publicKey || '';
+
+      const bannerBox = document.getElementById('leilao-banner-box');
+      bannerBox.innerHTML = '';
+      addImageRow(bannerBox, data.banner || 'assets/img/leilao/banner.jpg', '', false);
+    }
+
+    function gerarIdLote() {
+      let id;
+      do {
+        id = 'lote-' + Math.random().toString(36).slice(2, 8);
+      } while (currentLeilao && currentLeilao.lots.some((l) => l.id === id));
+      return id;
+    }
+
+    function renderLeilaoLotes(lots) {
+      const container = document.getElementById('leilao-lotes-container');
+      container.innerHTML = '';
+      lots.forEach((lot) => addLoteCard(lot));
+    }
+
+    function addLoteCard(lot) {
+      const container = document.getElementById('leilao-lotes-container');
+      const card = document.createElement('div');
+      card.className = 'product-card lote-card';
+      card.dataset.id = lot.id;
+      const endTimeLocal = lot.endTime ? new Date(lot.endTime).toISOString().slice(0, 16) : '';
+      card.innerHTML = `
+        <div class="card-top-row">
+          <h2>${escapeHtml(lot.title) || 'Novo lote'}</h2>
+          <div class="card-actions">
+            <button type="button" class="remove-product remove-lote">remover lote</button>
+          </div>
+        </div>
+        <div class="admin-row">
+          <div class="field field-mini">
+            <label>Número do lote (aparece sobre a foto)</label>
+            <input type="text" class="lo-number" placeholder="ex: 001" value="${escapeAttr(lot.lotNumber)}">
+          </div>
+        </div>
+        <div class="field field-mini" style="margin-top:12px;">
+          <label>Título da obra</label>
+          <input type="text" class="lo-title" value="${escapeAttr(lot.title)}">
+        </div>
+        <div class="field field-mini" style="margin-top:12px;">
+          <label>Descrição</label>
+          <textarea class="lo-desc" rows="3">${escapeHtml(lot.description)}</textarea>
+        </div>
+        <div class="admin-row" style="margin-top:12px;">
+          <div class="field field-mini">
+            <label>Lance inicial (R$)</label>
+            <input type="number" step="0.01" min="0" class="lo-start" value="${lot.startingPrice != null ? lot.startingPrice : ''}">
+          </div>
+          <div class="field field-mini">
+            <label>Incremento mínimo (R$)</label>
+            <input type="number" step="0.01" min="0" class="lo-incr" value="${lot.minIncrement != null ? lot.minIncrement : ''}">
+          </div>
+        </div>
+        <div class="field field-mini" style="margin-top:12px;">
+          <label>Encerra em</label>
+          <input type="datetime-local" class="lo-end" value="${endTimeLocal}">
+        </div>
+        <div class="field field-mini" style="margin-top:16px;">
+          <label>Fotos da obra (a pessoa desliza o dedo pra ver as demais — use fotos quadradas)</label>
+          <div class="lo-imgs-box"></div>
+          <button class="btn ghost add-lo-img" type="button" style="margin-top:8px;">+ adicionar foto</button>
+        </div>
+      `;
+      container.appendChild(card);
+
+      const imgsBox = card.querySelector('.lo-imgs-box');
+      const imagensIniciais = (Array.isArray(lot.images) && lot.images.length)
+        ? lot.images
+        : (lot.image ? [lot.image] : [`assets/img/leilao/${lot.id}-1.jpg`]);
+      imagensIniciais.forEach((path) => addImageRow(imgsBox, path, null, true));
+
+      card.querySelector('.add-lo-img').addEventListener('click', () => {
+        let n = imgsBox.querySelectorAll('.img-row').length + 1;
+        let novoPath = `assets/img/leilao/${lot.id}-${n}.jpg`;
+        const existentes = new Set([...imgsBox.querySelectorAll('.img-row')].map((r) => r.dataset.path));
+        while (existentes.has(novoPath)) { n++; novoPath = `assets/img/leilao/${lot.id}-${n}.jpg`; }
+        addImageRow(imgsBox, novoPath, null, true);
+        imgsBox.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      card.querySelector('.lo-title').addEventListener('input', (e) => {
+        card.querySelector('h2').textContent = e.target.value || 'Novo lote';
+      });
+
+      card.querySelector('.remove-lote').addEventListener('click', () => {
+        if (!confirm(`Remover o lote "${lot.title || lot.id}"? Isso some do site quando você salvar.`)) return;
+        card.remove();
+      });
+    }
+
+    document.getElementById('btn-novo-lote').addEventListener('click', () => {
+      if (!currentLeilao) currentLeilao = JSON.parse(JSON.stringify(LEILAO_DEFAULTS));
+      const novo = { id: gerarIdLote(), lotNumber: '', title: '', description: '', images: [], startingPrice: 0, minIncrement: 10, endTime: '' };
+      addLoteCard(novo);
+      document.getElementById('leilao-lotes-container').lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    document.getElementById('btn-salvar-leilao').addEventListener('click', async () => {
+      const status = document.getElementById('leilao-save-status');
+      if (!currentLeilao) currentLeilao = JSON.parse(JSON.stringify(LEILAO_DEFAULTS));
+
+      const bannerRow = document.querySelector('#leilao-banner-box .img-row');
+      const lotCards = document.querySelectorAll('.lote-card');
+      const lots = [...lotCards].map((card) => {
+        const endLocal = card.querySelector('.lo-end').value;
+        const images = [...card.querySelectorAll('.lo-imgs-box .img-row')].map((row) => row.dataset.path).filter(Boolean);
+        return {
+          id: card.dataset.id,
+          lotNumber: card.querySelector('.lo-number').value.trim(),
+          title: card.querySelector('.lo-title').value.trim(),
+          description: card.querySelector('.lo-desc').value.trim(),
+          startingPrice: parseFloat(card.querySelector('.lo-start').value) || 0,
+          minIncrement: parseFloat(card.querySelector('.lo-incr').value) || 0,
+          endTime: endLocal ? new Date(endLocal).toISOString() : '',
+          images,
+          image: images[0] || '',
+        };
+      });
+
+      currentLeilao = {
+        texts: {
+          eventTitle: document.getElementById('lx-eventTitle').value.trim(),
+          eventSubtitle: document.getElementById('lx-eventSubtitle').value.trim(),
+          how1Title: document.getElementById('lx-how1Title').value.trim(),
+          how1Text: document.getElementById('lx-how1Text').value.trim(),
+          how2Title: document.getElementById('lx-how2Title').value.trim(),
+          how2Text: document.getElementById('lx-how2Text').value.trim(),
+          how3Title: document.getElementById('lx-how3Title').value.trim(),
+          how3Text: document.getElementById('lx-how3Text').value.trim(),
+          footerText: document.getElementById('lx-footerText').value.trim(),
+        },
+        banner: bannerRow ? bannerRow.dataset.path : '',
+        lots,
+        email: {
+          toEmail: document.getElementById('lx-eToEmail').value.trim(),
+          serviceId: document.getElementById('lx-eServiceId').value.trim(),
+          templateId: document.getElementById('lx-eTemplateId').value.trim(),
+          publicKey: document.getElementById('lx-ePublicKey').value.trim(),
+        },
+      };
+
+      showStatus(status, 'Salvando...', true);
+      try {
+        const body = {
+          message: 'Atualiza leilão pelo painel admin',
+          content: b64EncodeUnicode(JSON.stringify(currentLeilao, null, 2)),
+          branch: 'main',
+        };
+        if (currentLeilaoSha) body.sha = currentLeilaoSha;
+        const res = await fetch(`${apiBase()}/contents/${DATA_PATH_LEILAO}`, {
+          method: 'PUT',
+          headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          showStatus(status, 'Erro ao salvar: ' + (err.message || res.status), false);
+          return;
+        }
+        const result = await res.json();
+        currentLeilaoSha = result.content.sha;
+        showStatus(status, 'Salvo! O site atualiza em 1-2 minutos.', true);
+        renderLeilaoBids(currentLeilao.lots);
+      } catch (err) {
+        showStatus(status, 'Erro de conexão: ' + err.message, false);
+      }
+    });
+
+    // ---- lances ao vivo (Firebase) ----
+    async function renderLeilaoBids(lots) {
+      const msg = document.getElementById('leilao-bids-msg');
+      const container = document.getElementById('leilao-bids-container');
+      leilaoBidsUnsubs.forEach((unsub) => { try { unsub(); } catch (e) {} });
+      leilaoBidsUnsubs = [];
+      container.innerHTML = '';
+
+      if (!lots || !lots.length) {
+        msg.textContent = 'Nenhum lote cadastrado ainda.';
+        return;
+      }
+      const fb = await window.__fbReady;
+      if (!fb) {
+        msg.textContent = 'Firebase não está configurado — veja o passo a passo que veio junto com esses arquivos.';
+        return;
+      }
+      msg.textContent = '';
+      const { db, ref, onValue } = fb;
+
+      lots.forEach((lot) => {
+        const box = document.createElement('div');
+        box.className = 'admin-panel';
+        box.style.margin = '0 0 14px';
+        box.innerHTML = `
+          <div class="card-top-row">
+            <h3 style="font-family:var(--f-display); font-size:15px; margin:0;">${escapeHtml(lot.title) || lot.id}</h3>
+            <div class="card-actions">
+              <button type="button" class="move-btn btn-encerrar-lote">encerrar agora</button>
+              <button type="button" class="move-btn btn-zerar-lote">zerar lances</button>
+            </div>
+          </div>
+          <p class="lote-bid-atual" style="font-family:var(--f-mono); font-size:13px; margin:10px 0;">carregando...</p>
+          <div class="lote-leads-lista" style="font-family:var(--f-mono); font-size:12px; color:var(--ink-dim);"></div>
+        `;
+        container.appendChild(box);
+
+        const atualEl = box.querySelector('.lote-bid-atual');
+        const listaEl = box.querySelector('.lote-leads-lista');
+
+        const unsub1 = onValue(ref(db, `leilao/lotes/${lot.id}`), (snap) => {
+          const v = snap.val();
+          if (!v) { atualEl.textContent = `Lance inicial: R$ ${(lot.startingPrice || 0).toFixed(2)} — ainda sem lances.`; return; }
+          atualEl.textContent = `Lance atual: R$ ${Number(v.value || 0).toFixed(2)}` + (v.bidder ? ` — ${v.bidder}` : '') + (v.manualEnd ? ' · ENCERRADO MANUALMENTE' : '');
+        });
+        const unsub2 = onValue(ref(db, `leilao/leads/${lot.id}`), (snap) => {
+          const itens = [];
+          snap.forEach((child) => itens.push(child.val()));
+          itens.sort((a, b) => (b.time || 0) - (a.time || 0));
+          if (!itens.length) { listaEl.innerHTML = 'Nenhum lance ainda.'; return; }
+          listaEl.innerHTML = itens.map((it) => {
+            const hora = it.time ? new Date(it.time).toLocaleString('pt-BR') : '';
+            return `<div style="border-top:1px solid var(--line); padding:6px 0;">R$ ${Number(it.value || 0).toFixed(2)} — ${escapeHtml(it.name || '')} ${it.contact ? '(' + escapeHtml(it.contact) + ')' : ''} <span style="opacity:.6;">${hora}</span></div>`;
+          }).join('');
+        });
+        leilaoBidsUnsubs.push(unsub1, unsub2);
+
+        box.querySelector('.btn-encerrar-lote').addEventListener('click', async () => {
+          if (!confirm(`Encerrar o lote "${lot.title || lot.id}" agora? Ninguém mais poderá dar lance nele.`)) return;
+          const { db, ref, set, get } = fb;
+          const snap = await get(ref(db, `leilao/lotes/${lot.id}`));
+          const atual = snap.val() || { value: lot.startingPrice || 0, bidder: null };
+          await set(ref(db, `leilao/lotes/${lot.id}`), { ...atual, manualEnd: true });
+        });
+        box.querySelector('.btn-zerar-lote').addEventListener('click', async () => {
+          if (!confirm(`Zerar todos os lances do lote "${lot.title || lot.id}"? Isso não pode ser desfeito.`)) return;
+          const { db, ref, set, remove } = fb;
+          await set(ref(db, `leilao/lotes/${lot.id}`), { value: lot.startingPrice || 0, bidder: null, manualEnd: false });
+          await remove(ref(db, `leilao/leads/${lot.id}`));
+        });
+      });
+    }
+  </script>
+</body>
+</html>
