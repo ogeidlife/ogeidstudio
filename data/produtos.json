@@ -1,6 +1,6 @@
 {
   "cabeca": {
-    "ordem": 5,
+    "ordem": 1,
     "numero": "Nº 001",
     "titulo": "Cabeça Ogeid ",
     "preco": "150,00 R$",
@@ -40,8 +40,69 @@
     "capaAnimada": "assets/img/cabeca.gif",
     "variacoes": []
   },
+  "print": {
+    "ordem": 4,
+    "numero": "Nº 002",
+    "titulo": "Ta escrito ",
+    "preco": "R$ 80,00",
+    "porte": "P",
+    "descricao": "Ilustração original do universo do personagem impresso em papel A3 ou A4",
+    "specs": [
+      {
+        "label": "Material",
+        "valor": "Impressão em papel couchê"
+      },
+      {
+        "label": "Tamanhos",
+        "valor": "A3 / A4"
+      },
+      {
+        "label": "Prazo",
+        "valor": "Sob encomenda"
+      }
+    ],
+    "imagens": [
+      "assets/img/quadros-1.jpg",
+      "assets/img/quadros-2.jpg",
+      "assets/img/quadros-3.jpg",
+      "assets/img/print-4.jpg",
+      "assets/img/print-5.jpg",
+      "assets/img/print-6.jpg"
+    ],
+    "destaque": false,
+    "capaEstatica": "assets/img/quadros-capa.jpg",
+    "capaAnimada": "assets/img/quadros.gif",
+    "variacoes": [
+      {
+        "nome": "COR",
+        "opcoes": [
+          {
+            "valor": "Amarelo",
+            "imagem": "assets/img/quadros-1.jpg"
+          },
+          {
+            "valor": "Preto",
+            "imagem": "assets/img/print-4.jpg"
+          }
+        ]
+      },
+      {
+        "nome": "Tamanho",
+        "opcoes": [
+          {
+            "valor": "A4",
+            "preco": "60,00 R$"
+          },
+          {
+            "valor": "A3",
+            "preco": "80,00 R$"
+          }
+        ]
+      }
+    ]
+  },
   "abajures": {
-    "ordem": 6,
+    "ordem": 2,
     "numero": "Nº 003",
     "titulo": "Abajur Ogeid melancolia",
     "preco": "R$ 220,00",
@@ -76,12 +137,161 @@
     "capaAnimada": "assets/img/abajures.gif",
     "variacoes": []
   },
-  "ajude-seus-amigos": {
+  "print-museografico": {
+    "ordem": 5,
+    "numero": "Nº 004",
+    "titulo": "Minha cidade ",
+    "preco": "R$ 90,00",
+    "porte": "P",
+    "descricao": "Ilustração original do universo do personagem impresso em papel A3 ou A4",
+    "specs": [
+      {
+        "label": "Material",
+        "valor": "papel couchê"
+      },
+      {
+        "label": "Tamanhos",
+        "valor": "A4 / A3"
+      },
+      {
+        "label": "Edição",
+        "valor": "Lote limitado"
+      },
+      {
+        "label": "Prazo",
+        "valor": "Sob encomenda"
+      }
+    ],
+    "imagens": [
+      "assets/img/prints-1.jpg",
+      "assets/img/prints-2.jpg",
+      "assets/img/prints-3.jpg"
+    ],
+    "destaque": false,
+    "capaEstatica": "assets/img/prints-capa.jpg",
+    "capaAnimada": "assets/img/prints.gif",
+    "variacoes": [
+      {
+        "nome": "Tamanho",
+        "opcoes": [
+          {
+            "valor": "A4",
+            "preco": "60,00 R$"
+          },
+          {
+            "valor": "A3",
+            "preco": "80,00 R$"
+          }
+        ]
+      }
+    ]
+  },
+  "livros": {
+    "ordem": 6,
+    "numero": "Nº 005",
+    "titulo": "Sem problemas",
+    "preco": "80,00R$",
+    "porte": "P",
+    "descricao": "Ilustração original do universo do personagem impresso em papel A4 ou A3",
+    "specs": [
+      {
+        "label": "Tamanho",
+        "valor": "A3 / A4"
+      },
+      {
+        "label": "Papel",
+        "valor": "papel couchê"
+      }
+    ],
+    "imagens": [
+      "assets/img/livros-1.jpg",
+      "assets/img/livros-2.jpg",
+      "assets/img/livros-3.jpg"
+    ],
+    "destaque": false,
+    "capaEstatica": "assets/img/livros-capa.jpg",
+    "capaAnimada": "assets/img/livros.gif",
+    "variacoes": [
+      {
+        "nome": "Tamanho",
+        "opcoes": [
+          {
+            "valor": "A4",
+            "preco": "60,00 R$"
+          },
+          {
+            "valor": "A3",
+            "preco": "80,00 R$"
+          }
+        ]
+      }
+    ]
+  },
+  "adesivos": {
+    "ordem": 3,
+    "destaque": false,
+    "numero": "Nº 006",
+    "titulo": "Adesivos",
+    "preco": "20,00",
+    "porte": "P",
+    "descricao": "pack de adesivos do universo Ogeid ",
+    "specs": [
+      {
+        "label": "Material",
+        "valor": "Impressão a laser sobre vinil"
+      },
+      {
+        "label": "Quantidade de adesivos ",
+        "valor": "8"
+      },
+      {
+        "label": "Tamanho",
+        "valor": "Variados "
+      }
+    ],
+    "capaEstatica": "assets/img/adesivos-capa.jpg",
+    "capaAnimada": "assets/img/adesivos.gif",
+    "imagens": [
+      "assets/img/adesivos-1.jpg",
+      "assets/img/adesivos-2.jpg",
+      "assets/img/adesivos-3.jpg"
+    ],
+    "variacoes": []
+  },
+  "quadro-ogeid": {
     "ordem": 7,
+    "destaque": false,
+    "numero": "Nº 007",
+    "titulo": "Tranquilo mas nem tanto ",
+    "preco": "300,00R$",
+    "porte": "G",
+    "descricao": "1/1 Pintura sobre o universo Ogeid feita a mão em tela 60 x60cm ",
+    "specs": [
+      {
+        "label": "Técnica mista sobre canvas ",
+        "valor": "tinta acrílica, giz oleoso, lápis grafite, caneta hidrográfica "
+      },
+      {
+        "label": "Tamanho ",
+        "valor": "60 x 60 cm"
+      }
+    ],
+    "capaEstatica": "assets/img/quadro-ogeid-capa.jpg",
+    "capaAnimada": "assets/img/quadro-ogeid.gif",
+    "imagens": [
+      "assets/img/quadro-ogeid-1.jpg",
+      "assets/img/quadro-ogeid-2.jpg",
+      "assets/img/quadro-ogeid-3.jpg",
+      "assets/img/quadro-ogeid-4.jpg"
+    ],
+    "variacoes": []
+  },
+  "ajude-seus-amigos": {
+    "ordem": 8,
     "destaque": false,
     "numero": "Nº 008",
     "titulo": "Ajude seus amigos ",
-    "preco": "400,00",
+    "preco": "300,00 R$",
     "porte": "G",
     "descricao": "1/1 Pintura sobre o universo Ogeid feita a mão em tela 50 x 50cm ",
     "specs": [
@@ -104,787 +314,32 @@
     ],
     "variacoes": []
   },
-  "sem-titulo-1": {
-    "ordem": 1,
-    "destaque": false,
-    "numero": "Nº 01",
-    "titulo": "Sem título #1",
-    "preco": "150,00",
-    "descricao": "Sem título — técnica mista sobre papel A3.\nPintura feita com spray, giz seco, caneta esferográfica e tinta acrílica. A obra foi construída a partir de linhas, manchas e sobreposições, explorando de forma livre a relação entre desenho, cor e gesto. O processo mistura elementos figurativos e abstratos, mantendo as marcas e interferências de cada material.",
-    "specs": [],
-    "variacoes": [],
-    "capaEstatica": "assets/img/sem-titulo-1-capa.jpg",
-    "capaAnimada": "assets/img/sem-titulo-1.gif",
-    "imagens": [
-      "assets/img/sem-titulo-1-1.jpg",
-      "assets/img/sem-titulo-1-2.jpg",
-      "assets/img/sem-titulo-1-3.jpg"
-    ],
-    "porte": "M"
-  },
-  "sem-titulo-2": {
-    "ordem": 2,
-    "destaque": false,
-    "numero": "Nº 02",
-    "titulo": "Sem título #2",
-    "preco": "150,00 ",
-    "descricao": "Obra sem título, feita em técnica mista sobre papel A3.\nA pintura foi construída com spray, giz seco, caneta esferográfica e tinta acrílica, misturando linhas, manchas e desenhos feitos diretamente sobre o papel.",
-    "specs": [],
-    "variacoes": [],
-    "capaEstatica": "assets/img/sem-titulo-2-capa.jpg",
-    "capaAnimada": "assets/img/sem-titulo-2.gif",
-    "imagens": [
-      "assets/img/sem-titulo-2-1.jpg",
-      "assets/img/sem-titulo-2-2.jpg",
-      "assets/img/sem-titulo-2-3.jpg"
-    ],
-    "porte": "M"
-  },
-  "sem-titulo-3": {
-    "ordem": 3,
-    "destaque": false,
-    "numero": "Nº 03",
-    "titulo": "Sem título #3",
-    "preco": "150,00",
-    "descricao": "Nesta obra, a pintura surge de uma mistura espontânea de materiais e gestos. Sobre o papel A3, spray, giz seco, caneta esferográfica e tinta acrílica se encontram e se sobrepõem, criando diferentes texturas, marcas e camadas de cor.\n\nA composição traz uma figura central que parece atravessar um cenário urbano, cercada por estruturas, linhas e elementos que lembram prédios e formas arquitetônicas. As cores fortes e os traços mais soltos contrastam com algumas formas mais definidas, criando uma sensação de movimento e tensão.\n\nO trabalho nasce justamente desse encontro entre controle e improviso. Algumas marcas parecem planejadas, enquanto outras permanecem como registros do próprio processo de pintura. A sobreposição dos materiais deixa visível o gesto e transforma o papel em um espaço de experimentação, onde desenho e pintura se misturam de maneira natural.\n\nSem título\nTécnica mista sobre papel\nA3\nSpray, giz seco, caneta esferográfica e tinta acrílica.",
-    "specs": [],
-    "variacoes": [],
-    "capaEstatica": "assets/img/sem-titulo-3-capa.jpg",
-    "capaAnimada": "assets/img/sem-titulo-3.gif",
-    "imagens": [
-      "assets/img/sem-titulo-3-1.jpg",
-      "assets/img/sem-titulo-3-2.jpg",
-      "assets/img/sem-titulo-3-3.jpg"
-    ],
-    "porte": "M"
-  },
-  "poltrona-nina": {
-    "ordem": 4,
-    "destaque": false,
-    "numero": "Nº 007",
-    "titulo": "POLTRONA NINA ",
-    "preco": "150,00",
-    "descricao": "Poltrona nina decorativa pintada a mão modelo único ",
-    "specs": [
-      {
-        "label": "Material",
-        "valor": " Tecido e Madeira"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/poltrona-nina-capa.jpg",
-    "capaAnimada": "assets/img/poltrona-nina.gif",
-    "imagens": [
-      "assets/img/poltrona-nina-1.jpg",
-      "assets/img/poltrona-nina-2.jpg",
-      "assets/img/poltrona-nina-3.jpg",
-      "assets/img/poltrona-nina-4.jpg"
-    ],
-    "porte": "M"
-  },
-  "o-tempo-e-real": {
-    "ordem": 8,
-    "destaque": false,
-    "numero": "Pintura",
-    "titulo": "O tempo é real",
-    "preco": "400,00",
-    "porte": "G",
-    "descricao": "Pinturas de maior escala sobre tela e painel, em que o graffiti, o desenho de linha e a cor em camadas se encontram. Figuras, carros, semáforos e símbolos urbanos aparecem sobre superfícies construídas por acúmulo, em trabalhos de 2023 a 2026.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Spray, aerógrafo e pincel sobre tela"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "140 × 80 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2026"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Pintura"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/o-tempo-e-real-capa.jpg",
-    "capaAnimada": "assets/img/o-tempo-e-real-capa.jpg",
-    "imagens": [
-      "assets/img/o-tempo-e-real-1.jpg"
-    ]
-  },
-  "bilhar": {
+  "quadro-ogeid-3": {
     "ordem": 9,
     "destaque": false,
-    "numero": "Pintura",
-    "titulo": "Bilhar",
-    "preco": "500,00",
+    "numero": "Nº 009",
+    "titulo": "Tranquilo mas nem tanto 2",
+    "preco": "INDISPONÍVEL",
     "porte": "G",
-    "descricao": "Pinturas de maior escala sobre tela e painel, em que o graffiti, o desenho de linha e a cor em camadas se encontram. Figuras, carros, semáforos e símbolos urbanos aparecem sobre superfícies construídas por acúmulo, em trabalhos de 2023 a 2026.",
+    "descricao": "1/1 Pintura sobre o universo Ogeid feita a mão em tela 60 x60cm ",
     "specs": [
       {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre tela"
+        "label": "técnica mista sobre canvas ",
+        "valor": "Tinta acrílica, giz oleoso, caneta hidrográfica, lápis grafite "
       },
       {
-        "label": "Dimensões",
-        "valor": "75 × 100 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2024"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Pintura"
+        "label": "tamanho",
+        "valor": "60x 60cm"
       }
     ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/bilhar-capa.jpg",
-    "capaAnimada": "assets/img/bilhar-capa.jpg",
+    "capaEstatica": "assets/img/quadro-ogeid-3-capa.jpg",
+    "capaAnimada": "assets/img/quadro-ogeid-3.gif",
     "imagens": [
-      "assets/img/bilhar-1.jpg"
-    ]
-  },
-  "12-12": {
-    "ordem": 10,
-    "destaque": false,
-    "numero": "Pintura",
-    "titulo": "12/12",
-    "preco": "700,00R$",
-    "porte": "G",
-    "descricao": "Pinturas de maior escala sobre tela e painel, em que o graffiti, o desenho de linha e a cor em camadas se encontram. Figuras, carros, semáforos e símbolos urbanos aparecem sobre superfícies construídas por acúmulo, em trabalhos de 2023 a 2026.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre painel de madeira impresso"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "100 × 75 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2024"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Pintura"
-      }
+      "assets/img/quadro-ogeid-3-1.jpg",
+      "assets/img/quadro-ogeid-3-2.jpg",
+      "assets/img/quadro-ogeid-3-3.jpg",
+      "assets/img/quadro-ogeid-3-4.jpg"
     ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/12-12-capa.jpg",
-    "capaAnimada": "assets/img/12-12-capa.jpg",
-    "imagens": [
-      "assets/img/12-12-1.jpg"
-    ]
-  },
-  "irmaos": {
-    "ordem": 11,
-    "destaque": false,
-    "numero": "Pintura",
-    "titulo": "Irmãos",
-    "preco": "800,00",
-    "porte": "G",
-    "descricao": "Pinturas de maior escala sobre tela e painel, em que o graffiti, o desenho de linha e a cor em camadas se encontram. Figuras, carros, semáforos e símbolos urbanos aparecem sobre superfícies construídas por acúmulo, em trabalhos de 2023 a 2026.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "85 × 65 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2024"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Pintura"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/irmaos-capa.jpg",
-    "capaAnimada": "assets/img/irmaos-capa.jpg",
-    "imagens": [
-      "assets/img/irmaos-1.jpg"
-    ]
-  },
-  "saxofonista": {
-    "ordem": 12,
-    "destaque": false,
-    "numero": "Pintura",
-    "titulo": "Saxofonista",
-    "preco": "400,00",
-    "porte": "G",
-    "descricao": "Pinturas de maior escala sobre tela e painel, em que o graffiti, o desenho de linha e a cor em camadas se encontram. Figuras, carros, semáforos e símbolos urbanos aparecem sobre superfícies construídas por acúmulo, em trabalhos de 2023 a 2026.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre tela"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "84 × 123 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2023"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Pintura"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/saxofonista-capa.jpg",
-    "capaAnimada": "assets/img/saxofonista-capa.jpg",
-    "imagens": [
-      "assets/img/saxofonista-1.jpg"
-    ]
-  },
-  "sonhos-em-andamento": {
-    "ordem": 13,
-    "destaque": false,
-    "numero": "Papel · 2026",
-    "titulo": "Sonhos em andamento",
-    "preco": "300",
-    "porte": "M",
-    "descricao": "Trabalhos em A3 que reúnem spray, giz seco, caneta e tinta acrílica. Cenas densas, com figuras recorrentes, objetos e fragmentos da cidade sobrepostos, registram sonhos, observações do cotidiano e acontecimentos. O gesto largo do spray convive com o traço fino da caneta, e o controle cede espaço ao acidente.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "42 × 29,7 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2026"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Papel, 2026"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/sonhos-em-andamento-capa.jpg",
-    "capaAnimada": "assets/img/sonhos-em-andamento-2.jpg",
-    "imagens": [
-      "assets/img/sonhos-em-andamento-1.jpg",
-      "assets/img/sonhos-em-andamento-2.jpg",
-      "assets/img/sonhos-em-andamento-3.jpg"
-    ]
-  },
-  "observando-o-cotidiano": {
-    "ordem": 14,
-    "destaque": false,
-    "numero": "Papel · 2026",
-    "titulo": "Observando o cotidiano",
-    "preco": "300",
-    "porte": "M",
-    "descricao": "Trabalhos em A3 que reúnem spray, giz seco, caneta e tinta acrílica. Cenas densas, com figuras recorrentes, objetos e fragmentos da cidade sobrepostos, registram sonhos, observações do cotidiano e acontecimentos. O gesto largo do spray convive com o traço fino da caneta, e o controle cede espaço ao acidente.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "42 × 29,7 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2026"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Papel, 2026"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/observando-o-cotidiano-capa.jpg",
-    "capaAnimada": "assets/img/observando-o-cotidiano-capa.jpg",
-    "imagens": [
-      "assets/img/observando-o-cotidiano-1.jpg",
-      "assets/img/observando-o-cotidiano-2.jpg",
-      "assets/img/observando-o-cotidiano-3.jpg"
-    ]
-  },
-  "o-inevitavel-ou-tinha-que-acontecer": {
-    "ordem": 15,
-    "destaque": false,
-    "numero": "Papel · 2026",
-    "titulo": "O inevitável ou tinha que acontecer",
-    "preco": "300",
-    "porte": "M",
-    "descricao": "Trabalhos em A3 que reúnem spray, giz seco, caneta e tinta acrílica. Cenas densas, com figuras recorrentes, objetos e fragmentos da cidade sobrepostos, registram sonhos, observações do cotidiano e acontecimentos. O gesto largo do spray convive com o traço fino da caneta, e o controle cede espaço ao acidente.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "42 × 29,7 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2026"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Papel, 2026"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/o-inevitavel-ou-tinha-que-acontecer-capa.jpg",
-    "capaAnimada": "assets/img/o-inevitavel-ou-tinha-que-acontecer-capa.jpg",
-    "imagens": [
-      "assets/img/o-inevitavel-ou-tinha-que-acontecer-1.jpg",
-      "assets/img/o-inevitavel-ou-tinha-que-acontecer-2.jpg",
-      "assets/img/o-inevitavel-ou-tinha-que-acontecer-3.jpg"
-    ]
-  },
-  "sem-titulo-serie-1": {
-    "ordem": 16,
-    "destaque": false,
-    "numero": "Papel · 2026",
-    "titulo": "Sem título (série) #1",
-    "preco": "250,00",
-    "porte": "M",
-    "descricao": "Trabalhos em A3 que reúnem spray, giz seco, caneta e tinta acrílica. Cenas densas, com figuras recorrentes, objetos e fragmentos da cidade sobrepostos, registram sonhos, observações do cotidiano e acontecimentos. O gesto largo do spray convive com o traço fino da caneta, e o controle cede espaço ao acidente.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "29,7 × 42 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2026"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Papel, 2026"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/sem-titulo-serie-1-capa.jpg",
-    "capaAnimada": "assets/img/sem-titulo-serie-1-capa.jpg",
-    "imagens": [
-      "assets/img/sem-titulo-serie-1-1.jpg"
-    ]
-  },
-  "sem-titulo-serie-2": {
-    "ordem": 17,
-    "destaque": false,
-    "numero": "Papel · 2026",
-    "titulo": "Sem título (série) #2",
-    "preco": "250,00",
-    "porte": "M",
-    "descricao": "Trabalhos em A3 que reúnem spray, giz seco, caneta e tinta acrílica. Cenas densas, com figuras recorrentes, objetos e fragmentos da cidade sobrepostos, registram sonhos, observações do cotidiano e acontecimentos. O gesto largo do spray convive com o traço fino da caneta, e o controle cede espaço ao acidente.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "29,7 × 42 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2026"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Papel, 2026"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/sem-titulo-serie-2-capa.jpg",
-    "capaAnimada": "assets/img/sem-titulo-serie-2-capa.jpg",
-    "imagens": [
-      "assets/img/sem-titulo-serie-2-1.jpg"
-    ]
-  },
-  "sem-titulo-serie-3": {
-    "ordem": 18,
-    "destaque": false,
-    "numero": "Papel · 2026",
-    "titulo": "Sem título (série) #3",
-    "preco": "250,00",
-    "porte": "M",
-    "descricao": "Trabalhos em A3 que reúnem spray, giz seco, caneta e tinta acrílica. Cenas densas, com figuras recorrentes, objetos e fragmentos da cidade sobrepostos, registram sonhos, observações do cotidiano e acontecimentos. O gesto largo do spray convive com o traço fino da caneta, e o controle cede espaço ao acidente.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "29,7 × 42 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2026"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Papel, 2026"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/sem-titulo-serie-3-capa.jpg",
-    "capaAnimada": "assets/img/sem-titulo-serie-3-capa.jpg",
-    "imagens": [
-      "assets/img/sem-titulo-serie-3-1.jpg"
-    ]
-  },
-  "sem-titulo-serie-4": {
-    "ordem": 19,
-    "destaque": false,
-    "numero": "Papel · 2026",
-    "titulo": "Sem título (série) #4",
-    "preco": "250,00",
-    "porte": "M",
-    "descricao": "Trabalhos em A3 que reúnem spray, giz seco, caneta e tinta acrílica. Cenas densas, com figuras recorrentes, objetos e fragmentos da cidade sobrepostos, registram sonhos, observações do cotidiano e acontecimentos. O gesto largo do spray convive com o traço fino da caneta, e o controle cede espaço ao acidente.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "29,7 × 42 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2026"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Papel, 2026"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/sem-titulo-serie-4-capa.jpg",
-    "capaAnimada": "assets/img/sem-titulo-serie-4-capa.jpg",
-    "imagens": [
-      "assets/img/sem-titulo-serie-4-1.jpg"
-    ]
-  },
-  "serie-1000": {
-    "ordem": 20,
-    "destaque": false,
-    "numero": "Série 1000",
-    "titulo": "Série 1000",
-    "preco": "100,00",
-    "porte": "P",
-    "descricao": "Projeto de mil pinturas em formato A5, com unidade estética, iniciado em 2025. A série investiga a repetição: até onde o personagem central consegue ir, onde consegue viver e onde se sai melhor. É também um ambiente de experimentação com materiais e intensidades, em que o volume de produção faz parte da pesquisa. Trinta pinturas integram a proposta até agora.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "21 × 14,8 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2025"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Série 1000"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/serie-1000-capa.jpg",
-    "capaAnimada": "assets/img/serie-1000-capa.jpg",
-    "imagens": [
-      "assets/img/serie-1000-1.jpg"
-    ]
-  },
-  "rosas-vermelhas": {
-    "ordem": 21,
-    "destaque": false,
-    "numero": "Papel · 2025",
-    "titulo": "Rosas vermelhas",
-    "preco": "150,00",
-    "porte": "P",
-    "descricao": "Trabalhos em A3 e A4 em que o desenho de linha, o giz seco e a cor se acumulam em composições densas, com cenas urbanas, flores, carros e figuras recorrentes. O personagem se desloca entre paisagens que misturam observação e invenção.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "29,7 × 21 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2025"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Desenho e cor"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/rosas-vermelhas-capa.jpg",
-    "capaAnimada": "assets/img/rosas-vermelhas-capa.jpg",
-    "imagens": [
-      "assets/img/rosas-vermelhas-1.jpg"
-    ]
-  },
-  "universo-ogeid-29": {
-    "ordem": 22,
-    "destaque": false,
-    "numero": "Papel · 2025",
-    "titulo": "Universo OGEID #29",
-    "preco": "150,00",
-    "porte": "P",
-    "descricao": "Trabalhos em A3 e A4 em que o desenho de linha, o giz seco e a cor se acumulam em composições densas, com cenas urbanas, flores, carros e figuras recorrentes. O personagem se desloca entre paisagens que misturam observação e invenção.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "29,7 × 21 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2025"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Desenho e cor"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/universo-ogeid-29-capa.jpg",
-    "capaAnimada": "assets/img/universo-ogeid-29-capa.jpg",
-    "imagens": [
-      "assets/img/universo-ogeid-29-1.jpg"
-    ]
-  },
-  "sem-titulo-2023-1": {
-    "ordem": 23,
-    "destaque": false,
-    "numero": "Papel · 2023",
-    "titulo": "Sem título #1 (2023)",
-    "preco": "200,00",
-    "porte": "M",
-    "descricao": "Trabalhos em A3 e A4 em que o desenho de linha, o giz seco e a cor se acumulam em composições densas, com cenas urbanas, flores, carros e figuras recorrentes. O personagem se desloca entre paisagens que misturam observação e invenção.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "42 × 29,7 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2023"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Desenho e cor"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/sem-titulo-2023-1-capa.jpg",
-    "capaAnimada": "assets/img/sem-titulo-2023-1-capa.jpg",
-    "imagens": [
-      "assets/img/sem-titulo-2023-1-1.jpg"
-    ]
-  },
-  "sem-titulo-2023-2": {
-    "ordem": 24,
-    "destaque": false,
-    "numero": "Papel · 2023",
-    "titulo": "Sem título #2 (2023)",
-    "preco": "200,00",
-    "porte": "M",
-    "descricao": "Trabalhos em A3 e A4 em que o desenho de linha, o giz seco e a cor se acumulam em composições densas, com cenas urbanas, flores, carros e figuras recorrentes. O personagem se desloca entre paisagens que misturam observação e invenção.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "42 × 29,7 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2023"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Desenho e cor"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/sem-titulo-2023-2-capa.jpg",
-    "capaAnimada": "assets/img/sem-titulo-2023-2-capa.jpg",
-    "imagens": [
-      "assets/img/sem-titulo-2023-2-1.jpg",
-      "assets/img/sem-titulo-2023-2-2.jpg",
-      "assets/img/sem-titulo-2023-2-3.jpg"
-    ]
-  },
-  "sem-titulo-kraft-1": {
-    "ordem": 25,
-    "destaque": false,
-    "numero": "Papel kraft · 2026",
-    "titulo": "Sem título (kraft) #1",
-    "preco": "150,00",
-    "porte": "P",
-    "descricao": "Papel kraft, bloco de concreto e outros suportes já usados entram no trabalho com suas marcas, texturas e cor própria. O suporte participa da imagem: o tom do kraft e a aspereza do concreto definem como a tinta, o spray e o giz se depositam.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel kraft"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "29,7 × 21 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2026"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Suportes encontrados"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/sem-titulo-kraft-1-capa.jpg",
-    "capaAnimada": "assets/img/sem-titulo-kraft-1-capa.jpg",
-    "imagens": [
-      "assets/img/sem-titulo-kraft-1-1.jpg",
-      "assets/img/sem-titulo-kraft-1-2.jpg",
-      "assets/img/sem-titulo-kraft-1-3.jpg",
-      "assets/img/sem-titulo-kraft-1-4.jpg"
-    ]
-  },
-  "ocio": {
-    "ordem": 26,
-    "destaque": false,
-    "numero": "Concreto · 2026",
-    "titulo": "Ócio",
-    "preco": "100,00",
-    "porte": "M",
-    "descricao": "Papel kraft, bloco de concreto e outros suportes já usados entram no trabalho com suas marcas, texturas e cor própria. O suporte participa da imagem: o tom do kraft e a aspereza do concreto definem como a tinta, o spray e o giz se depositam.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre bloco de concreto"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "19 × 25 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2026"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Suportes encontrados"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/ocio-capa.jpg",
-    "capaAnimada": "assets/img/ocio-2.jpg",
-    "imagens": [
-      "assets/img/ocio-1.jpg",
-      "assets/img/ocio-2.jpg"
-    ]
-  },
-  "ritmo-de-copa-do-mundo": {
-    "ordem": 27,
-    "destaque": false,
-    "numero": "COPA · 2026",
-    "titulo": "Ritmo de copa do mundo",
-    "preco": "150,00",
-    "porte": "P",
-    "descricao": "Pequenos trabalhos em A5 que levam o futebol e a cultura de torcida ao universo do artista: jogadores, bola, estádio e arquibancada tratados com spray, tinta e giz, com a energia do jogo.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "21 × 14,8 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2026"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Futebol"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/ritmo-de-copa-do-mundo-capa.jpg",
-    "capaAnimada": "assets/img/ritmo-de-copa-do-mundo-capa.jpg",
-    "imagens": [
-      "assets/img/ritmo-de-copa-do-mundo-1.jpg"
-    ]
-  },
-  "ritmo-de-copa-do-mundo-2": {
-    "ordem": 28,
-    "destaque": false,
-    "numero": "COPA 2 · 2026",
-    "titulo": "Ritmo de copa do mundo #2",
-    "preco": "150,00",
-    "porte": "P",
-    "descricao": "Pequenos trabalhos em A5 que levam o futebol e a cultura de torcida ao universo do artista: jogadores, bola, estádio e arquibancada tratados com spray, tinta e giz, com a energia do jogo.",
-    "specs": [
-      {
-        "label": "Técnica",
-        "valor": "Técnica mista sobre papel"
-      },
-      {
-        "label": "Dimensões",
-        "valor": "21 × 14,8 cm"
-      },
-      {
-        "label": "Ano",
-        "valor": "2026"
-      },
-      {
-        "label": "Coleção",
-        "valor": "Futebol"
-      }
-    ],
-    "variacoes": [],
-    "capaEstatica": "assets/img/ritmo-de-copa-do-mundo-2-capa.jpg",
-    "capaAnimada": "assets/img/ritmo-de-copa-do-mundo-2-capa.jpg",
-    "imagens": [
-      "assets/img/ritmo-de-copa-do-mundo-2-1.jpg"
-    ]
+    "variacoes": []
   }
 }
