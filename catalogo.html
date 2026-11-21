@@ -380,6 +380,8 @@ document.addEventListener("click",e=>{
 
 $$(".wl").forEach(a=>a.href=wa("Olá! Vim pelo catálogo de obras do OGEID."));
 $("#ig").href=$("#ig2").href=INSTAGRAM;$("#yr").textContent=new Date().getFullYear();
+/* se a miniatura -p.jpg não existir no servidor, usa a imagem grande */
+addEventListener("error",e=>{const t=e.target;if(t&&t.tagName==="IMG"&&/-p\.jpg$/.test(t.src)&&!t.dataset.fb){t.dataset.fb=1;t.src=t.src.replace(/-p\.jpg$/,".jpg")}},true);
 sync();route();
 </script>
 </body>
