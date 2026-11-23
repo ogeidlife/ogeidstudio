@@ -53,6 +53,11 @@ h1{font-size:clamp(44px,9vw,104px)}
 .price{position:absolute;right:-6px;top:-6px;background:var(--acid);border:3px solid var(--ink);padding:3px 10px;font:400 17px 'Archivo Black';transform:rotate(4deg);box-shadow:3px 3px 0 var(--ink);z-index:2;white-space:nowrap}
 .card.off img{filter:grayscale(1) opacity(.5)}
 .card.off .im:after{content:"Indisponível";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-14deg);border:4px solid var(--red);color:var(--red);padding:4px 12px;font:400 20px 'Archivo Black';text-transform:uppercase;background:rgba(255,253,247,.85);white-space:nowrap}
+.lbl{font:400 12px 'Archivo Black';text-transform:uppercase;margin:16px 0 10px}
+.fmts{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:440px;margin-bottom:8px}
+.fmt{background:var(--white);border:3px solid var(--ink);padding:10px 14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;box-shadow:5px 5px 0 var(--ink);font-family:Inter;color:var(--ink);transition:transform .12s,box-shadow .12s}
+.fmt b{font:400 24px 'Archivo Black'}.fmt span{font:500 12px Inter;color:var(--mute)}.fmt em{font:400 17px 'Archivo Black';font-style:normal;margin-top:6px}
+.fmt:hover{background:#f3ffb0}.fmt[aria-checked=true]{background:var(--acid);transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
 .empty{padding:30px 0;font:400 24px 'Permanent Marker';color:var(--mute)}
 main{padding-bottom:84px}
 .back{display:inline-block;margin:34px 0 22px;font:400 13px 'Archivo Black';text-transform:uppercase}.back:hover{color:var(--red)}
@@ -150,8 +155,8 @@ const B="https://ogeidstudio.wordpress.com/wp-content/uploads/";
 /* ================================================================ */
 
 /* Coleções: [rótulo, descrição] */
-const G={pa:["Pinturas A5","Pinturas numeradas em formato A5, 2025."],u26:["Série 2026","Obras de 2026 do Universo Ogeid."],n26:["Novidades","Obra nova do Universo Ogeid."],ob:["Obras 2023–24","Obras de 2023 e 2024 do Universo Ogeid."],ac:["Acervo 2016–25","Prints, esculturas e quadros de 2016 a 2025."],lv:["Livro","Portfólio impresso em edição limitada."]};
-const T={pa:"Pintura A5",u26:"Sem título",n26:"Sem título",ob:"Sem título",ac:"Sem título",lv:"Livro"};
+const G={pr:["Prints A4 · A3","Prints do Universo Ogeid, 2026. Disponíveis em A4 ou A3."],pa:["Pinturas A5","Pinturas numeradas em formato A5, 2025."],u26:["Série 2026","Obras de 2026 do Universo Ogeid."],n26:["Novidades","Obra nova do Universo Ogeid."],ob:["Obras 2023–24","Obras de 2023 e 2024 do Universo Ogeid."],ac:["Acervo 2016–25","Prints, esculturas e quadros de 2016 a 2025."],lv:["Livro","Portfólio impresso em edição limitada."]};
+const T={pr:"Print Ogeid",pa:"Pintura A5",u26:"Sem título",n26:"Sem título",ob:"Sem título",ac:"Sem título",lv:"Livro"};
 /* Catálogo: coleção → [pasta padrão, linhas "arquivo|preço|título|id Mercado Livre|fotos extras (vírgula)|descrição"]
    preço 0 = indisponível; preço c = disponível, valor sob consulta. Para ter mais fotos numa obra, suba as imagens no WordPress e liste os caminhos no campo "fotos extras".
    Novas obras entram NO FIM de cada lista (o código OG-000 segue a ordem). */
@@ -274,7 +279,27 @@ novas/nov26-26.jpg|20|Adesivos Ogeid
 novas/nov26-27.jpg|180|Cabeça (escultura)||novas/nov26-27-d1.jpg,novas/nov26-27-d2.jpg
 novas/nov26-28.jpg|150|Poltrona Nina||novas/nov26-28-d1.jpg|Poltrona customizada à mão. Medidas: 82 cm × 60 cm.
 novas/nov26-29.jpg|500|Sem título||novas/nov26-29-d1.jpg,novas/nov26-29-d2.jpg,novas/nov26-29-d3.jpg,novas/nov26-29-d4.jpg,novas/nov26-29-d5.jpg
-novas/nov26-30.jpg|400|Ogeid x Akira||novas/nov26-30-d1.jpg,novas/nov26-30-d2.jpg`]
+novas/nov26-30.jpg|400|Ogeid x Akira||novas/nov26-30-d1.jpg,novas/nov26-30-d2.jpg`],
+pr:["novas/",`print-01.jpg|60|Print Ogeid Nº 01|||Figura amarela de perfil sobre fundo preto, com traços vermelhos e azuis.
+print-02.jpg|60|Print Ogeid Nº 02|||Figura preta com contornos azuis sobre fundo amarelo e azul.
+print-03.jpg|60|Print Ogeid Nº 03|||Figura vermelha de braço aberto sobre fundo branco, com detalhes em azul e amarelo.
+print-04.jpg|60|Print Ogeid Nº 04|||Figura verde de contorno vermelho e mão amarela erguida sobre fundo preto.
+print-05.jpg|60|Print Ogeid Nº 05|||Rostos brancos e formas vermelhas sobre fundo amarelo.
+print-06.jpg|60|Print Ogeid Nº 06|||Rosto branco em forma vermelha sobre fundo azul-escuro.
+print-07.jpg|60|Print Ogeid Nº 07|||Rosto de contorno azul diante de um bloco verde, sobre fundo branco.
+print-08.jpg|60|Print Ogeid Nº 08|||Figura vermelha de sorriso aberto e uniforme com estrela, sobre fundo amarelo.
+print-09.jpg|60|Print Ogeid Nº 09|||Rosto branco de contorno roxo sobre fundo ocre, com prédios roxos.
+print-10.jpg|60|Print Ogeid Nº 10|||Silhueta preta sobre fundo azul e rosa-pink, com um rosto na base.
+print-11.jpg|60|Print Ogeid Nº 11|||Tabuleiro xadrez preto e branco com figura ocre e linhas rosa.
+print-12.jpg|60|Print Ogeid Nº 12|||Xadrez, formas azuis e ocre sobre branco, com linhas rosa.
+print-13.jpg|60|Print Ogeid Nº 13|||Formas em azul-claro, verde e preto sobre fundo vermelho, com uma flor amarela.
+print-14.jpg|60|Print Ogeid Nº 14|||Palmeira branca e forma ocre sobre fundo preto, com casa em linhas rosa.
+print-15.jpg|60|Print Ogeid Nº 15|||Rosto branco de contorno amarelo sobre fundo preto cortado por faixas vermelhas.
+print-16.jpg|60|Print Ogeid Nº 16|||Carro amarelo com um braço rosa-pink para fora, sobre fundo azul-marinho.
+print-17.jpg|60|Print Ogeid Nº 17|||Silhueta preta e rastro de cor do ciano ao amarelo, sobre fundo amarelo.
+print-18.jpg|60|Print Ogeid Nº 18|||Rostos brancos empilhados sobre fundo azul, cruzados por linhas vermelhas.
+print-19.jpg|60|Print Ogeid Nº 19|||Relógio de ponteiros azuis e cabelo preto sobre fundo amarelo.
+print-20.jpg|60|Print Ogeid Nº 20|||Relógio e setas sobre fundo roxo e ocre.`]
 };
 
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -284,22 +309,29 @@ const loc=p=>p.startsWith("novas/"),full=p=>loc(p)?p:B+p,img=(p,w)=>loc(p)?(w<=7
 const ml=i=>"https://produto.mercadolivre.com.br/MLB-"+i.ml+"-_JM";
 const items=[];
 for(const g in D){const[p,txt]=D[g];txt.split("\n").forEach(l=>{const[f,pr,t,m,ex,ds]=l.split("|");
-  items.push({n:items.length+1,g,src:f.includes("/")?f:p+f,pr:pr==="c"?0:+pr,q:pr==="c",t:t||T[g],ml:m,ex:ex?ex.split(","):[],ds})})}
+  items.push({n:items.length+1,g,src:f.includes("/")?f:p+f,pr:pr==="c"?0:+pr,q:pr==="c",t:t||T[g],ml:m,ex:ex?ex.split(","):[],ds,fm:g==="pr"})})}
 const PR={all:()=>1,a:i=>i.pr<=100,b:i=>i.pr>100&&i.pr<=300,c:i=>i.pr>300&&i.pr<=700,d:i=>i.pr>700};
-let st={g:"all",p:"all",on:true,s:"cat"},bag=[],sy=0;
-try{bag=JSON.parse(localStorage.getItem("og_bag")||"[]").filter(n=>items[n-1]&&items[n-1].pr)}catch(e){}
-const L=()=>bag.map(n=>items[n-1]),total=()=>L().reduce((s,i)=>s+i.pr,0);
+/* Prints: mesmo valor para todos, por formato */
+const FMT={A4:60,A3:80},FD={A4:"21 × 29,7 cm",A3:"29,7 × 42 cm"};
+let st={g:"all",p:"all",on:true,s:"cat"},bag=[],sy=0,fmt="A4";
+try{bag=JSON.parse(localStorage.getItem("og_bag")||"[]").map(b=>typeof b==="number"?{n:b}:b).filter(b=>b&&items[b.n-1]&&items[b.n-1].pr&&(!items[b.n-1].fm||FMT[b.f]))}catch(e){}
+const pv=(i,f)=>i.fm?FMT[f||"A4"]:i.pr;
+const L=()=>bag.map(b=>({...items[b.n-1],f:b.f,p:pv(items[b.n-1],b.f)})),total=()=>L().reduce((s,i)=>s+i.p,0);
+const inBag=(n,f)=>bag.some(b=>b.n===n&&b.f===f),fl=i=>i.fm?" ("+i.f+")":"";
+const rk=i=>i.g==="pr"?2:i.g==="n26"?1:0;
+const fmtBox=i=>`<div class="lbl" id="fl">Escolha o formato</div><div class="fmts" role="radiogroup" aria-labelledby="fl">${Object.keys(FMT).map(f=>`<button type="button" class="fmt" role="radio" data-f="${f}" aria-checked="${f===fmt}"><b>${f}</b><span>${FD[f]}</span><em>${brl(FMT[f])}</em></button>`).join("")}</div><div class="pr" id="prv">${brl(FMT[fmt])} <small>formato ${fmt}</small></div>`;
+function pickF(){$$(".fmt").forEach(b=>b.setAttribute("aria-checked",b.dataset.f===fmt));const p=$("#prv");if(p)p.innerHTML=brl(FMT[fmt])+" <small>formato "+fmt+"</small>";upd()}
 
 /* vitrine */
 function list(){
   const r=items.filter(i=>(st.g==="all"||i.g===st.g)&&(!st.on||av(i))&&(st.p==="all"||(i.pr&&PR[st.p](i))));
   const d=st.s==="asc"?1:st.s==="desc"?-1:0;
-  return r.sort((a,b)=>!av(a)-!av(b)||(d?(!a.pr-!b.pr)||d*(a.pr-b.pr):(b.g==="n26")-(a.g==="n26")));
+  return r.sort((a,b)=>!av(a)-!av(b)||(d?(!a.pr-!b.pr)||d*(a.pr-b.pr):rk(b)-rk(a)));
 }
-const card=i=>`<article class="card${av(i)?"":" off"}">${i.pr?`<span class="price">${brl(i.pr)}</span>`:i.q?`<span class="price">Sob consulta</span>`:""}
+const card=i=>`<article class="card${av(i)?"":" off"}">${i.pr?`<span class="price">${i.fm?"R$ "+FMT.A4+"–"+FMT.A3:brl(i.pr)}</span>`:i.q?`<span class="price">Sob consulta</span>`:""}
 <a class="im" href="#obra-${i.n}" aria-label="Ver ${i.t}"><img loading="lazy" decoding="async" src="${img(i.src,600)}" alt="${i.t}"></a>
 <h3>${i.t}</h3><small>${pad(i)} · ${G[i.g][0]}</small>
-${i.pr?`<button class="btn" data-a="${i.n}">Encomendar</button>`:`<a class="btn" href="#obra-${i.n}">${i.q?"Ver e consultar":"Ver obra"}</a>`}</article>`;
+${i.fm?`<a class="btn" href="#obra-${i.n}">Escolher A4 ou A3</a>`:i.pr?`<button class="btn" data-a="${i.n}">Encomendar</button>`:`<a class="btn" href="#obra-${i.n}">${i.q?"Ver e consultar":"Ver obra"}</a>`}</article>`;
 function render(){
   const r=list();
   $("#chips").innerHTML=[["all","Tudo"],...Object.entries(G).map(([k,v])=>[k,v[0]])].map(([k,l])=>`<button class="chip" data-g="${k}" aria-pressed="${st.g===k}">${l}</button>`).join("");
@@ -311,6 +343,7 @@ $("#fp").onchange=e=>{st.p=e.target.value;render()};$("#so").onchange=e=>{st.s=e
 
 /* página da obra */
 function obra(i){
+  fmt="A4";
   const ims=[i.src,...i.ex],sold=!av(i);
   let rel=items.filter(x=>x.g===i.g&&x.n!==i.n&&av(x)).slice(0,4);
   if(rel.length<4)rel=rel.concat(items.filter(x=>av(x)&&x.n!==i.n&&!rel.includes(x)).slice(0,4-rel.length));
@@ -322,7 +355,7 @@ function obra(i){
   </div>
   <div class="info"><span class="hand">${pad(i)} · ${G[i.g][0]}</span><h1>${i.t}</h1>
     <span class="tag${sold?" off":""}">${sold?"Indisponível":"Disponível"}</span>
-    ${sold?"":i.q?`<div class="pr" style="font-size:28px">Valor sob consulta</div>`:`<div class="pr">${brl(i.pr)}${i.g==="lv"?" <small>frete grátis</small>":""}</div>`}
+    ${sold?"":i.q?`<div class="pr" style="font-size:28px">Valor sob consulta</div>`:i.fm?fmtBox(i):`<div class="pr">${brl(i.pr)}${i.g==="lv"?" <small>frete grátis</small>":""}</div>`}
     <p>${i.ds||G[i.g][1]}</p>
     <div class="acts">${sold?`<button class="btn red" data-s="${i.n}">Quero algo parecido</button>`
       :i.q?`<button class="btn red" data-q="${i.n}">Consultar valor</button>`:`<button class="btn red" data-a="${i.n}">Encomendar</button><button class="btn" data-b="${i.n}">+ Sacola</button>${i.ml?`<a class="btn" target="_blank" rel="noopener" href="${ml(i)}">Mercado Livre</a>`:""}`}</div>
@@ -349,14 +382,14 @@ addEventListener("hashchange",route);
 function sync(){
   try{localStorage.setItem("og_bag",JSON.stringify(bag))}catch(e){}
   $("#cnt").textContent=bag.length;upd();
-  $("#bl").innerHTML=bag.length?L().map(i=>`<div class="bi"><img src="${img(i.src,120)}" alt=""><b>${i.t}<br><small>${pad(i)}</small></b><span>${brl(i.pr)}</span><button data-r="${i.n}" aria-label="Remover ${i.t}">×</button></div>`).join("")+`<p class="tot">Total: ${brl(total())}</p>`:'<p class="empty">Sua sacola está vazia.</p>';
+  $("#bl").innerHTML=bag.length?L().map((i,k)=>`<div class="bi"><img src="${img(i.src,120)}" alt=""><b>${i.t}<br><small>${pad(i)}${i.fm?" · formato "+i.f:""}</small></b><span>${brl(i.p)}</span><button data-r="${k}" aria-label="Remover ${i.t}">×</button></div>`).join("")+`<p class="tot">Total: ${brl(total())}</p>`:'<p class="empty">Sua sacola está vazia.</p>';
   $("#bf").hidden=!bag.length;
 }
-const upd=()=>$$("[data-b]").forEach(b=>b.textContent=bag.includes(+b.dataset.b)?"Na sacola ✓":"+ Sacola");
-const add=n=>{if(!bag.includes(n))bag.push(n);sync()};
+const upd=()=>$$("[data-b]").forEach(b=>b.textContent=inBag(+b.dataset.b,items[+b.dataset.b-1].fm?fmt:undefined)?"Na sacola ✓":"+ Sacola");
+const add=(n,f)=>{if(!inBag(n,f))bag.push({n,f});sync()};
 function msg(){
   const g=id=>$(id).value.trim();
-  return["Olá! Quero encomendar do catálogo OGEID:","",...L().map(i=>`• ${pad(i)} · ${i.t} — ${brl(i.pr)}\n  ${link(i.n)}`),"","Total: "+brl(total())+" (sem frete)","",
+  return["Olá! Quero encomendar do catálogo OGEID:","",...L().map(i=>`• ${pad(i)} · ${i.t}${fl(i)} — ${brl(i.p)}\n  ${link(i.n)}`),"","Total: "+brl(total())+" (sem frete)","",
     "Nome: "+g("#fn"),"WhatsApp: "+g("#fw"),"Entrega: "+$("#fd").value+(g("#fc")?" · "+g("#fc"):""),g("#fo")?"Obs.: "+g("#fo"):null].filter(x=>x!==null).join("\n");
 }
 const ok=()=>{if(!$("#fn").value.trim()||!$("#fw").value.trim()){$("#fe").textContent="Preencha seu nome e WhatsApp.";return false}$("#fe").textContent="";return true};
@@ -366,11 +399,12 @@ const dg=$("#bg");
 $("#open-bag").onclick=()=>dg.showModal();$("#bx").onclick=()=>dg.close();
 dg.onclick=e=>{if(e.target===dg)dg.close()};
 document.addEventListener("click",e=>{
-  const c=e.target.closest("[data-a],[data-b],[data-s],[data-m],[data-c],[data-r],[data-t],[data-q]");if(!c)return;
+  const c=e.target.closest("[data-a],[data-b],[data-s],[data-m],[data-c],[data-r],[data-t],[data-q],[data-f]");if(!c)return;
   const d=c.dataset,n=+(d.a||d.b||d.s||d.m||d.c||d.r||d.q),i=items[n-1];
-  if(d.a){add(n);dg.showModal()}
-  else if(d.b){bag.includes(n)?bag.splice(bag.indexOf(n),1):bag.push(n);sync()}
-  else if(d.r){bag=bag.filter(x=>x!==n);sync()}
+  if(d.f){fmt=d.f;pickF()}
+  else if(d.a){add(n,i.fm?fmt:undefined);dg.showModal()}
+  else if(d.b){const f=i.fm?fmt:undefined,k=bag.findIndex(x=>x.n===n&&x.f===f);k>=0?bag.splice(k,1):bag.push({n,f});sync()}
+  else if(d.r){bag.splice(n,1);sync()}
   else if(d.s)window.open(wa(`Olá! Vi a obra ${pad(i)} · ${i.t} no catálogo (${link(n)}) e ela está indisponível. Tem algo parecido ou posso encomendar uma nova?`),"_blank","noopener");
   else if(d.q)window.open(wa(`Olá! Tenho interesse na obra ${pad(i)} · ${i.t} (${link(n)}). Qual o valor e como funciona a entrega?`),"_blank","noopener");
   else if(d.m)window.open(wa(`Olá! Quero ver mais fotos da obra ${pad(i)} · ${i.t}: ${link(n)}`),"_blank","noopener");
