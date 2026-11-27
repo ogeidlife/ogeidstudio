@@ -151,12 +151,49 @@ dialog img{max-width:92vw;max-height:72vh;background:#fff;border:8px solid #fff;
 .js .rv.in{opacity:1;transform:none}
 @media(max-width:560px){.grid{grid-template-columns:repeat(2,1fr);gap:26px 14px}.price{font-size:14px}.box{padding:20px}.row{grid-template-columns:1fr}.card.off .im:after{font-size:15px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.wall figure{opacity:1}}
+
+/* ===== BLACK FRIDAY ===== */
+.bkbar{background:var(--red);color:#fff;border-bottom:4px solid var(--ink);font:400 13px 'Archivo Black';text-transform:uppercase}
+.bkbar .wrap{display:flex;justify-content:center;align-items:center;gap:10px 18px;flex-wrap:wrap;padding-block:8px;text-align:center}
+.bkbar time{background:#fff;color:var(--ink);padding:2px 9px;font-variant-numeric:tabular-nums}
+.bkbar a{background:var(--ink);color:var(--acid);padding:3px 10px}
+.bk{background:var(--ink);color:#f4efe3;padding:0;position:relative;overflow:hidden;border-bottom:4px solid var(--acid)}
+.bk:before,.bk:after{content:"";display:block;height:20px;background:repeating-linear-gradient(-45deg,var(--acid) 0 18px,var(--ink) 18px 36px)}
+.bkin{position:relative;padding:64px 20px 70px}
+.bkin:before{content:"BLACK FRIDAY";position:absolute;left:-1%;bottom:-3%;font:400 clamp(110px,22vw,320px)/.8 'Archivo Black';color:transparent;-webkit-text-stroke:2px rgba(212,255,26,.11);white-space:nowrap;pointer-events:none}
+.bkin>*{position:relative}
+.bk .hand{color:var(--acid)}
+.bk h2{font-size:clamp(70px,14vw,180px);margin:0}
+.bk h2 em{font-style:normal;color:transparent;-webkit-text-stroke:2px #f4efe3;display:block}
+.bk h2 span{color:var(--acid);display:block}
+.bkh{display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+.pct{width:clamp(130px,17vw,200px);aspect-ratio:1;border-radius:50%;background:var(--red);color:#fff;border:4px solid #f4efe3;display:grid;place-content:center;text-align:center;transform:rotate(-10deg);box-shadow:8px 8px 0 var(--acid);animation:wob 3s ease-in-out infinite}
+.pct b{font:400 clamp(46px,7vw,76px)/.9 'Archivo Black'}.pct small{font:400 18px 'Permanent Marker'}
+@keyframes wob{50%{transform:rotate(-4deg) scale(1.05)}}
+.bkp{max-width:50ch;color:#cfc9b8;margin:22px 0 28px;font-size:17px}
+.cd{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px}
+.cd div{min-width:92px;text-align:center;border:3px dashed #5a5a5a;padding:12px 8px 8px}
+.cd b{display:block;font:400 clamp(40px,7vw,64px)/1 'Archivo Black';color:var(--acid);font-variant-numeric:tabular-nums}
+.cd small{font:400 11px 'Archivo Black';text-transform:uppercase;color:#a9a393}
+.price.sale{background:var(--red);color:#fff}.price s{display:block;font-size:11px;line-height:1;opacity:.8}
+.tks{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px;max-width:760px}
+.tk{position:relative;background:var(--paper);color:var(--ink);border:3px solid var(--ink);padding:20px 22px;box-shadow:8px 8px 0 var(--acid);display:flex;flex-direction:column;gap:4px;transition:transform .15s}
+.tk:hover{transform:translate(-3px,-3px) rotate(-.6deg)}
+.tk:before,.tk:after{content:"";position:absolute;top:50%;width:22px;height:22px;margin-top:-11px;border-radius:50%;background:var(--ink)}
+.tk:before{left:-13px}.tk:after{right:-13px}
+.tk small{font:400 12px 'Archivo Black';text-transform:uppercase;color:var(--mute)}
+.tk b{font:400 56px/1 'Archivo Black';color:var(--red)}
+.tk span{font-size:14px;color:var(--mute)}.tk u{font:400 13px 'Archivo Black';text-transform:uppercase;margin-top:8px}
+.wall .stamp{position:absolute;left:38%;top:34%;z-index:5;width:128px;aspect-ratio:1;border-radius:50%;background:var(--red);color:#fff;border:4px solid var(--ink);display:grid;place-content:center;text-align:center;font:400 14px/1 'Archivo Black';text-transform:uppercase;box-shadow:5px 5px 0 var(--acid);animation:wob 3s ease-in-out infinite}
+.stamp b{font-size:38px}
+nav ul .bkl{background:var(--red);color:#fff;padding:4px 9px}
 </style>
 </head>
 <body>
+<div class="bkbar" id="bkbar" hidden><div class="wrap"><span id="bkmsg"></span><time id="bkt"></time><a href="#bk">Ver ofertas</a></div></div>
 <nav><div class="wrap">
   <a href="#top"><img data-logo alt="OGEID Studio" width="46" height="46"></a>
-  <ul><li><a href="#flash">Flash</a></li><li><a href="catalogo.html">Obras</a></li><li><a href="#processo">Processo</a></li><li><a href="#orcamento">Orçamento</a></li><li><a href="#agendar">Agendar</a></li><li><a href="#faq">Dúvidas</a></li></ul>
+  <ul><li data-bf hidden><a class="bkl" href="#bk">Black Friday</a></li><li><a href="#flash">Flash</a></li><li><a href="catalogo.html">Obras</a></li><li><a href="#processo">Processo</a></li><li><a href="#orcamento">Orçamento</a></li><li><a href="#agendar">Agendar</a></li><li><a href="#faq">Dúvidas</a></li></ul>
   <a class="btn" href="#agendar">Agendar</a>
 </div></nav>
 
@@ -172,6 +209,18 @@ dialog img{max-width:92vw;max-height:72vh;background:#fff;border:8px solid #fff;
 
 <div class="banner"><img src="https://ogeidstudio.wordpress.com/wp-content/uploads/2024/01/banner-1.gif" alt="OGEID Studio" onerror="this.parentNode.remove()"></div>
 <div class="mq" aria-hidden="true"><div id="mq"></div></div>
+
+<section class="bk" id="bk" hidden><div class="wrap bkin">
+  <span class="hand" id="bkdate"></span>
+  <div class="bkh"><h2><em>Black</em><span>Friday</span></h2><div class="pct"><b id="bkpct"></b><small>off</small></div></div>
+  <p class="bkp">Condições especiais de Black Friday em flash tattoo e obras. Os preços do site já aparecem com desconto. Condições confirmadas no atendimento.</p>
+  <div class="cd" id="bkcd" role="timer" aria-label="Tempo restante da Black Friday"><div><b>00</b><small>dias</small></div><div><b>00</b><small>horas</small></div><div><b>00</b><small>min</small></div><div><b>00</b><small>seg</small></div></div>
+  <div class="tks">
+    <a class="tk" id="tkf" href="#flash"><small>Flash tattoo</small><b></b><span>em todos os flashes disponíveis, com o preço já atualizado no desenho.</span><u>Ver flashes →</u></a>
+    <a class="tk" id="tko" href="catalogo.html"><small>Obras, prints e objetos</small><b></b><span>em todo o catálogo, com o valor já descontado na sacola.</span><u>Ver obras →</u></a>
+  </div>
+  <div class="cta" style="margin-top:34px"><a class="btn" href="#flash">Escolher meu flash</a><a class="btn red" href="#agendar">Agendar com desconto</a></div>
+</div></section>
 
 <section class="promo" id="promo" hidden><div class="wrap">
   <figure><img id="promoImg" alt="Animação: mão segurando um celular com a promoção OGEID Tattoo 20% off" width="500" height="281" loading="lazy"></figure>
@@ -279,6 +328,12 @@ const INSTAGRAM="https://instagram.com/ogeid_life";    // link do seu Instagram
 const SLOTS=["10:00","13:00","15:00","17:00"];
 const CLOSED=[0];                            // dias sem atendimento (0 = domingo)
 const DAYS=21;                               // quantos dias aparecem no agendamento
+const BF={
+  ativa:true,                                // false desliga toda a Black Friday de uma vez
+  fim:"2026-11-27",                          // último dia (fuso de Brasília) → some sozinha depois. Para estender: "2026-11-30"
+  flash:20,                                  // % de desconto nos flashes (0 = sem desconto)
+  obras:20                                   // % de desconto em obras, prints e objetos (0 = sem desconto)
+};
 const PROMO={
   ativa:true,                                // false esconde a promoção do site
   fim:"",                                    // ex.: "2026-11-30" → some sozinha depois dessa data
@@ -329,7 +384,7 @@ function render(){
   const r=view(),v=r.slice(0,shown);
   $("#count").textContent=r.length+" flashes";
   $("#grid").innerHTML=v.length?v.map(f=>`<article class="card${f.off?" off":""}">
-    ${f.off?"":`<span class="price">${f.label}</span>`}
+    ${f.off?"":`<span class="price${f.show?" sale":""}">${f.show||f.label}</span>`}
     <button class="im" data-z="${f.n}" aria-label="Ampliar flash ${f.name}"><img loading="lazy" decoding="async" src="${f.src}?w=600" alt="Flash tattoo ${f.name}"></button>
     ${f.off?"":`<button class="btn" data-p="${f.n}">Quero esse</button>`}</article>`).join(""):'<p class="empty">Nenhum flash nessa faixa.</p>';
   $("#more").style.display=r.length>shown?"inline-block":"none";
@@ -347,7 +402,7 @@ const lb=$("#lb");
 function choose(f){
   sel=f;lb.close();
   $("#pick").style.display="flex";$("#pimg").src=f.src+"?w=200";
-  $("#ptxt").textContent=`Flash ${f.name} · ${f.label}`;
+  $("#ptxt").textContent=`Flash ${f.name} · ${f.now||f.label}`;
   $("#agendar").scrollIntoView({behavior:"smooth",block:"start"});
 }
 $("#grid").addEventListener("click",e=>{
@@ -390,6 +445,25 @@ $("#qsend").onclick=()=>{
   window.open(wa(`Olá! Quero um orçamento.\nNome: ${n}\nIdeia: ${t}\nLocal: ${$("#qa").value}\nTamanho: ${$("#qs").value}\nPrimeira tattoo: ${$("#qf").value}\nEntendo que o desenho será criado no estilo autoral do estúdio.${promoLine("#qpc")?"\n"+promoLine("#qpc"):""}`),"_blank","noopener");
 };
 
+/* black friday: liga e desliga sozinha (veja BF no topo da configuração) */
+const BFD=new Date(BF.fim+"T23:59:59-03:00"),bfOn=BF.ativa&&(BF.flash>0||BF.obras>0)&&new Date()<=BFD;
+if(bfOn){
+  PROMO.ativa=false;
+  const dsc=n=>Math.round(n*(100-BF.flash)/100),top=Math.max(BF.flash,BF.obras),[,mo,da]=BF.fim.split("-");
+  if(BF.flash)F.forEach(f=>{if(f.off)return;f.now=f.lo===f.hi?brl(dsc(f.lo)):`${brl(dsc(f.lo))}–${dsc(f.hi)}`;f.show=`<s>${f.label}</s> ${f.now}`});
+  const part=[BF.flash&&`flash −${BF.flash}%`,BF.obras&&`obras −${BF.obras}%`].filter(Boolean).join(" · ");
+  $("#bk").hidden=$("#bkbar").hidden=false;$$("[data-bf]").forEach(e=>e.hidden=false);
+  $("#bkmsg").textContent="Black Friday · "+part;$("#bkpct").textContent=top+"%";$("#bkdate").textContent=`ofertas até ${da}/${mo}`;
+  BF.flash?$("#tkf b").textContent="−"+BF.flash+"%":$("#tkf").hidden=true;
+  BF.obras?$("#tko b").textContent="−"+BF.obras+"%":$("#tko").hidden=true;
+  $("#mq").innerHTML=Array(4).fill(`<span>Black Friday</span><span>${part}</span><span>Até ${da}/${mo}</span><span>Agende já</span>`).join("");
+  $("#wall").insertAdjacentHTML("beforeend",`<a class="stamp" href="#bk"><b>${top}%</b>Black<br>Friday</a>`);
+  const cd=$$("#bkcd b"),bt=$("#bkt"),tick=()=>{const s=Math.max(0,Math.floor((BFD-new Date())/1e3));if(!s)return location.reload();
+    const v=[Math.floor(s/86400),Math.floor(s/3600)%24,Math.floor(s/60)%60,s%60].map(x=>String(x).padStart(2,"0"));
+    cd.forEach((b,i)=>b.textContent=v[i]);bt.textContent=`${v[0]}d ${v[1]}:${v[2]}:${v[3]}`};
+  tick();setInterval(tick,1e3);
+}
+
 /* promoção: aparece só se estiver ativa e dentro do prazo */
 const promoOn=PROMO.ativa&&(!PROMO.fim||new Date()<=new Date(PROMO.fim+"T23:59:59"));
 if(promoOn){
@@ -397,7 +471,7 @@ if(promoOn){
   $("#promo").hidden=false;$$("[data-promo]").forEach(l=>l.hidden=false);
   $("#promoBtn").onclick=()=>{$("#bpc").checked=true;$("#agendar").scrollIntoView({behavior:"smooth",block:"start"})};
 }
-const promoLine=id=>promoOn&&$(id).checked?"Promoção: 20% off (vi no site, podem confirmar as condições?)":"";
+const promoLine=id=>bfOn&&BF.flash?`Black Friday: ${BF.flash}% off (vi no site, podem confirmar as condições?)`:promoOn&&$(id).checked?"Promoção: 20% off (vi no site, podem confirmar as condições?)":"";
 
 /* links fixos e entrada */
 $("#wa").href=$("#wl").href=wa("Olá! Vim pelo site do OGEID Studio.");

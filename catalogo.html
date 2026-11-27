@@ -88,9 +88,36 @@ footer{background:var(--ink);color:#bdb7a6;padding:40px 0;border-top:4px solid v
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:center}footer a:hover{color:var(--acid)}
 .wa{position:fixed;right:16px;bottom:16px;z-index:25;background:#25d366;color:var(--ink);border:3px solid var(--ink);padding:11px 16px;font:400 13px 'Archivo Black';text-transform:uppercase;box-shadow:4px 4px 0 var(--ink)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== BLACK FRIDAY ===== */
+.bkbar{background:var(--red);color:#fff;border-bottom:4px solid var(--ink);font:400 13px 'Archivo Black';text-transform:uppercase}
+.bkbar .wrap{display:flex;justify-content:center;align-items:center;gap:10px 18px;flex-wrap:wrap;padding-block:8px;text-align:center}
+.bkbar time{background:#fff;color:var(--ink);padding:2px 9px;font-variant-numeric:tabular-nums}
+.bkbar a{background:var(--ink);color:var(--acid);padding:3px 10px}
+.bk{background:var(--ink);color:#f4efe3;padding:0;position:relative;overflow:hidden;border-bottom:4px solid var(--acid)}
+.bk:before,.bk:after{content:"";display:block;height:20px;background:repeating-linear-gradient(-45deg,var(--acid) 0 18px,var(--ink) 18px 36px)}
+.bkin{position:relative;padding:64px 20px 70px}
+.bkin:before{content:"BLACK FRIDAY";position:absolute;left:-1%;bottom:-3%;font:400 clamp(110px,22vw,320px)/.8 'Archivo Black';color:transparent;-webkit-text-stroke:2px rgba(212,255,26,.11);white-space:nowrap;pointer-events:none}
+.bkin>*{position:relative}
+.bk .hand{color:var(--acid)}
+.bk h2{font-size:clamp(70px,14vw,180px);margin:0}
+.bk h2 em{font-style:normal;color:transparent;-webkit-text-stroke:2px #f4efe3;display:block}
+.bk h2 span{color:var(--acid);display:block}
+.bkh{display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+.pct{width:clamp(130px,17vw,200px);aspect-ratio:1;border-radius:50%;background:var(--red);color:#fff;border:4px solid #f4efe3;display:grid;place-content:center;text-align:center;transform:rotate(-10deg);box-shadow:8px 8px 0 var(--acid);animation:wob 3s ease-in-out infinite}
+.pct b{font:400 clamp(46px,7vw,76px)/.9 'Archivo Black'}.pct small{font:400 18px 'Permanent Marker'}
+@keyframes wob{50%{transform:rotate(-4deg) scale(1.05)}}
+.bkp{max-width:50ch;color:#cfc9b8;margin:22px 0 28px;font-size:17px}
+.cd{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px}
+.cd div{min-width:92px;text-align:center;border:3px dashed #5a5a5a;padding:12px 8px 8px}
+.cd b{display:block;font:400 clamp(40px,7vw,64px)/1 'Archivo Black';color:var(--acid);font-variant-numeric:tabular-nums}
+.cd small{font:400 11px 'Archivo Black';text-transform:uppercase;color:#a9a393}
+.price.sale{background:var(--red);color:#fff}.price s{display:block;font-size:11px;line-height:1;opacity:.8}
+.pr s{font-size:.55em;color:var(--mute);margin-right:6px}
 </style>
 </head>
 <body>
+<div class="bkbar" id="bkbar" hidden><div class="wrap"><span id="bkmsg"></span><time id="bkt"></time></div></div>
 <nav><div class="wrap">
   <a href="index.html" aria-label="Início"><img data-logo alt="OGEID Studio" width="46" height="46"></a>
   <ul><li><a href="index.html#flash">Flash</a></li><li><a class="on" href="catalogo.html">Obras</a></li><li><a href="index.html#orcamento">Orçamento</a></li><li><a href="index.html#agendar">Agendar</a></li></ul>
@@ -98,6 +125,11 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;
 </div></nav>
 
 <main id="cat">
+  <section class="bk" id="bk" hidden><div class="wrap bkin" style="padding-block:40px 44px"><div class="bkh">
+    <div><span class="hand" id="bkdate"></span><h2 style="font-size:clamp(54px,10vw,120px)"><em>Black</em><span>Friday</span></h2></div>
+    <div class="pct"><b id="bkpct"></b><small>off</small></div>
+    <div><p class="bkp" style="margin:0 0 18px">Todas as obras, prints e objetos já com desconto. O valor atualizado aparece nos cards e na sacola.</p><div class="cd" id="bkcd" role="timer" aria-label="Tempo restante da Black Friday"><div><b>00</b><small>dias</small></div><div><b>00</b><small>horas</small></div><div><b>00</b><small>min</small></div><div><b>00</b><small>seg</small></div></div></div>
+  </div></div></section>
   <header class="wrap top">
     <span class="hand">catálogo de obras</span>
     <h1>Universo Ogeid</h1>
@@ -151,6 +183,12 @@ document.querySelectorAll('[data-logo]').forEach(i=>i.src=LOGO);document.getElem
 const WHATSAPP="5511940569974";            // DDI+DDD+número, só dígitos
 const INSTAGRAM="https://instagram.com/ogeid_life";
 const EMAIL="lifeogeid@gmail.com";
+const BF={
+  ativa:true,                                // false desliga toda a Black Friday de uma vez
+  fim:"2026-11-27",                          // último dia (fuso de Brasília) → some sozinha depois. Para estender: "2026-11-30"
+  flash:20,                                  // % de desconto nos flashes (0 = sem desconto)
+  obras:20                                   // % de desconto em obras, prints e objetos (0 = sem desconto)
+};
 const B="https://ogeidstudio.wordpress.com/wp-content/uploads/";
 /* ================================================================ */
 
@@ -313,6 +351,9 @@ for(const g in D){const[p,txt]=D[g];txt.split("\n").forEach(l=>{const[f,pr,t,m,e
 const PR={all:()=>1,a:i=>i.pr<=100,b:i=>i.pr>100&&i.pr<=300,c:i=>i.pr>300&&i.pr<=700,d:i=>i.pr>700};
 /* Prints: mesmo valor para todos, por formato */
 const FMT={A4:60,A3:80},FD={A4:"21 × 29,7 cm",A3:"29,7 × 42 cm"};
+/* black friday: desconto aplicado nos preços (liga e desliga sozinha, veja BF no topo) */
+const BFD=new Date(BF.fim+"T23:59:59-03:00"),bfOn=BF.ativa&&BF.obras>0&&new Date()<=BFD,bfk=v=>Math.round(v*(100-BF.obras)/100),FMT0={...FMT};
+if(bfOn){items.forEach(i=>{if(i.pr){i.o=i.pr;i.pr=bfk(i.pr)}});FMT.A4=bfk(FMT.A4);FMT.A3=bfk(FMT.A3)}
 let st={g:"all",p:"all",on:true,s:"cat"},bag=[],sy=0,fmt="A4";
 try{bag=JSON.parse(localStorage.getItem("og_bag")||"[]").map(b=>typeof b==="number"?{n:b}:b).filter(b=>b&&items[b.n-1]&&items[b.n-1].pr&&(!items[b.n-1].fm||FMT[b.f]))}catch(e){}
 const pv=(i,f)=>i.fm?FMT[f||"A4"]:i.pr;
@@ -328,7 +369,7 @@ function list(){
   const d=st.s==="asc"?1:st.s==="desc"?-1:0;
   return r.sort((a,b)=>!av(a)-!av(b)||(d?(!a.pr-!b.pr)||d*(a.pr-b.pr):rk(b)-rk(a)));
 }
-const card=i=>`<article class="card${av(i)?"":" off"}">${i.pr?`<span class="price">${i.fm?"R$ "+FMT.A4+"–"+FMT.A3:brl(i.pr)}</span>`:i.q?`<span class="price">Sob consulta</span>`:""}
+const card=i=>`<article class="card${av(i)?"":" off"}">${i.pr?`<span class="price${bfOn?" sale":""}">${bfOn?`<s>${i.fm?"R$ "+FMT0.A4+"–"+FMT0.A3:brl(i.o)}</s>`:""}${i.fm?"R$ "+FMT.A4+"–"+FMT.A3:brl(i.pr)}</span>`:i.q?`<span class="price">Sob consulta</span>`:""}
 <a class="im" href="#obra-${i.n}" aria-label="Ver ${i.t}"><img loading="lazy" decoding="async" src="${img(i.src,600)}" alt="${i.t}"></a>
 <h3>${i.t}</h3><small>${pad(i)} · ${G[i.g][0]}</small>
 ${i.fm?`<a class="btn" href="#obra-${i.n}">Escolher A4 ou A3</a>`:i.pr?`<button class="btn" data-a="${i.n}">Encomendar</button>`:`<a class="btn" href="#obra-${i.n}">${i.q?"Ver e consultar":"Ver obra"}</a>`}</article>`;
@@ -355,7 +396,7 @@ function obra(i){
   </div>
   <div class="info"><span class="hand">${pad(i)} · ${G[i.g][0]}</span><h1>${i.t}</h1>
     <span class="tag${sold?" off":""}">${sold?"Indisponível":"Disponível"}</span>
-    ${sold?"":i.q?`<div class="pr" style="font-size:28px">Valor sob consulta</div>`:i.fm?fmtBox(i):`<div class="pr">${brl(i.pr)}${i.g==="lv"?" <small>frete grátis</small>":""}</div>`}
+    ${sold?"":i.q?`<div class="pr" style="font-size:28px">Valor sob consulta</div>`:i.fm?fmtBox(i):`<div class="pr">${bfOn&&i.o?`<s>${brl(i.o)}</s>`:""}${brl(i.pr)}${i.g==="lv"?" <small>frete grátis</small>":""}</div>`}
     <p>${i.ds||G[i.g][1]}</p>
     <div class="acts">${sold?`<button class="btn red" data-s="${i.n}">Quero algo parecido</button>`
       :i.q?`<button class="btn red" data-q="${i.n}">Consultar valor</button>`:`<button class="btn red" data-a="${i.n}">Encomendar</button><button class="btn" data-b="${i.n}">+ Sacola</button>${i.ml?`<a class="btn" target="_blank" rel="noopener" href="${ml(i)}">Mercado Livre</a>`:""}`}</div>
@@ -389,7 +430,7 @@ const upd=()=>$$("[data-b]").forEach(b=>b.textContent=inBag(+b.dataset.b,items[+
 const add=(n,f)=>{if(!inBag(n,f))bag.push({n,f});sync()};
 function msg(){
   const g=id=>$(id).value.trim();
-  return["Olá! Quero encomendar do catálogo OGEID:","",...L().map(i=>`• ${pad(i)} · ${i.t}${fl(i)} — ${brl(i.p)}\n  ${link(i.n)}`),"","Total: "+brl(total())+" (sem frete)","",
+  return["Olá! Quero encomendar do catálogo OGEID:","",...L().map(i=>`• ${pad(i)} · ${i.t}${fl(i)} — ${brl(i.p)}\n  ${link(i.n)}`),"","Total: "+brl(total())+" (sem frete)"+(bfOn?` · já com ${BF.obras}% off Black Friday (vi no site, podem confirmar as condições?)`:""),"",
     "Nome: "+g("#fn"),"WhatsApp: "+g("#fw"),"Entrega: "+$("#fd").value+(g("#fc")?" · "+g("#fc"):""),g("#fo")?"Obs.: "+g("#fo"):null].filter(x=>x!==null).join("\n");
 }
 const ok=()=>{if(!$("#fn").value.trim()||!$("#fw").value.trim()){$("#fe").textContent="Preencha seu nome e WhatsApp.";return false}$("#fe").textContent="";return true};
@@ -416,6 +457,15 @@ $$(".wl").forEach(a=>a.href=wa("Olá! Vim pelo catálogo de obras do OGEID."));
 $("#ig").href=$("#ig2").href=INSTAGRAM;$("#yr").textContent=new Date().getFullYear();
 /* se a miniatura -p.jpg não existir no servidor, usa a imagem grande */
 addEventListener("error",e=>{const t=e.target;if(t&&t.tagName==="IMG"&&/-p\.jpg$/.test(t.src)&&!t.dataset.fb){t.dataset.fb=1;t.src=t.src.replace(/-p\.jpg$/,".jpg")}},true);
+if(bfOn){
+  const [,mo,da]=BF.fim.split("-");
+  $("#bk").hidden=$("#bkbar").hidden=false;$("#bkpct").textContent=BF.obras+"%";
+  $("#bkmsg").textContent="Black Friday · obras −"+BF.obras+"%";$("#bkdate").textContent=`ofertas até ${da}/${mo}`;
+  const cd=$$("#bkcd b"),bt=$("#bkt"),tick=()=>{const s=Math.max(0,Math.floor((BFD-new Date())/1e3));if(!s)return location.reload();
+    const v=[Math.floor(s/86400),Math.floor(s/3600)%24,Math.floor(s/60)%60,s%60].map(x=>String(x).padStart(2,"0"));
+    cd.forEach((b,i)=>b.textContent=v[i]);bt.textContent=`${v[0]}d ${v[1]}:${v[2]}:${v[3]}`};
+  tick();setInterval(tick,1e3);
+}
 sync();route();
 </script>
 </body>
